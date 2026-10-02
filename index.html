@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Luyện viết tiếng Trung HSK3</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 15px;
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+}
+
+.header {
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+h1 {
+    margin: 0 0 8px;
+    font-size: 24px;
+}
+
+.subtitle {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.stat {
+    background: #f3f4f6;
+    border-radius: 10px;
+    padding: 10px 5px;
+}
+
+.stat-number {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.progress {
+    color: #6b7280;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.vietnamese {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.label {
+    display: block;
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 7px;
+}
+
+input {
+    width: 100%;
+    height: 55px;
+    border: 2px solid #d1d5db;
+    border-radius: 12px;
+    padding: 0 15px;
+    font-size: 24px;
+    text-align: center;
+    outline: none;
+}
+
+input:focus {
+    border-color: #2563eb;
+}
+
+button {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 11px;
+    margin-top: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.check {
+    background: #2563eb;
+    color: white;
+}
+
+.next {
+    background: #16a34a;
+    color: white;
+}
+
+.shuffle {
+    background: #f59e0b;
+    color: white;
+}
+
+.reset {
+    background: #e5e7eb;
+    color: #111827;
+}
+
+.result {
+    text-align: center;
+    min-height: 30px;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.correct {
+    color: #16a34a;
+}
+
+.wrong {
+    color: #dc2626;
+}
+
+.hint {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #fff7ed;
+    color: #c2410c;
+    text-align: center;
+    font-size: 18px;
+}
+
+.answer {
+    margin-top: 12px;
+    padding: 14px;
+    border-radius: 10px;
+    background: #eff6ff;
+    text-align: center;
+}
+
+.hanzi {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.pinyin {
+    font-size: 20px;
+    color: #2563eb;
+    margin-top: 5px;
+}
+
+.info {
+    margin-top: 15px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.footer {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 12px;
+    margin: 20px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>🇨🇳 LUYỆN VIẾT TIẾNG TRUNG</h1>
+
+        <div class="subtitle">
+            HSK3 • Nhìn tiếng Việt → Viết chữ Hán
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+                <div class="stat-number" id="correctCount">0</div>
+                <div class="stat-label">Đúng</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-number" id="wrongCount">0</div>
+                <div class="stat-label">Sai</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-number" id="totalCount">0</div>
+                <div class="stat-label">Đã làm</div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="progress" id="progress">
+            Câu 1 / 200
+        </div>
+
+        <div class="label" style="text-align:center;">
+            Viết tiếng Trung:
+        </div>
+
+        <div class="vietnamese" id="vietnamese">
+            -
+        </div>
+
+        <input
+            id="answerInput"
+            type="text"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            placeholder="Nhập chữ Hán..."
+        >
+
+        <button class="check" onclick="checkAnswer()">
+            KIỂM TRA
+        </button>
+
+        <button class="next" onclick="nextWord()">
+            CÂU TIẾP THEO
+        </button>
+
+        <button class="shuffle" onclick="shuffleWords()">
+            🔀 XÁO TRỘN 200 TỪ
+        </button>
+
+        <button class="reset" onclick="resetGame()">
+            ↺ LÀM LẠI
+        </button>
+
+        <div id="result" class="result"></div>
+
+        <div id="hint" class="hint" style="display:none;"></div>
+
+        <div id="answer" class="answer" style="display:none;">
+
+            <div class="label">
+                Đáp án
+            </div>
+
+            <div class="hanzi" id="correctHanzi"></div>
+
+            <div class="pinyin" id="correctPinyin"></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="info">
+
+        Gõ đúng chữ Hán → Pinyin xuất hiện.<br>
+        Sai 1–2 lần → chưa hiện Pinyin.<br>
+        Sai lần 3 → Pinyin xuất hiện làm gợi ý.
+
+    </div>
+
+
+    <div class="footer">
+        HSK3 Chinese Practice
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+==================================================
+DỮ LIỆU 200 TỪ MẪU
+vi = tiếng Việt
+han = chữ Hán
+py = Pinyin
+==================================================
+*/
+
+const words = [
+
+{vi:"yêu thích",han:"喜欢",py:"xǐhuan"},
+{vi:"bắt đầu",han:"开始",py:"kāishǐ"},
+{vi:"kết thúc",han:"结束",py:"jiéshù"},
+{vi:"công việc",han:"工作",py:"gōngzuò"},
+{vi:"học tập",han:"学习",py:"xuéxí"},
+{vi:"hiểu",han:"明白",py:"míngbai"},
+{vi:"biết",han:"知道",py:"zhīdào"},
+{vi:"cảm thấy",han:"觉得",py:"juéde"},
+{vi:"hy vọng",han:"希望",py:"xīwàng"},
+{vi:"cần",han:"需要",py:"xūyào"},
+{vi:"muốn",han:"想",py:"xiǎng"},
+{vi:"giúp đỡ",han:"帮助",py:"bāngzhù"},
+{vi:"chuẩn bị",han:"准备",py:"zhǔnbèi"},
+{vi:"giới thiệu",han:"介绍",py:"jièshào"},
+{vi:"quyết định",han:"决定",py:"juédìng"},
+{vi:"kiểm tra",han:"检查",py:"jiǎnchá"},
+{vi:"thay đổi",han:"改变",py:"gǎibiàn"},
+{vi:"sử dụng",han:"使用",py:"shǐyòng"},
+{vi:"đồng ý",han:"同意",py:"tóngyì"},
+{vi:"phát hiện",han:"发现",py:"fāxiàn"},
+
+{vi:"vấn đề",han:"问题",py:"wèntí"},
+{vi:"cơ hội",han:"机会",py:"jīhuì"},
+{vi:"phương pháp",han:"方法",py:"fāngfǎ"},
+{vi:"kết quả",han:"结果",py:"jiéguǒ"},
+{vi:"tin tức",han:"消息",py:"xiāoxi"},
+{vi:"ý nghĩa",han:"意思",py:"yìsi"},
+{vi:"ý kiến",han:"意见",py:"yìjiàn"},
+{vi:"cách",han:"办法",py:"bànfǎ"},
+{vi:"lý do",han:"原因",py:"yuányīn"},
+{vi:"mục đích",han:"目的",py:"mùdì"},
+{vi:"thời gian",han:"时间",py:"shíjiān"},
+{vi:"năm",han:"年",py:"nián"},
+{vi:"tháng",han:"月",py:"yuè"},
+{vi:"tuần",han:"星期",py:"xīngqī"},
+{vi:"hôm nay",han:"今天",py:"jīntiān"},
+{vi:"ngày mai",han:"明天",py:"míngtiān"},
+{vi:"hôm qua",han:"昨天",py:"zuótiān"},
+{vi:"buổi sáng",han:"早上",py:"zǎoshang"},
+{vi:"buổi tối",han:"晚上",py:"wǎnshang"},
+{vi:"bây giờ",han:"现在",py:"xiànzài"},
+
+{vi:"thường xuyên",han:"经常",py:"jīngcháng"},
+{vi:"đôi khi",han:"有时候",py:"yǒu shíhou"},
+{vi:"đã từng",han:"曾经",py:"céngjīng"},
+{vi:"vẫn",han:"还是",py:"háishi"},
+{vi:"lại",han:"又",py:"yòu"},
+{vi:"đã",han:"已经",py:"yǐjīng"},
+{vi:"sắp",han:"快",py:"kuài"},
+{vi:"cùng nhau",han:"一起",py:"yìqǐ"},
+{vi:"bởi vì",han:"因为",py:"yīnwèi"},
+{vi:"cho nên",han:"所以",py:"suǒyǐ"},
+{vi:"nhưng",han:"但是",py:"dànshì"},
+{vi:"nếu",han:"如果",py:"rúguǒ"},
+{vi:"mặc dù",han:"虽然",py:"suīrán"},
+{vi:"vì vậy",han:"因此",py:"yīncǐ"},
+{vi:"ngoài ra",han:"另外",py:"lìngwài"},
+{vi:"cũng",han:"也",py:"yě"},
+{vi:"đều",han:"都",py:"dōu"},
+{vi:"chỉ",han:"只",py:"zhǐ"},
+{vi:"mới",han:"才",py:"cái"},
+{vi:"rất",han:"非常",py:"fēicháng"},
+
+{vi:"nhanh",han:"快",py:"kuài"},
+{vi:"chậm",han:"慢",py:"màn"},
+{vi:"cao",han:"高",py:"gāo"},
+{vi:"thấp",han:"低",py:"dī"},
+{vi:"dài",han:"长",py:"cháng"},
+{vi:"ngắn",han:"短",py:"duǎn"},
+{vi:"to",han:"大",py:"dà"},
+{vi:"nhỏ",han:"小",py:"xiǎo"},
+{vi:"nhiều",han:"多",py:"duō"},
+{vi:"ít",han:"少",py:"shǎo"},
+{vi:"mới",han:"新",py:"xīn"},
+{vi:"cũ",han:"旧",py:"jiù"},
+{vi:"đúng",han:"对",py:"duì"},
+{vi:"sai",han:"错",py:"cuò"},
+{vi:"quan trọng",han:"重要",py:"zhòngyào"},
+{vi:"đơn giản",han:"简单",py:"jiǎndān"},
+{vi:"khó",han:"难",py:"nán"},
+{vi:"dễ",han:"容易",py:"róngyì"},
+{vi:"đặc biệt",han:"特别",py:"tèbié"},
+{vi:"giống nhau",han:"一样",py:"yíyàng"},
+
+{vi:"người",han:"人",py:"rén"},
+{vi:"bạn bè",han:"朋友",py:"péngyou"},
+{vi:"gia đình",han:"家人",py:"jiārén"},
+{vi:"cha mẹ",han:"父母",py:"fùmǔ"},
+{vi:"anh trai",han:"哥哥",py:"gēge"},
+{vi:"em trai",han:"弟弟",py:"dìdi"},
+{vi:"chị gái",han:"姐姐",py:"jiějie"},
+{vi:"em gái",han:"妹妹",py:"mèimei"},
+{vi:"chồng",han:"丈夫",py:"zhàngfu"},
+{vi:"vợ",han:"妻子",py:"qīzi"},
+{vi:"con trai",han:"儿子",py:"érzi"},
+{vi:"con gái",han:"女儿",py:"nǚ'ér"},
+{vi:"trẻ em",han:"孩子",py:"háizi"},
+{vi:"bố",han:"爸爸",py:"bàba"},
+{vi:"mẹ",han:"妈妈",py:"māma"},
+{vi:"thầy giáo",han:"老师",py:"lǎoshī"},
+{vi:"học sinh",han:"学生",py:"xuésheng"},
+{vi:"đồng nghiệp",han:"同事",py:"tóngshì"},
+{vi:"bác sĩ",han:"医生",py:"yīshēng"},
+{vi:"nhân viên",han:"职员",py:"zhíyuán"},
+
+{vi:"trường học",han:"学校",py:"xuéxiào"},
+{vi:"bệnh viện",han:"医院",py:"yīyuàn"},
+{vi:"công ty",han:"公司",py:"gōngsī"},
+{vi:"cửa hàng",han:"商店",py:"shāngdiàn"},
+{vi:"nhà hàng",han:"饭店",py:"fàndiàn"},
+{vi:"ngân hàng",han:"银行",py:"yínháng"},
+{vi:"sân bay",han:"机场",py:"jīchǎng"},
+{vi:"nhà ga",han:"车站",py:"chēzhàn"},
+{vi:"đường phố",han:"街道",py:"jiēdào"},
+{vi:"phòng",han:"房间",py:"fángjiān"},
+{vi:"nhà",han:"房子",py:"fángzi"},
+{vi:"cửa",han:"门",py:"mén"},
+{vi:"bàn",han:"桌子",py:"zhuōzi"},
+{vi:"ghế",han:"椅子",py:"yǐzi"},
+{vi:"điện thoại",han:"手机",py:"shǒujī"},
+{vi:"máy tính",han:"电脑",py:"diànnǎo"},
+{vi:"tivi",han:"电视",py:"diànshì"},
+{vi:"sách",han:"书",py:"shū"},
+{vi:"báo",han:"报纸",py:"bàozhǐ"},
+{vi:"ảnh",han:"照片",py:"zhàopiàn"},
+
+{vi:"đi",han:"去",py:"qù"},
+{vi:"đến",han:"到",py:"dào"},
+{vi:"đi lại",han:"走",py:"zǒu"},
+{vi:"đi bộ",han:"走路",py:"zǒulù"},
+{vi:"chạy",han:"跑",py:"pǎo"},
+{vi:"ngồi",han:"坐",py:"zuò"},
+{vi:"đứng",han:"站",py:"zhàn"},
+{vi:"đi xe",han:"骑",py:"qí"},
+{vi:"mua",han:"买",py:"mǎi"},
+{vi:"bán",han:"卖",py:"mài"},
+{vi:"mở",han:"开",py:"kāi"},
+{vi:"đóng",han:"关",py:"guān"},
+{vi:"đưa",han:"给",py:"gěi"},
+{vi:"lấy",han:"拿",py:"ná"},
+{vi:"đặt",han:"放",py:"fàng"},
+{vi:"mang",han:"带",py:"dài"},
+{vi:"đưa đón",han:"接",py:"jiē"},
+{vi:"gọi điện",han:"打电话",py:"dǎ diànhuà"},
+{vi:"nói chuyện",han:"聊天",py:"liáotiān"},
+{vi:"nói",han:"说",py:"shuō"},
+
+{vi:"ăn",han:"吃",py:"chī"},
+{vi:"uống",han:"喝",py:"hē"},
+{vi:"ngủ",han:"睡觉",py:"shuìjiào"},
+{vi:"thức dậy",han:"起床",py:"qǐchuáng"},
+{vi:"tắm",han:"洗澡",py:"xǐzǎo"},
+{vi:"rửa",han:"洗",py:"xǐ"},
+{vi:"mặc",han:"穿",py:"chuān"},
+{vi:"cởi",han:"脱",py:"tuō"},
+{vi:"nấu ăn",han:"做饭",py:"zuò fàn"},
+{vi:"nấu",han:"做",py:"zuò"},
+{vi:"đói",han:"饿",py:"è"},
+{vi:"khát",han:"渴",py:"kě"},
+{vi:"no",han:"饱",py:"bǎo"},
+{vi:"ngon",han:"好吃",py:"hǎochī"},
+{vi:"mệt",han:"累",py:"lèi"},
+{vi:"khỏe",han:"健康",py:"jiànkāng"},
+{vi:"bệnh",han:"生病",py:"shēngbìng"},
+{vi:"đau",han:"疼",py:"téng"},
+{vi:"thuốc",han:"药",py:"yào"},
+{vi:"mắt",han:"眼睛",py:"yǎnjing"},
+
+{vi:"màu đỏ",han:"红色",py:"hóngsè"},
+{vi:"màu trắng",han:"白色",py:"báisè"},
+{vi:"màu đen",han:"黑色",py:"hēisè"},
+{vi:"màu xanh",han:"绿色",py:"lǜsè"},
+{vi:"màu vàng",han:"黄色",py:"huángsè"},
+{vi:"màu xanh dương",han:"蓝色",py:"lánsè"},
+{vi:"tiền",han:"钱",py:"qián"},
+{vi:"giá",han:"价格",py:"jiàgé"},
+{vi:"rẻ",han:"便宜",py:"piányi"},
+{vi:"đắt",han:"贵",py:"guì"},
+{vi:"đồ vật",han:"东西",py:"dōngxi"},
+{vi:"quần áo",han:"衣服",py:"yīfu"},
+{vi:"giày",han:"鞋",py:"xié"},
+{vi:"món ăn",han:"菜",py:"cài"},
+{vi:"nước",han:"水",py:"shuǐ"},
+{vi:"trà",han:"茶",py:"chá"},
+{vi:"cà phê",han:"咖啡",py:"kāfēi"},
+{vi:"trái cây",han:"水果",py:"shuǐguǒ"},
+{vi:"rau",han:"蔬菜",py:"shūcài"},
+{vi:"bánh mì",han:"面包",py:"miànbāo"},
+
+{vi:"thời tiết",han:"天气",py:"tiānqì"},
+{vi:"mưa",han:"下雨",py:"xiàyǔ"},
+{vi:"tuyết",han:"下雪",py:"xiàxuě"},
+{vi:"gió",han:"风",py:"fēng"},
+{vi:"nóng",han:"热",py:"rè"},
+{vi:"lạnh",han:"冷",py:"lěng"},
+{vi:"mùa xuân",han:"春天",py:"chūntiān"},
+{vi:"mùa hè",han:"夏天",py:"xiàtiān"},
+{vi:"mùa thu",han:"秋天",py:"qiūtiān"},
+{vi:"mùa đông",han:"冬天",py:"dōngtiān"},
+{vi:"núi",han:"山",py:"shān"},
+{vi:"sông",han:"河",py:"hé"},
+{vi:"biển",han:"海",py:"hǎi"},
+{vi:"thành phố",han:"城市",py:"chéngshì"},
+{vi:"nông thôn",han:"农村",py:"nóngcūn"},
+{vi:"phía trên",han:"上面",py:"shàngmian"},
+{vi:"phía dưới",han:"下面",py:"xiàmian"},
+{vi:"bên trong",han:"里面",py:"lǐmian"},
+{vi:"bên ngoài",han:"外面",py:"wàimian"},
+{vi:"bên cạnh",han:"旁边",py:"pángbiān"},
+
+{vi:"đẹp",han:"漂亮",py:"piàoliang"},
+{vi:"xinh",han:"美丽",py:"měilì"},
+{vi:"cao hứng",han:"高兴",py:"gāoxìng"},
+{vi:"vui vẻ",han:"快乐",py:"kuàilè"},
+{vi:"buồn",han:"难过",py:"nánguò"},
+{vi:"lo lắng",han:"担心",py:"dānxīn"},
+{vi:"hy vọng",han:"希望",py:"xīwàng"},
+{vi:"yên tâm",han:"放心",py:"fàngxīn"},
+{vi:"vui",han:"开心",py:"kāixīn"},
+{vi:"thích",han:"喜欢",py:"xǐhuan"},
+{vi:"ghét",han:"讨厌",py:"tǎoyàn"},
+{vi:"sợ",han:"害怕",py:"hàipà"},
+{vi:"mệt mỏi",han:"累",py:"lèi"},
+{vi:"bận",han:"忙",py:"máng"},
+{vi:"rảnh",han:"有空",py:"yǒu kòng"},
+{vi:"đói bụng",han:"饿",py:"è"},
+{vi:"khát nước",han:"渴",py:"kě"},
+{vi:"đau lòng",han:"伤心",py:"shāngxīn"},
+{vi:"vui mừng",han:"高兴",py:"gāoxìng"},
+{vi:"cẩn thận",han:"小心",py:"xiǎoxīn"}
+
+];
+
+
+/*
+==================================================
+BIẾN TRÒ CHƠI
+==================================================
+*/
+
+let currentIndex = 0;
+
+let wrongAttempts = 0;
+
+let correctCount = 0;
+
+let wrongCount = 0;
+
+let totalCount = 0;
+
+let finishedCurrent = false;
+
+
+/*
+==================================================
+LẤY ELEMENT
+==================================================
+*/
+
+const vietnamese =
+    document.getElementById("vietnamese");
+
+const answerInput =
+    document.getElementById("answerInput");
+
+const result =
+    document.getElementById("result");
+
+const hint =
+    document.getElementById("hint");
+
+const answer =
+    document.getElementById("answer");
+
+const correctHanzi =
+    document.getElementById("correctHanzi");
+
+const correctPinyin =
+    document.getElementById("correctPinyin");
+
+const progress =
+    document.getElementById("progress");
+
+
+/*
+==================================================
+HIỂN THỊ TỪ
+==================================================
+*/
+
+function showWord() {
+
+    const word =
+        words[currentIndex];
+
+    vietnamese.textContent =
+        word.vi;
+
+    progress.textContent =
+        "Câu " +
+        (currentIndex + 1) +
+        " / " +
+        words.length;
+
+    answerInput.value = "";
+
+    result.textContent = "";
+
+    result.className =
+        "result";
+
+    hint.style.display =
+        "none";
+
+    answer.style.display =
+        "none";
+
+    wrongAttempts = 0;
+
+    finishedCurrent = false;
+
+    answerInput.focus();
+}
+
+
+/*
+==================================================
+ CHUẨN HÓA INPUT
+==================================================
+*/
+
+function cleanText(text) {
+
+    return String(text)
+        .trim()
+        .replace(/\s+/g, "");
+
+}
+
+
+/*
+==================================================
+KIỂM TRA
+==================================================
+*/
+
+function checkAnswer() {
+
+    if (finishedCurrent) {
+        return;
+    }
+
+    const userAnswer =
+        cleanText(answerInput.value);
+
+    const word =
+        words[currentIndex];
+
+    if (userAnswer === "") {
+
+        result.textContent =
+            "⚠️ Hãy nhập chữ Hán.";
+
+        result.className =
+            "result wrong";
+
+        return;
+    }
+
+
+    /*
+    ĐÚNG
+    */
+
+    if (userAnswer === word.han) {
+
+        correctCount++;
+
+        totalCount++;
+
+        finishedCurrent = true;
+
+        result.textContent =
+            "✅ CHÍNH XÁC!";
+
+        result.className =
+            "result correct";
+
+        correctHanzi.textContent =
+            word.han;
+
+        correctPinyin.textContent =
+            word.py;
+
+        answer.style.display =
+            "block";
+
+        updateStats();
+
+        return;
+    }
+
+
+    /*
+    SAI
+    */
+
+    wrongAttempts++;
+
+    wrongCount++;
+
+    totalCount++;
+
+    result.textContent =
+        "❌ Chưa đúng. Lần " +
+        wrongAttempts;
+
+    result.className =
+        "result wrong";
+
+
+    /*
+    SAI 3 LẦN
+    */
+
+    if (wrongAttempts >= 3) {
+
+        hint.innerHTML =
+            "💡 Gợi ý Pinyin: <b>" +
+            word.py +
+            "</b>";
+
+        hint.style.display =
+            "block";
+
+        correctHanzi.textContent =
+            word.han;
+
+        correctPinyin.textContent =
+            word.py;
+
+        answer.style.display =
+            "block";
+
+        finishedCurrent = true;
+
+    }
+
+    updateStats();
+}
+
+
+/*
+==================================================
+CÂU TIẾP THEO
+==================================================
+*/
+
+function nextWord() {
+
+    currentIndex++;
+
+    if (currentIndex >= words.length) {
+
+        currentIndex = 0;
+
+        alert(
+            "🎉 Bạn đã hoàn thành " +
+            words.length +
+            " từ!"
+        );
+    }
+
+    showWord();
+}
+
+
+/*
+==================================================
+CẬP NHẬT THỐNG KÊ
+==================================================
+*/
+
+function updateStats() {
+
+    document.getElementById(
+        "correctCount"
+    ).textContent =
+        correctCount;
+
+    document.getElementById(
+        "wrongCount"
+    ).textContent =
+        wrongCount;
+
+    document.getElementById(
+        "totalCount"
+    ).textContent =
+        totalCount;
+}
+
+
+/*
+==================================================
+XÁO TRỘN
+==================================================
+*/
+
+function shuffleWords() {
+
+    for (
+        let i = words.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            words[i],
+            words[j]
+        ] =
+        [
+            words[j],
+            words[i]
+        ];
+    }
+
+    currentIndex = 0;
+
+    showWord();
+
+    alert("🔀 Đã xáo trộn 200 từ!");
+}
+
+
+/*
+==================================================
+LÀM LẠI
+==================================================
+*/
+
+function resetGame() {
+
+    currentIndex = 0;
+
+    wrongAttempts = 0;
+
+    correctCount = 0;
+
+    wrongCount = 0;
+
+    totalCount = 0;
+
+    finishedCurrent = false;
+
+    updateStats();
+
+    showWord();
+}
+
+
+/*
+==================================================
+ENTER = KIỂM TRA
+==================================================
+*/
+
+answerInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+
+            checkAnswer();
+
+        }
+
+    }
+);
+
+
+/*
+==================================================
+KHỞI ĐỘNG
+==================================================
+*/
+
+showWord();
+
+</script>
+
+</body>
+</html>
