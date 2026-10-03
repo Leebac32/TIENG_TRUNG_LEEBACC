@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>TIẾNG TRUNG LEEBACC - HSK 3.0</title>
+
+<title>TIẾNG TRUNG LEEBACC</title>
 
 <style>
+
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -13,24 +15,19 @@
 
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f6f8;
+    background: #f3f4f6;
     color: #222;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 button,
-input,
-select {
+input {
     font-family: inherit;
-}
-
-button {
-    cursor: pointer;
 }
 
 .app {
     width: 100%;
-    max-width: 600px;
+    max-width: 520px;
     min-height: 100vh;
     margin: auto;
     background: white;
@@ -43,20 +40,20 @@ button {
 .header {
     background: #c62828;
     color: white;
-    padding: 18px 16px;
     text-align: center;
+    padding: 18px 12px;
 }
 
 .header h1 {
     margin: 0;
-    font-size: 23px;
+    font-size: 22px;
 }
 
 .header p {
-    margin: 6px 0 0;
+    margin: 5px 0 0;
     font-size: 13px;
-    opacity: .9;
 }
+
 
 /* =========================
    SCREEN
@@ -64,87 +61,13 @@ button {
 
 .screen {
     display: none;
-    padding: 18px;
+    padding: 22px 18px;
 }
 
 .screen.active {
     display: block;
 }
 
-/* =========================
-   START
-========================= */
-
-.logo {
-    text-align: center;
-    padding: 35px 10px 20px;
-}
-
-.logo .hanzi {
-    font-size: 58px;
-    font-weight: bold;
-    color: #c62828;
-}
-
-.logo h2 {
-    margin: 8px 0;
-    font-size: 24px;
-}
-
-.logo p {
-    color: #666;
-}
-
-.name-box {
-    margin-top: 25px;
-}
-
-.name-box input {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    font-size: 16px;
-    outline: none;
-}
-
-.name-box input:focus {
-    border-color: #c62828;
-}
-
-/* =========================
-   BUTTON
-========================= */
-
-.btn {
-    width: 100%;
-    border: none;
-    padding: 14px;
-    border-radius: 10px;
-    margin-top: 12px;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.btn-primary {
-    background: #c62828;
-    color: white;
-}
-
-.btn-secondary {
-    background: #eeeeee;
-    color: #333;
-}
-
-.btn-blue {
-    background: #1976d2;
-    color: white;
-}
-
-.btn-green {
-    background: #2e7d32;
-    color: white;
-}
 
 /* =========================
    LEVEL
@@ -152,7 +75,15 @@ button {
 
 .level-title {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+}
+
+.level-title h2 {
+    margin-bottom: 8px;
+}
+
+.level-title p {
+    color: #777;
 }
 
 .level-grid {
@@ -162,1149 +93,615 @@ button {
 }
 
 .level-card {
-    border: 2px solid #ddd;
-    border-radius: 12px;
-    padding: 18px 8px;
-    text-align: center;
     background: white;
+    border: 2px solid #ddd;
+    border-radius: 14px;
+    padding: 20px 5px;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 .level-card:active {
     transform: scale(.97);
 }
 
-.level-card h3 {
-    margin: 0;
+.level-card strong {
+    display: block;
     color: #c62828;
-    font-size: 22px;
+    font-size: 24px;
+    margin-bottom: 8px;
 }
 
-.level-card p {
-    margin: 8px 0 0;
-    font-size: 12px;
-    color: #666;
-}
 
 /* =========================
-   HOME
+   BUTTON
 ========================= */
 
-.welcome {
-    background: #fff3f3;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-}
-
-.welcome strong {
-    color: #c62828;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 15px;
-}
-
-.stat {
-    background: #f5f5f5;
-    padding: 12px 5px;
-    text-align: center;
-    border-radius: 10px;
-}
-
-.stat-number {
-    font-size: 21px;
-    font-weight: bold;
-    color: #c62828;
-}
-
-.stat-label {
-    font-size: 11px;
-    color: #666;
-    margin-top: 4px;
-}
-
-.menu-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.menu-card {
+.btn {
+    width: 100%;
     border: none;
-    background: #f7f7f7;
-    padding: 18px 8px;
     border-radius: 12px;
-    font-size: 15px;
+    padding: 15px;
+    margin-top: 12px;
+    font-size: 16px;
     font-weight: bold;
 }
 
-.menu-card:active {
-    background: #eeeeee;
+.primary {
+    background: #c62828;
+    color: white;
 }
 
-.menu-icon {
-    font-size: 28px;
-    display: block;
-    margin-bottom: 7px;
+.secondary {
+    background: #eeeeee;
+    color: #333;
 }
+
 
 /* =========================
    STUDY
 ========================= */
 
-.topbar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 15px;
-}
-
-.topbar button {
-    width: auto;
-    margin: 0;
-    padding: 9px 13px;
-}
-
-.topbar-title {
-    flex: 1;
+.study {
     text-align: center;
-    font-weight: bold;
+}
+
+.counter {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 18px;
 }
 
 .progress {
     height: 7px;
-    background: #eee;
+    background: #eeeeee;
     border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 18px;
+    margin-bottom: 30px;
 }
 
 .progress-bar {
     height: 100%;
-    background: #c62828;
     width: 0%;
+    background: #c62828;
     transition: width .2s;
 }
 
-.word-card {
-    text-align: center;
-    border: 1px solid #eee;
-    border-radius: 15px;
-    padding: 25px 15px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.05);
-}
 
-.word-number {
-    color: #888;
-    font-size: 13px;
-}
+/* =========================
+   VIETNAMESE MEANING
+========================= */
 
-.word-hanzi {
-    font-size: 58px;
+.meaning {
+    min-height: 110px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 15px;
+
+    font-size: 30px;
     font-weight: bold;
-    margin: 18px 0 5px;
+    text-align: center;
 }
 
-.word-pinyin {
-    color: #c62828;
-    font-size: 21px;
-    margin-bottom: 12px;
-}
 
-.word-meaning {
-    font-size: 20px;
-    min-height: 30px;
-}
+/* =========================
+   HINT
+========================= */
 
-.example {
-    margin-top: 20px;
-    padding: 12px;
-    background: #f7f7f7;
-    border-radius: 10px;
+.hint {
+    color: #888;
     font-size: 14px;
-    text-align: left;
-    line-height: 1.5;
+    margin: 8px 0 18px;
 }
 
-.example .cn {
+
+/* =========================
+   INPUT
+========================= */
+
+.answer-input {
+    width: 100%;
+
+    padding: 16px;
+
+    border: 2px solid #dddddd;
+    border-radius: 12px;
+
+    outline: none;
+
+    font-size: 21px;
+    text-align: center;
+}
+
+.answer-input:focus {
+    border-color: #c62828;
+}
+
+
+/* =========================
+   RESULT
+========================= */
+
+.result {
+    min-height: 30px;
+
+    margin-top: 14px;
+
     font-size: 17px;
     font-weight: bold;
 }
 
-.example .py {
+.result.correct {
+    color: #2e7d32;
+}
+
+.result.wrong {
     color: #c62828;
 }
 
-.example .vi {
-    color: #555;
-}
 
-.study-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+/* =========================
+   ANSWER
+========================= */
+
+.solution {
     margin-top: 12px;
-}
 
-.study-buttons button {
-    margin: 0;
-}
+    padding: 15px;
 
-/* =========================
-   QUIZ
-========================= */
-
-.quiz-card {
-    border: 1px solid #eee;
-    border-radius: 15px;
-    padding: 20px;
-}
-
-.quiz-question {
-    text-align: center;
-    font-size: 38px;
-    font-weight: bold;
-    margin: 20px 0;
-}
-
-.quiz-sub {
-    text-align: center;
-    color: #777;
-    margin-bottom: 15px;
-}
-
-.answers {
-    display: grid;
-    gap: 10px;
-}
-
-.answer {
-    padding: 14px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background: white;
-    text-align: left;
-    font-size: 16px;
-}
-
-.answer.correct {
-    background: #dff3e1;
-    border-color: #2e7d32;
-}
-
-.answer.wrong {
-    background: #ffe1e1;
-    border-color: #c62828;
-}
-
-/* =========================
-   SEARCH
-========================= */
-
-.search-box {
-    display: flex;
-    gap: 8px;
-}
-
-.search-box input {
-    flex: 1;
-    padding: 13px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    font-size: 16px;
-    outline: none;
-}
-
-.search-box button {
-    width: auto;
-    margin: 0;
-    padding: 0 18px;
-}
-
-.search-results {
-    margin-top: 15px;
-}
-
-.result {
-    padding: 14px;
-    border-bottom: 1px solid #eee;
-}
-
-.result-hanzi {
-    font-size: 25px;
-    font-weight: bold;
-}
-
-.result-pinyin {
-    color: #c62828;
-}
-
-.result-meaning {
-    color: #555;
-    margin-top: 4px;
-}
-
-/* =========================
-   SENTENCE
-========================= */
-
-.sentence-card {
-    background: #f8f8f8;
     border-radius: 12px;
-    padding: 18px;
-    margin-top: 15px;
+
+    background: #fff3f3;
+
+    font-size: 20px;
+    line-height: 1.5;
 }
 
-.sentence-cn {
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.sentence-py {
+.solution b {
     color: #c62828;
-    margin-top: 8px;
 }
 
-.sentence-vi {
-    color: #555;
-    margin-top: 8px;
-}
 
 /* =========================
-   EMPTY
+   NOTE
 ========================= */
 
-.empty {
-    text-align: center;
-    color: #888;
-    padding: 30px 10px;
-}
+.note {
+    margin-top: 18px;
 
-/* =========================
-   FOOTER
-========================= */
-
-.footer {
     text-align: center;
+
+    font-size: 12px;
     color: #999;
-    font-size: 11px;
-    padding: 25px 10px;
+
+    line-height: 1.5;
 }
+
 
 /* =========================
    MOBILE
 ========================= */
 
 @media (max-width: 380px) {
+
     .level-grid {
         grid-template-columns: 1fr;
     }
 
-    .word-hanzi {
-        font-size: 50px;
+    .meaning {
+        font-size: 26px;
     }
 
-    .menu-grid {
-        grid-template-columns: 1fr;
-    }
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <div class="app">
 
-    <div class="header">
-        <h1>TIẾNG TRUNG LEEBACC</h1>
-        <p>HSK 3.0 · Học từ vựng tiếng Trung</p>
-    </div>
 
-    <!-- =========================
-         START SCREEN
-    ========================== -->
+<!-- =========================
+     HEADER
+========================= -->
 
-    <section id="startScreen" class="screen active">
+<div class="header">
 
-        <div class="logo">
-            <div class="hanzi">中文</div>
-            <h2>HSK 3.0</h2>
-            <p>Học tiếng Trung thực tế, dễ sử dụng</p>
-        </div>
+    <h1>TIẾNG TRUNG LEEBACC</h1>
 
-        <div class="name-box">
-            <input
-                id="nameInput"
-                type="text"
-                placeholder="Nhập tên của bạn"
-                autocomplete="off"
-            >
-        </div>
-
-        <button class="btn btn-primary" onclick="startApp()">
-            BẮT ĐẦU
-        </button>
-
-    </section>
-
-
-    <!-- =========================
-         LEVEL SCREEN
-    ========================== -->
-
-    <section id="levelScreen" class="screen">
-
-        <div class="level-title">
-            <h2>Chọn cấp độ HSK</h2>
-            <p>HSK 3.0 · 2026</p>
-        </div>
-
-        <div class="level-grid">
-
-            <button class="level-card" onclick="selectLevel(1)">
-                <h3>HSK 1</h3>
-                <p>300 từ</p>
-            </button>
-
-            <button class="level-card" onclick="selectLevel(2)">
-                <h3>HSK 2</h3>
-                <p>500 từ</p>
-            </button>
-
-            <button class="level-card" onclick="selectLevel(3)">
-                <h3>HSK 3</h3>
-                <p>1000 từ</p>
-            </button>
-
-        </div>
-
-        <button class="btn btn-secondary" onclick="showScreen('startScreen')">
-            ← Quay lại
-        </button>
-
-    </section>
-
-
-    <!-- =========================
-         HOME SCREEN
-    ========================== -->
-
-    <section id="homeScreen" class="screen">
-
-        <div class="welcome">
-            Xin chào <strong id="userName">bạn</strong>!
-            <br>
-            <span id="currentLevelText"></span>
-        </div>
-
-        <div class="stats">
-
-            <div class="stat">
-                <div id="totalWords" class="stat-number">0</div>
-                <div class="stat-label">TỪ VỰNG</div>
-            </div>
-
-            <div class="stat">
-                <div id="learnedWords" class="stat-number">0</div>
-                <div class="stat-label">ĐÃ HỌC</div>
-            </div>
-
-            <div class="stat">
-                <div id="quizScore" class="stat-number">0</div>
-                <div class="stat-label">ĐIỂM QUIZ</div>
-            </div>
-
-        </div>
-
-        <div class="menu-grid">
-
-            <button class="menu-card" onclick="startStudy()">
-                <span class="menu-icon">📚</span>
-                HỌC TỪ VỰNG
-            </button>
-
-            <button class="menu-card" onclick="startQuiz()">
-                <span class="menu-icon">📝</span>
-                QUIZ
-            </button>
-
-            <button class="menu-card" onclick="showSearch()">
-                <span class="menu-icon">🔍</span>
-                TRA TỪ
-            </button>
-
-            <button class="menu-card" onclick="showSentences()">
-                <span class="menu-icon">💬</span>
-                CÂU VÍ DỤ
-            </button>
-
-        </div>
-
-        <button class="btn btn-secondary" onclick="changeLevel()">
-            ĐỔI CẤP ĐỘ
-        </button>
-
-    </section>
-
-
-    <!-- =========================
-         STUDY SCREEN
-    ========================== -->
-
-    <section id="studyScreen" class="screen">
-
-        <div class="topbar">
-            <button class="btn btn-secondary" onclick="showScreen('homeScreen')">
-                ←
-            </button>
-
-            <div class="topbar-title">
-                HỌC TỪ VỰNG
-            </div>
-
-            <button class="btn btn-blue" onclick="speakCurrentWord()">
-                🔊
-            </button>
-        </div>
-
-        <div class="progress">
-            <div id="studyProgress" class="progress-bar"></div>
-        </div>
-
-        <div class="word-card">
-
-            <div id="wordNumber" class="word-number">
-                1 / 300
-            </div>
-
-            <div id="wordHanzi" class="word-hanzi">
-                你好
-            </div>
-
-            <div id="wordPinyin" class="word-pinyin">
-                nǐ hǎo
-            </div>
-
-            <div id="wordMeaning" class="word-meaning">
-                xin chào
-            </div>
-
-            <div id="exampleBox" class="example" style="display:none;">
-
-                <div id="exampleCN" class="cn"></div>
-                <div id="examplePY" class="py"></div>
-                <div id="exampleVI" class="vi"></div>
-
-            </div>
-
-        </div>
-
-        <div class="study-buttons">
-
-            <button class="btn btn-secondary" onclick="previousWord()">
-                ← Trước
-            </button>
-
-            <button class="btn btn-primary" onclick="nextWord()">
-                Tiếp →
-            </button>
-
-        </div>
-
-        <button class="btn btn-green" onclick="markLearned()">
-            ✓ Đã học
-        </button>
-
-        <button class="btn btn-secondary" onclick="showExample()">
-            💬 Xem ví dụ
-        </button>
-
-    </section>
-
-
-    <!-- =========================
-         QUIZ SCREEN
-    ========================== -->
-
-    <section id="quizScreen" class="screen">
-
-        <div class="topbar">
-
-            <button class="btn btn-secondary" onclick="showScreen('homeScreen')">
-                ←
-            </button>
-
-            <div class="topbar-title">
-                QUIZ
-            </div>
-
-        </div>
-
-        <div class="quiz-card">
-
-            <div style="text-align:center;color:#777;">
-                Câu <span id="quizNumber">1</span>
-            </div>
-
-            <div id="quizQuestion" class="quiz-question">
-                你好
-            </div>
-
-            <div id="quizSub" class="quiz-sub">
-                Nghĩa tiếng Việt là gì?
-            </div>
-
-            <div id="answers" class="answers"></div>
-
-        </div>
-
-        <div id="quizResult" style="text-align:center;margin-top:15px;font-weight:bold;"></div>
-
-        <button id="nextQuizButton"
-                class="btn btn-primary"
-                onclick="nextQuiz()"
-                style="display:none;">
-            CÂU TIẾP →
-        </button>
-
-    </section>
-
-
-    <!-- =========================
-         SEARCH SCREEN
-    ========================== -->
-
-    <section id="searchScreen" class="screen">
-
-        <div class="topbar">
-
-            <button class="btn btn-secondary" onclick="showScreen('homeScreen')">
-                ←
-            </button>
-
-            <div class="topbar-title">
-                TRA TỪ
-            </div>
-
-        </div>
-
-        <div class="search-box">
-
-            <input
-                id="searchInput"
-                type="search"
-                placeholder="Nhập chữ Hán / pinyin / nghĩa"
-                autocomplete="off"
-            >
-
-            <button class="btn btn-primary" onclick="searchWords()">
-                Tìm
-            </button>
-
-        </div>
-
-        <div id="searchResults" class="search-results">
-            <div class="empty">
-                Nhập từ cần tìm
-            </div>
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         SENTENCE SCREEN
-    ========================== -->
-
-    <section id="sentenceScreen" class="screen">
-
-        <div class="topbar">
-
-            <button class="btn btn-secondary" onclick="showScreen('homeScreen')">
-                ←
-            </button>
-
-            <div class="topbar-title">
-                CÂU VÍ DỤ
-            </div>
-
-        </div>
-
-        <div id="sentenceList"></div>
-
-    </section>
-
-
-    <div class="footer">
-        TIẾNG TRUNG LEEBACC · HSK 3.0
-    </div>
+    <p>
+        HSK · Luyện Pinyin → Tiếng Trung
+    </p>
 
 </div>
 
 
+
 <!-- =========================
-     VOCABULARY FILES
-========================== -->
+     LEVEL SCREEN
+========================= -->
+
+<section
+    id="levelScreen"
+    class="screen active"
+>
+
+    <div class="level-title">
+
+        <h2>
+            Chọn cấp độ HSK
+        </h2>
+
+        <p>
+            Chọn cấp độ để bắt đầu
+        </p>
+
+    </div>
+
+
+    <div class="level-grid">
+
+
+        <button
+            class="level-card"
+            onclick="startLevel(1)"
+        >
+
+            <strong>
+                HSK 1
+            </strong>
+
+            300 từ
+
+        </button>
+
+
+
+        <button
+            class="level-card"
+            onclick="startLevel(2)"
+        >
+
+            <strong>
+                HSK 2
+            </strong>
+
+            500 từ
+
+        </button>
+
+
+
+        <button
+            class="level-card"
+            onclick="startLevel(3)"
+        >
+
+            <strong>
+                HSK 3
+            </strong>
+
+            1000 từ
+
+        </button>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     STUDY SCREEN
+========================= -->
+
+<section
+    id="studyScreen"
+    class="screen study"
+>
+
+
+    <div class="counter">
+
+        HSK
+        <span id="levelText">
+            1
+        </span>
+
+        ·
+
+        <span id="countText">
+            1 / 300
+        </span>
+
+    </div>
+
+
+
+    <div class="progress">
+
+        <div
+            id="progressBar"
+            class="progress-bar"
+        ></div>
+
+    </div>
+
+
+
+    <!-- TIẾNG VIỆT -->
+
+    <div
+        id="meaning"
+        class="meaning"
+    >
+        ...
+    </div>
+
+
+
+    <div class="hint">
+
+        Nhập Pinyin để gõ chữ Trung
+
+    </div>
+
+
+
+    <!-- Ô NHẬP -->
+
+    <input
+        id="answerInput"
+        class="answer-input"
+
+        type="text"
+
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="none"
+        spellcheck="false"
+
+        placeholder="Nhập Pinyin..."
+    >
+
+
+
+    <!-- KẾT QUẢ -->
+
+    <div
+        id="result"
+        class="result"
+    ></div>
+
+
+
+    <!-- ĐÁP ÁN -->
+
+    <div
+        id="solution"
+        class="solution"
+        style="display:none;"
+    ></div>
+
+
+
+    <!-- QUAY LẠI -->
+
+    <button
+        class="btn secondary"
+        onclick="backToLevel()"
+    >
+
+        ← Đổi HSK
+
+    </button>
+
+
+
+    <div class="note">
+
+        Sai 3 lần sẽ hiện đáp án.<br>
+
+        Sau khi hiện đáp án,
+        bạn phải nhập lại đúng
+        mới được sang từ tiếp theo.
+
+    </div>
+
+
+</section>
+
+
+</div>
+
+
+
+<!-- =========================
+     VOCABULARY
+========================= -->
 
 <script src="hsk1.js"></script>
 <script src="hsk2.js"></script>
 <script src="hsk3.js"></script>
 
 
+
 <script>
 
 /* =========================================================
-   DATA
+   BIẾN
 ========================================================= */
 
 let currentLevel = 1;
+
 let currentWords = [];
 
-let studyIndex = 0;
+let randomWords = [];
 
-let quizIndex = 0;
-let quizScore = 0;
-let quizAnswered = false;
+let currentWord = null;
 
-let learned = JSON.parse(
-    localStorage.getItem("leebacc_learned") || "{}"
-);
+let wrongCount = 0;
+
+let mustRepeatAnswer = false;
+
+let completedCount = 0;
 
 
 /* =========================================================
-   GET DATA FROM JS FILES
+   LẤY DỮ LIỆU HSK
 ========================================================= */
 
 function getVocabulary(level) {
 
-    let result = [];
+    let data = [];
+
 
     /*
        HSK1
-       HSK2 = HSK1 + HSK2
-       HSK3 = HSK1 + HSK2 + HSK3
     */
 
-    if (level >= 1 && Array.isArray(window.HSK1)) {
-        result = result.concat(window.HSK1);
+    if (
+        level >= 1 &&
+        Array.isArray(window.HSK1)
+    ) {
+
+        data = data.concat(
+            window.HSK1
+        );
+
     }
 
-    if (level >= 2 && Array.isArray(window.HSK2)) {
-        result = result.concat(window.HSK2);
+
+    /*
+       HSK2
+    */
+
+    if (
+        level >= 2 &&
+        Array.isArray(window.HSK2)
+    ) {
+
+        data = data.concat(
+            window.HSK2
+        );
+
     }
 
-    if (level >= 3 && Array.isArray(window.HSK3)) {
-        result = result.concat(window.HSK3);
+
+    /*
+       HSK3
+    */
+
+    if (
+        level >= 3 &&
+        Array.isArray(window.HSK3)
+    ) {
+
+        data = data.concat(
+            window.HSK3
+        );
+
     }
 
-    return normalizeWords(result);
-}
+
+    /*
+       Chuyển dữ liệu thành object
+    */
+
+    const words = data.map(
+        function(item) {
+
+            return {
+
+                hanzi: item[0] || "",
+
+                pinyin: item[1] || "",
+
+                meaning: item[2] || ""
+
+            };
+
+        }
+    );
 
 
-/* =========================================================
-   NORMALIZE DATA
-========================================================= */
-
-function normalizeWords(data) {
-
-    return data.map(function(item) {
-
-        return {
-            hanzi: item[0] || "",
-            pinyin: item[1] || "",
-            meaning: item[2] || "",
-            example: item[3] || "",
-            examplePinyin: item[4] || "",
-            exampleVietnamese: item[5] || ""
-        };
-
-    });
-
-}
-
-
-/* =========================================================
-   REMOVE EXACT DUPLICATES
-========================================================= */
-
-function removeExactDuplicates(words) {
+    /*
+       Xóa bản ghi trùng hoàn toàn
+    */
 
     const seen = new Set();
 
-    return words.filter(function(word) {
 
-        /*
-          Không xóa chỉ dựa vào chữ Hán.
-          Vì HSK có thể có cùng chữ nhưng khác pinyin / nghĩa.
-        */
+    return words.filter(
+        function(word) {
 
-        const key =
-            word.hanzi.trim() +
-            "|" +
-            word.pinyin.trim() +
-            "|" +
-            word.meaning.trim();
+            const key =
+                word.hanzi +
+                "|" +
+                word.pinyin +
+                "|" +
+                word.meaning;
 
-        if (seen.has(key)) {
-            return false;
+
+            if (seen.has(key)) {
+
+                return false;
+
+            }
+
+
+            seen.add(key);
+
+            return true;
+
         }
-
-        seen.add(key);
-
-        return true;
-
-    });
-
-}
-
-
-/* =========================================================
-   START APP
-========================================================= */
-
-function startApp() {
-
-    const name = document.getElementById("nameInput").value.trim();
-
-    if (name !== "") {
-        localStorage.setItem("leebacc_name", name);
-    }
-
-    const savedName =
-        localStorage.getItem("leebacc_name") || "bạn";
-
-    document.getElementById("userName").textContent = savedName;
-
-    showScreen("levelScreen");
-}
-
-
-/* =========================================================
-   SCREEN CONTROL
-========================================================= */
-
-function showScreen(id) {
-
-    document.querySelectorAll(".screen").forEach(function(screen) {
-        screen.classList.remove("active");
-    });
-
-    const target = document.getElementById(id);
-
-    if (target) {
-        target.classList.add("active");
-    }
-
-    window.scrollTo(0, 0);
-
-}
-
-
-/* =========================================================
-   SELECT LEVEL
-========================================================= */
-
-function selectLevel(level) {
-
-    currentLevel = level;
-
-    currentWords = getVocabulary(level);
-
-    currentWords = removeExactDuplicates(currentWords);
-
-    localStorage.setItem(
-        "leebacc_level",
-        String(level)
     );
 
-    document.getElementById("currentLevelText").textContent =
-        "Bạn đang học HSK " + level;
-
-    document.getElementById("totalWords").textContent =
-        currentWords.length;
-
-    updateLearnedCount();
-
-    showScreen("homeScreen");
-
 }
 
 
 /* =========================================================
-   CHANGE LEVEL
-========================================================= */
-
-function changeLevel() {
-
-    showScreen("levelScreen");
-
-}
-
-
-/* =========================================================
-   STUDY
-========================================================= */
-
-function startStudy() {
-
-    if (!currentWords.length) {
-        alert("Chưa có dữ liệu từ vựng.");
-        return;
-    }
-
-    studyIndex = 0;
-
-    showScreen("studyScreen");
-
-    renderStudyWord();
-
-}
-
-
-function renderStudyWord() {
-
-    if (!currentWords.length) {
-        return;
-    }
-
-    const word = currentWords[studyIndex];
-
-    document.getElementById("wordNumber").textContent =
-        (studyIndex + 1) + " / " + currentWords.length;
-
-    document.getElementById("wordHanzi").textContent =
-        word.hanzi;
-
-    document.getElementById("wordPinyin").textContent =
-        word.pinyin;
-
-    document.getElementById("wordMeaning").textContent =
-        word.meaning;
-
-    const percent =
-        ((studyIndex + 1) / currentWords.length) * 100;
-
-    document.getElementById("studyProgress").style.width =
-        percent + "%";
-
-    const exampleBox =
-        document.getElementById("exampleBox");
-
-    if (word.example) {
-
-        document.getElementById("exampleCN").textContent =
-            word.example;
-
-        document.getElementById("examplePY").textContent =
-            word.examplePinyin;
-
-        document.getElementById("exampleVI").textContent =
-            word.exampleVietnamese;
-
-        exampleBox.style.display = "block";
-
-    } else {
-
-        exampleBox.style.display = "none";
-
-    }
-
-}
-
-
-/* =========================================================
-   NEXT WORD
-========================================================= */
-
-function nextWord() {
-
-    if (!currentWords.length) return;
-
-    studyIndex++;
-
-    if (studyIndex >= currentWords.length) {
-        studyIndex = 0;
-    }
-
-    renderStudyWord();
-
-}
-
-
-/* =========================================================
-   PREVIOUS WORD
-========================================================= */
-
-function previousWord() {
-
-    if (!currentWords.length) return;
-
-    studyIndex--;
-
-    if (studyIndex < 0) {
-        studyIndex = currentWords.length - 1;
-    }
-
-    renderStudyWord();
-
-}
-
-
-/* =========================================================
-   MARK LEARNED
-========================================================= */
-
-function markLearned() {
-
-    if (!currentWords.length) return;
-
-    const word = currentWords[studyIndex];
-
-    const key =
-        word.hanzi +
-        "|" +
-        word.pinyin;
-
-    learned[key] = true;
-
-    localStorage.setItem(
-        "leebacc_learned",
-        JSON.stringify(learned)
-    );
-
-    updateLearnedCount();
-
-}
-
-
-/* =========================================================
-   LEARNED COUNT
-========================================================= */
-
-function updateLearnedCount() {
-
-    let count = 0;
-
-    currentWords.forEach(function(word) {
-
-        const key =
-            word.hanzi +
-            "|" +
-            word.pinyin;
-
-        if (learned[key]) {
-            count++;
-        }
-
-    });
-
-    document.getElementById("learnedWords").textContent =
-        count;
-
-}
-
-
-/* =========================================================
-   EXAMPLE
-========================================================= */
-
-function showExample() {
-
-    const word = currentWords[studyIndex];
-
-    if (!word || !word.example) {
-
-        alert("Từ này chưa có câu ví dụ.");
-
-        return;
-    }
-
-    document.getElementById("exampleBox").style.display =
-        "block";
-
-}
-
-
-/* =========================================================
-   SPEECH
-========================================================= */
-
-function speakCurrentWord() {
-
-    if (!currentWords.length) return;
-
-    const word = currentWords[studyIndex];
-
-    if (!word) return;
-
-    if (!("speechSynthesis" in window)) {
-
-        alert("Trình duyệt không hỗ trợ phát âm.");
-
-        return;
-    }
-
-    speechSynthesis.cancel();
-
-    const utterance =
-        new SpeechSynthesisUtterance(word.hanzi);
-
-    utterance.lang = "zh-CN";
-    utterance.rate = 0.8;
-
-    speechSynthesis.speak(utterance);
-
-}
-
-
-/* =========================================================
-   QUIZ
-========================================================= */
-
-function startQuiz() {
-
-    if (currentWords.length < 4) {
-
-        alert("Cần ít nhất 4 từ để làm Quiz.");
-
-        return;
-    }
-
-    quizScore = 0;
-    quizIndex = 0;
-
-    document.getElementById("quizScore").textContent =
-        "0";
-
-    showScreen("quizScreen");
-
-    renderQuiz();
-
-}
-
-
-/* =========================================================
-   SHUFFLE
+   RANDOM
 ========================================================= */
 
 function shuffle(array) {
 
-    const copy = array.slice();
+    const copy =
+        array.slice();
 
-    for (let i = copy.length - 1; i > 0; i--) {
+
+    for (
+        let i = copy.length - 1;
+        i > 0;
+        i--
+    ) {
 
         const j =
-            Math.floor(Math.random() * (i + 1));
+            Math.floor(
+                Math.random() * (i + 1)
+            );
 
-        const temp = copy[i];
 
-        copy[i] = copy[j];
-        copy[j] = temp;
+        const temp =
+            copy[i];
+
+
+        copy[i] =
+            copy[j];
+
+
+        copy[j] =
+            temp;
 
     }
+
 
     return copy;
 
@@ -1312,406 +709,567 @@ function shuffle(array) {
 
 
 /* =========================================================
-   QUIZ RENDER
+   CHUẨN HÓA PINYIN
 ========================================================= */
 
-function renderQuiz() {
+function normalizePinyin(text) {
 
-    quizAnswered = false;
+    return String(text || "")
+        .trim()
+        .toLowerCase()
 
-    document.getElementById("quizNumber").textContent =
-        quizIndex + 1;
+        /*
+           Chuyển:
 
-    document.getElementById("quizResult").textContent =
-        "";
+           ǚ → u
+           ǎ → a
+           ò → o
 
-    document.getElementById("nextQuizButton").style.display =
-        "none";
+           để có thể nhập
+           cả pinyin có dấu
+           hoặc không dấu.
+        */
 
-    const question =
-        currentWords[
-            Math.floor(Math.random() * currentWords.length)
-        ];
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
 
-    window.currentQuizWord = question;
+        /*
+           Bỏ số thanh điệu
+        */
 
-    document.getElementById("quizQuestion").textContent =
-        question.hanzi;
+        .replace(/[1-5]/g, "")
 
-    document.getElementById("quizSub").textContent =
-        "Nghĩa tiếng Việt là gì?";
+        /*
+           Bỏ khoảng trắng
+        */
 
-    let choices = [question];
-
-    const others =
-        shuffle(
-            currentWords.filter(function(word) {
-                return word !== question;
-            })
-        );
-
-    choices =
-        choices.concat(
-            others.slice(0, 3)
-        );
-
-    choices = shuffle(choices);
-
-    const answers =
-        document.getElementById("answers");
-
-    answers.innerHTML = "";
-
-    choices.forEach(function(word) {
-
-        const button =
-            document.createElement("button");
-
-        button.className = "answer";
-
-        button.textContent =
-            word.meaning;
-
-        button.onclick = function() {
-
-            answerQuiz(
-                button,
-                word,
-                question
-            );
-
-        };
-
-        answers.appendChild(button);
-
-    });
+        .replace(/[\s'-]/g, "");
 
 }
 
 
 /* =========================================================
-   ANSWER QUIZ
+   KIỂM TRA PINYIN
 ========================================================= */
 
-function answerQuiz(button, selected, correct) {
+function isCorrect(input, word) {
 
-    if (quizAnswered) {
-        return;
-    }
-
-    quizAnswered = true;
-
-    const all =
-        document.querySelectorAll(".answer");
-
-    all.forEach(function(item) {
-
-        item.disabled = true;
-
-    });
-
-    if (
-        selected.hanzi === correct.hanzi &&
-        selected.pinyin === correct.pinyin &&
-        selected.meaning === correct.meaning
-    ) {
-
-        button.classList.add("correct");
-
-        quizScore++;
-
-        document.getElementById("quizResult").textContent =
-            "✓ Chính xác!";
-
-    } else {
-
-        button.classList.add("wrong");
-
-        all.forEach(function(item) {
-
-            if (
-                item.textContent === correct.meaning
-            ) {
-                item.classList.add("correct");
-            }
-
-        });
-
-        document.getElementById("quizResult").textContent =
-            "✗ Sai";
-
-    }
-
-    document.getElementById("quizScore").textContent =
-        quizScore;
-
-    document.getElementById("nextQuizButton").style.display =
-        "block";
+    return (
+        normalizePinyin(input) ===
+        normalizePinyin(word.pinyin)
+    );
 
 }
 
 
 /* =========================================================
-   NEXT QUIZ
+   CHỌN HSK
 ========================================================= */
 
-function nextQuiz() {
+function startLevel(level) {
 
-    quizIndex++;
+    currentLevel =
+        level;
 
-    if (quizIndex >= 10) {
+
+    currentWords =
+        getVocabulary(level);
+
+
+    if (!currentWords.length) {
 
         alert(
-            "Kết thúc 10 câu!\nĐiểm: " +
-            quizScore +
-            "/10"
+            "Chưa có dữ liệu HSK."
         );
 
-        quizIndex = 0;
-
-        showScreen("homeScreen");
-
         return;
+
     }
 
-    renderQuiz();
+
+    /*
+       Random toàn bộ danh sách
+    */
+
+    randomWords =
+        shuffle(currentWords);
+
+
+    currentWord = null;
+
+    wrongCount = 0;
+
+    mustRepeatAnswer = false;
+
+    completedCount = 0;
+
+
+    /*
+       Lưu cấp độ
+    */
+
+    localStorage.setItem(
+        "leebacc_level",
+        String(level)
+    );
+
+
+    document.getElementById(
+        "levelText"
+    ).textContent =
+        level;
+
+
+    document.getElementById(
+        "countText"
+    ).textContent =
+        "0 / " +
+        currentWords.length;
+
+
+    showScreen(
+        "studyScreen"
+    );
+
+
+    /*
+       Lấy từ random đầu tiên
+    */
+
+    nextRandomWord();
 
 }
 
 
 /* =========================================================
-   SEARCH
+   TỪ RANDOM TIẾP THEO
 ========================================================= */
 
-function showSearch() {
-
-    showScreen("searchScreen");
-
-    document.getElementById("searchInput").value = "";
-
-    document.getElementById("searchResults").innerHTML =
-        '<div class="empty">Nhập từ cần tìm</div>';
-
-}
+function nextRandomWord() {
 
 
-function searchWords() {
+    /*
+       Nếu đã dùng hết danh sách
+       thì xáo lại từ đầu
+    */
 
-    const keyword =
-        document
-            .getElementById("searchInput")
-            .value
-            .trim()
-            .toLowerCase();
+    if (
+        randomWords.length === 0
+    ) {
 
-    const resultBox =
-        document.getElementById("searchResults");
+        randomWords =
+            shuffle(currentWords);
 
-    if (!keyword) {
-
-        resultBox.innerHTML =
-            '<div class="empty">Nhập từ cần tìm</div>';
-
-        return;
     }
 
-    const results =
-        currentWords.filter(function(word) {
 
-            return (
-                word.hanzi.toLowerCase().includes(keyword) ||
-                word.pinyin.toLowerCase().includes(keyword) ||
-                word.meaning.toLowerCase().includes(keyword)
-            );
+    /*
+       Lấy một từ
+    */
 
-        });
+    currentWord =
+        randomWords.pop();
 
-    if (!results.length) {
 
-        resultBox.innerHTML =
-            '<div class="empty">Không tìm thấy từ này.</div>';
+    /*
+       Reset số lần sai
+    */
 
-        return;
-    }
+    wrongCount = 0;
 
-    resultBox.innerHTML = "";
+    mustRepeatAnswer = false;
 
-    results.forEach(function(word) {
 
-        const div =
-            document.createElement("div");
+    /*
+       Hiện nghĩa tiếng Việt
+    */
 
-        div.className = "result";
+    document.getElementById(
+        "meaning"
+    ).textContent =
+        currentWord.meaning;
 
-        div.innerHTML =
-            '<div class="result-hanzi">' +
-            escapeHTML(word.hanzi) +
-            '</div>' +
 
-            '<div class="result-pinyin">' +
-            escapeHTML(word.pinyin) +
-            '</div>' +
+    /*
+       Xóa ô nhập
+    */
 
-            '<div class="result-meaning">' +
-            escapeHTML(word.meaning) +
-            '</div>';
+    const input =
+        document.getElementById(
+            "answerInput"
+        );
 
-        div.onclick = function() {
 
-            speakWord(word.hanzi);
+    input.value = "";
 
-        };
+    input.disabled = false;
 
-        resultBox.appendChild(div);
 
-    });
+    /*
+       Xóa thông báo
+    */
+
+    document.getElementById(
+        "result"
+    ).textContent = "";
+
+
+    document.getElementById(
+        "result"
+    ).className =
+        "result";
+
+
+    /*
+       Ẩn đáp án
+    */
+
+    document.getElementById(
+        "solution"
+    ).style.display =
+        "none";
+
+
+    /*
+       Cập nhật số từ
+    */
+
+    completedCount++;
+
+
+    document.getElementById(
+        "countText"
+    ).textContent =
+
+        completedCount +
+        " / " +
+        currentWords.length;
+
+
+    /*
+       Thanh tiến độ
+
+       Khi hết danh sách,
+       nó sẽ random lại.
+    */
+
+    const percent =
+        Math.min(
+            completedCount,
+            currentWords.length
+        )
+        /
+        currentWords.length
+        *
+        100;
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        percent + "%";
+
+
+    /*
+       Đưa con trỏ vào ô nhập
+    */
+
+    setTimeout(
+        function() {
+
+            input.focus();
+
+        },
+        50
+    );
 
 }
 
 
 /* =========================================================
-   SEARCH ENTER
+   KIỂM TRA ĐÁP ÁN
+========================================================= */
+
+function checkAnswer() {
+
+    if (!currentWord) {
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "answerInput"
+        );
+
+
+    const value =
+        input.value.trim();
+
+
+    if (!value) {
+
+        return;
+
+    }
+
+
+    /*
+       ĐÚNG
+    */
+
+    if (
+        isCorrect(
+            value,
+            currentWord
+        )
+    ) {
+
+
+        /*
+           Nếu đây là trường hợp
+           đã sai 3 lần và phải nhập
+           lại đáp án.
+        */
+
+        if (mustRepeatAnswer) {
+
+            document.getElementById(
+                "result"
+            ).textContent =
+                "✓ Đúng! Sang từ tiếp theo.";
+
+        }
+
+        else {
+
+            document.getElementById(
+                "result"
+            ).textContent =
+                "✓ Chính xác!";
+
+        }
+
+
+        document.getElementById(
+            "result"
+        ).className =
+            "result correct";
+
+
+        /*
+           Chờ một chút rồi sang từ mới
+        */
+
+        setTimeout(
+            function() {
+
+                nextRandomWord();
+
+            },
+            500
+        );
+
+
+        return;
+
+    }
+
+
+    /*
+       SAI
+    */
+
+    wrongCount++;
+
+
+    document.getElementById(
+        "result"
+    ).textContent =
+
+        "✗ Sai lần " +
+        wrongCount +
+        "/3";
+
+
+    document.getElementById(
+        "result"
+    ).className =
+        "result wrong";
+
+
+    /*
+       SAI 3 LẦN
+    */
+
+    if (
+        wrongCount >= 3
+    ) {
+
+        mustRepeatAnswer = true;
+
+
+        /*
+           Hiện đáp án
+        */
+
+        document.getElementById(
+            "solution"
+        ).innerHTML =
+
+            "Đáp án: <b>" +
+
+            escapeHTML(
+                currentWord.hanzi
+            ) +
+
+            "</b> — " +
+
+            escapeHTML(
+                currentWord.pinyin
+            );
+
+
+        document.getElementById(
+            "solution"
+        ).style.display =
+            "block";
+
+
+        document.getElementById(
+            "result"
+        ).textContent =
+
+            "Đã sai 3 lần. Hãy nhập lại đáp án đúng.";
+
+
+        /*
+           Không khóa ô nhập.
+           Người dùng phải tự gõ lại.
+        */
+
+        input.value = "";
+
+        input.focus();
+
+    }
+
+}
+
+
+/* =========================================================
+   ENTER ĐỂ KIỂM TRA
 ========================================================= */
 
 document
-    .getElementById("searchInput")
-    .addEventListener("keydown", function(event) {
+    .getElementById("answerInput")
+    .addEventListener(
+        "keydown",
+        function(event) {
 
-        if (event.key === "Enter") {
-            searchWords();
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+                checkAnswer();
+
+            }
+
         }
-
-    });
+    );
 
 
 /* =========================================================
-   SPEAK WORD
+   HIỂN THỊ SCREEN
 ========================================================= */
 
-function speakWord(text) {
+function showScreen(id) {
 
-    if (!("speechSynthesis" in window)) {
-        return;
+    document
+        .querySelectorAll(".screen")
+        .forEach(
+            function(screen) {
+
+                screen.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    const target =
+        document.getElementById(id);
+
+
+    if (target) {
+
+        target.classList.add(
+            "active"
+        );
+
     }
 
-    speechSynthesis.cancel();
 
-    const utterance =
-        new SpeechSynthesisUtterance(text);
-
-    utterance.lang = "zh-CN";
-    utterance.rate = 0.8;
-
-    speechSynthesis.speak(utterance);
+    window.scrollTo(
+        0,
+        0
+    );
 
 }
 
 
 /* =========================================================
-   SENTENCES
+   QUAY LẠI CHỌN HSK
 ========================================================= */
 
-function showSentences() {
+function backToLevel() {
 
-    showScreen("sentenceScreen");
-
-    const list =
-        document.getElementById("sentenceList");
-
-    list.innerHTML = "";
-
-    const wordsWithExamples =
-        currentWords.filter(function(word) {
-
-            return word.example;
-
-        });
-
-    if (!wordsWithExamples.length) {
-
-        list.innerHTML =
-            '<div class="empty">Chưa có câu ví dụ.</div>';
-
-        return;
-    }
-
-    wordsWithExamples
-        .slice(0, 50)
-        .forEach(function(word) {
-
-            const card =
-                document.createElement("div");
-
-            card.className = "sentence-card";
-
-            card.innerHTML =
-                '<div class="sentence-cn">' +
-                escapeHTML(word.example) +
-                '</div>' +
-
-                '<div class="sentence-py">' +
-                escapeHTML(word.examplePinyin) +
-                '</div>' +
-
-                '<div class="sentence-vi">' +
-                escapeHTML(word.exampleVietnamese) +
-                '</div>';
-
-            list.appendChild(card);
-
-        });
+    showScreen(
+        "levelScreen"
+    );
 
 }
 
 
 /* =========================================================
-   HTML ESCAPE
+   ESCAPE HTML
 ========================================================= */
 
 function escapeHTML(text) {
 
     return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
-
-
-/* =========================================================
-   LOAD SAVED USER
-========================================================= */
-
-window.addEventListener("load", function() {
-
-    const savedName =
-        localStorage.getItem("leebacc_name");
-
-    if (savedName) {
-
-        document.getElementById("nameInput").value =
-            savedName;
-
-    }
-
-    const savedLevel =
-        localStorage.getItem("leebacc_level");
-
-    if (savedLevel) {
-
-        currentLevel =
-            parseInt(savedLevel);
-
-        currentWords =
-            removeExactDuplicates(
-                getVocabulary(currentLevel)
-            );
-
-    }
-
-});
 
 
 /* =========================================================
