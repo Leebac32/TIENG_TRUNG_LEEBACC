@@ -404,11 +404,6 @@ input:focus {
     min-height: 16px;
 }
 
-.hint {
-    color: #f59e0b;
-    font-weight: 600;
-}
-
 
 /* =====================================================
    HIDDEN
@@ -464,12 +459,11 @@ input:focus {
 </style>
 </head>
 
-
 <body>
 
 
 <!-- =====================================================
-     MÀN HÌNH NHẬP TÊN
+     NHẬP TÊN
 ===================================================== -->
 
 <div id="nameScreen" class="name-screen hidden">
@@ -522,13 +516,10 @@ input:focus {
 
 
 <!-- =====================================================
-     MÀN HÌNH TIẾP TỤC
+     TIẾP TỤC
 ===================================================== -->
 
-<div
-    id="userArea"
-    class="user-area hidden"
->
+<div id="userArea" class="user-area hidden">
 
     <div
         id="userGreeting"
@@ -565,14 +556,11 @@ input:focus {
      KHU VỰC HỌC
 ===================================================== -->
 
-<div
-    id="learningArea"
-    class="hidden"
->
+<div id="learningArea" class="hidden">
 
 
 <!-- =====================================================
-     HSK MENU
+     HSK
 ===================================================== -->
 
 <div class="menu">
@@ -609,66 +597,23 @@ input:focus {
 <div class="stats">
 
     <div class="stat">
-
-        <div
-            id="correctCount"
-            class="stat-number"
-        >
-            0
-        </div>
-
-        <div class="stat-label">
-            Đúng
-        </div>
-
+        <div id="correctCount" class="stat-number">0</div>
+        <div class="stat-label">Đúng</div>
     </div>
 
-
     <div class="stat">
-
-        <div
-            id="wrongCount"
-            class="stat-number"
-        >
-            0
-        </div>
-
-        <div class="stat-label">
-            Sai
-        </div>
-
+        <div id="wrongCount" class="stat-number">0</div>
+        <div class="stat-label">Sai</div>
     </div>
 
-
     <div class="stat">
-
-        <div
-            id="doneCount"
-            class="stat-number"
-        >
-            0
-        </div>
-
-        <div class="stat-label">
-            Đã làm
-        </div>
-
+        <div id="doneCount" class="stat-number">0</div>
+        <div class="stat-label">Đã làm</div>
     </div>
 
-
     <div class="stat">
-
-        <div
-            id="accuracy"
-            class="stat-number"
-        >
-            0%
-        </div>
-
-        <div class="stat-label">
-            Tỷ lệ
-        </div>
-
+        <div id="accuracy" class="stat-number">0%</div>
+        <div class="stat-label">Tỷ lệ</div>
     </div>
 
 </div>
@@ -701,7 +646,6 @@ input:focus {
         HSK 1 • LUYỆN VIẾT
     </div>
 
-
     <div
         id="question"
         class="question vi"
@@ -709,12 +653,10 @@ input:focus {
         Đang tải...
     </div>
 
-
     <div
         id="pinyin"
         class="pinyin"
     ></div>
-
 
     <input
         id="answerInput"
@@ -725,7 +667,6 @@ input:focus {
         spellcheck="false"
         placeholder="Nhập chữ Hán..."
     >
-
 
     <div class="actions">
 
@@ -739,12 +680,10 @@ input:focus {
 
     </div>
 
-
     <div
         id="result"
         class="result"
     ></div>
-
 
     <div
         id="hint"
@@ -764,7 +703,7 @@ input:focus {
 
 
 /* =====================================================
-   LƯU TRỮ
+   STORAGE
 ===================================================== */
 
 const STORAGE_KEY =
@@ -777,92 +716,44 @@ const STORAGE_KEY =
 
 const hskData = {
 
-    1:
-        Array.isArray(window.HSK1)
-            ? [...window.HSK1]
-            : [],
+    1: Array.isArray(window.HSK1)
+        ? [...window.HSK1]
+        : [],
 
-    2:
-        Array.isArray(window.HSK2)
-            ? [...window.HSK2]
-            : [],
+    2: Array.isArray(window.HSK2)
+        ? [...window.HSK2]
+        : [],
 
-    3:
-        Array.isArray(window.HSK3)
-            ? [...window.HSK3]
-            : []
+    3: Array.isArray(window.HSK3)
+        ? [...window.HSK3]
+        : []
 
 };
 
 
 /* =====================================================
-   NGƯỜI DÙNG
+   BIẾN
 ===================================================== */
 
 let currentUser = null;
 
-
-/* =====================================================
-   HSK HIỆN TẠI
-===================================================== */
-
 let currentHSK = 1;
-
-
-/* =====================================================
-   VỊ TRÍ CÂU
-===================================================== */
 
 let currentIndex = 0;
 
-
-/* =====================================================
-   CÂU HIỆN TẠI
-===================================================== */
-
 let currentQuestion = null;
-
-
-/* =====================================================
-   SỐ LẦN SAI
-===================================================== */
 
 let wrongAttempts = 0;
 
-
-/* =====================================================
-   ĐÃ HIỆN ĐÁP ÁN
-===================================================== */
-
 let answerShown = false;
 
-
-/* =====================================================
-   CÂU ĐÃ HOÀN THÀNH
-===================================================== */
-
 let questionCompleted = false;
-
-
-/* =====================================================
-   CÂU VỪA LÀM
-===================================================== */
 
 let lastQuestion = null;
 
 let hasPreviousQuestion = false;
 
-
-/* =====================================================
-   TIMER
-===================================================== */
-
 let nextTimer = null;
-
-
-/* =====================================================
-   THỐNG KÊ
-===================================================== */
 
 let correctCount = 0;
 
@@ -923,7 +814,7 @@ function saveUser() {
 
 
 /* =====================================================
-   TẠO TIẾN ĐỘ HSK
+   TẠO TIẾN ĐỘ
 ===================================================== */
 
 function createLevelProgress(level) {
@@ -952,7 +843,7 @@ function createLevelProgress(level) {
 
 
 /* =====================================================
-   ĐẢM BẢO USER DATA
+   ĐẢM BẢO DATA
 ===================================================== */
 
 function ensureUserData() {
@@ -1058,7 +949,7 @@ function shuffle(array) {
 
 
 /* =====================================================
-   TẠO THỨ TỰ XÁO TRỘN
+   TẠO ORDER RANDOM
 ===================================================== */
 
 function createShuffledOrder(level) {
@@ -1287,7 +1178,9 @@ function changeUser() {
 
 
 /* =====================================================
-   VÀO TRANG HỌC
+   VÀO HỌC
+   MỖI LẦN VÀO WEB / TIẾP TỤC
+   RANDOM LẠI 1 LẦN
 ===================================================== */
 
 function enterLearning() {
@@ -1310,26 +1203,16 @@ function enterLearning() {
         .getElementById("learningArea")
         .classList.remove("hidden");
 
-    /*
-       TÊN NẰM NGAY DƯỚI TIÊU ĐỀ
-    */
-
     document
         .getElementById("headerUserName")
         .textContent =
         "👤 " +
         currentUser.name;
 
-    loadSavedLevel();
 
-}
-
-
-/* =====================================================
-   LOAD HSK ĐÃ LƯU
-===================================================== */
-
-function loadSavedLevel() {
+    /*
+       XÁC ĐỊNH HSK CUỐI CÙNG
+    */
 
     let level =
         Number(
@@ -1346,6 +1229,32 @@ function loadSavedLevel() {
 
     }
 
+
+    /*
+       RANDOM MỘT LẦN CHO PHIÊN MỚI
+    */
+
+    const progress =
+        getLevelProgress(level);
+
+    progress.order =
+        createShuffledOrder(level);
+
+    progress.index = 0;
+
+
+    currentHSK = level;
+
+    currentIndex = 0;
+
+    saveUser();
+
+
+    /*
+       LOAD HSK
+       selectHSK sẽ KHÔNG random lại
+    */
+
     selectHSK(
         level,
         true
@@ -1356,6 +1265,7 @@ function loadSavedLevel() {
 
 /* =====================================================
    CHỌN HSK
+   KHÔNG RANDOM KHI BẤM NÚT HSK
 ===================================================== */
 
 function selectHSK(level, fromSaved) {
@@ -1373,6 +1283,12 @@ function selectHSK(level, fromSaved) {
     const progress =
         getLevelProgress(level);
 
+
+    /*
+       Chỉ tạo order nếu chưa có.
+       Không random lại khi chuyển HSK.
+    */
+
     if (
         !validOrder(
             level,
@@ -1387,6 +1303,12 @@ function selectHSK(level, fromSaved) {
 
     }
 
+
+    /*
+       Nếu HSK vừa được chọn trong cùng phiên,
+       dùng vị trí đã lưu.
+    */
+
     currentIndex =
         Math.min(
             progress.index || 0,
@@ -1395,6 +1317,7 @@ function selectHSK(level, fromSaved) {
                 hskData[level].length - 1
             )
         );
+
 
     correctCount =
         progress.correct || 0;
@@ -1405,10 +1328,12 @@ function selectHSK(level, fromSaved) {
     doneCount =
         progress.done || 0;
 
+
     currentUser.lastHSK =
         level;
 
     saveUser();
+
 
     document
         .getElementById("hsk1Button")
@@ -1422,11 +1347,13 @@ function selectHSK(level, fromSaved) {
         .getElementById("hsk3Button")
         .classList.remove("active");
 
+
     document
         .getElementById(
             "hsk" + level + "Button"
         )
         .classList.add("active");
+
 
     loadQuestion();
 
@@ -1465,11 +1392,13 @@ function loadQuestion() {
             "hint"
         );
 
+
     wrongAttempts = 0;
 
     answerShown = false;
 
     questionCompleted = false;
+
 
     input.value = "";
 
@@ -1478,15 +1407,19 @@ function loadQuestion() {
         "input-wrong"
     );
 
+
     result.innerHTML = "";
 
     result.className =
         "result";
 
+
     pinyin.innerHTML = "";
+
 
     hint.innerHTML =
         "Sai 3 lần sẽ hiện đáp án.";
+
 
     if (
         !data ||
@@ -1503,6 +1436,7 @@ function loadQuestion() {
 
     }
 
+
     const orderIndex =
         currentIndex %
         progress.order.length;
@@ -1512,6 +1446,7 @@ function loadQuestion() {
 
     const item =
         data[realIndex];
+
 
     currentQuestion = {
 
@@ -1526,6 +1461,7 @@ function loadQuestion() {
 
     };
 
+
     document
         .getElementById("modeTitle")
         .textContent =
@@ -1533,14 +1469,17 @@ function loadQuestion() {
         currentHSK +
         " • LUYỆN VIẾT";
 
+
     document
         .getElementById("question")
         .textContent =
         currentQuestion.question;
 
+
     updateProgress();
 
     updateStats();
+
 
     setTimeout(function() {
 
@@ -1558,11 +1497,8 @@ function loadQuestion() {
 function normalizeText(text) {
 
     return String(text)
-
         .trim()
-
         .replace(/\s+/g,"")
-
         .replace(
             /[，。！？、,.!?;；:：'"“”‘’`]/g,
             ""
@@ -1572,7 +1508,7 @@ function normalizeText(text) {
 
 
 /* =====================================================
-   KIỂM TRA ĐÁP ÁN
+   KIỂM TRA
 ===================================================== */
 
 function checkAnswer() {
@@ -1585,6 +1521,7 @@ function checkAnswer() {
         return;
     }
 
+
     const input =
         document.getElementById(
             "answerInput"
@@ -1595,9 +1532,11 @@ function checkAnswer() {
             input.value
         );
 
+
     if (!userAnswer) {
         return;
     }
+
 
     const correctAnswer =
         normalizeText(
@@ -1605,9 +1544,9 @@ function checkAnswer() {
         );
 
 
-    /* =================================================
+    /*
        ĐÚNG
-    ================================================= */
+    */
 
     if (
         userAnswer ===
@@ -1620,6 +1559,7 @@ function checkAnswer() {
 
         doneCount++;
 
+
         input.classList.remove(
             "input-wrong"
         );
@@ -1628,13 +1568,16 @@ function checkAnswer() {
             "input-correct"
         );
 
+
         const result =
             document.getElementById(
                 "result"
             );
 
+
         result.className =
             "result correct";
+
 
         result.innerHTML =
             '<div class="answer">' +
@@ -1649,11 +1592,13 @@ function checkAnswer() {
             ) +
             '</div>';
 
+
         saveLastQuestion();
 
         saveCurrentProgress();
 
         updateStats();
+
 
         nextTimer =
             setTimeout(function() {
@@ -1666,14 +1611,15 @@ function checkAnswer() {
 
             },1500);
 
+
         return;
 
     }
 
 
-    /* =================================================
+    /*
        SAI
-    ================================================= */
+    */
 
     if (!answerShown) {
 
@@ -1683,6 +1629,7 @@ function checkAnswer() {
 
     }
 
+
     input.classList.remove(
         "input-correct"
     );
@@ -1691,14 +1638,15 @@ function checkAnswer() {
         "input-wrong"
     );
 
+
     saveCurrentProgress();
 
     updateStats();
 
 
-    /* =================================================
+    /*
        SAI LẦN 2
-    ================================================= */
+    */
 
     if (
         wrongAttempts === 2
@@ -1709,9 +1657,9 @@ function checkAnswer() {
     }
 
 
-    /* =================================================
+    /*
        SAI LẦN 3
-    ================================================= */
+    */
 
     if (
         wrongAttempts >= 3 &&
@@ -1743,11 +1691,10 @@ function showPinyinInitials() {
             currentQuestion.pinyin
         ).trim();
 
+
     const initials =
         pinyin
-
             .split(/\s+/)
-
             .map(function(word) {
 
                 return word
@@ -1755,8 +1702,8 @@ function showPinyinInitials() {
                     : "";
 
             })
-
             .join("");
+
 
     hint.innerHTML =
         "Gợi ý Pinyin: " +
@@ -1766,7 +1713,7 @@ function showPinyinInitials() {
 
 
 /* =====================================================
-   HIỆN ĐÁP ÁN SAU 3 LẦN
+   ĐÁP ÁN SAU 3 LẦN
 ===================================================== */
 
 function showAnswerAfterThreeWrong() {
@@ -1776,8 +1723,10 @@ function showAnswerAfterThreeWrong() {
             "result"
         );
 
+
     result.className =
         "result wrong";
+
 
     result.innerHTML =
         '<div class="answer">' +
@@ -1791,6 +1740,7 @@ function showAnswerAfterThreeWrong() {
             currentQuestion.pinyin
         ) +
         '</div>';
+
 
     document
         .getElementById("hint")
@@ -1844,6 +1794,7 @@ function showPreviousQuestion() {
 
     }
 
+
     if (nextTimer) {
 
         clearTimeout(nextTimer);
@@ -1851,6 +1802,7 @@ function showPreviousQuestion() {
         nextTimer = null;
 
     }
+
 
     currentQuestion = {
 
@@ -1865,19 +1817,23 @@ function showPreviousQuestion() {
 
     };
 
+
     questionCompleted = true;
 
     answerShown = true;
+
 
     document
         .getElementById("question")
         .textContent =
         lastQuestion.question;
 
+
     const input =
         document.getElementById(
             "answerInput"
         );
+
 
     input.value = "";
 
@@ -1889,13 +1845,16 @@ function showPreviousQuestion() {
         "input-correct"
     );
 
+
     const result =
         document.getElementById(
             "result"
         );
 
+
     result.className =
         "result correct";
+
 
     result.innerHTML =
         '<div class="answer">' +
@@ -1910,6 +1869,7 @@ function showPreviousQuestion() {
         ) +
         '</div>';
 
+
     document
         .getElementById("hint")
         .innerHTML =
@@ -1919,7 +1879,7 @@ function showPreviousQuestion() {
 
 
 /* =====================================================
-   XÁO TRỘN
+   XÁO TRỘN THỦ CÔNG
 ===================================================== */
 
 function shuffleCurrentLevel() {
@@ -1932,19 +1892,23 @@ function shuffleCurrentLevel() {
 
     }
 
+
     const progress =
         getLevelProgress(
             currentHSK
         );
+
 
     progress.order =
         createShuffledOrder(
             currentHSK
         );
 
+
     progress.index = 0;
 
     currentIndex = 0;
+
 
     saveUser();
 
@@ -1963,12 +1927,15 @@ function saveCurrentProgress() {
         return;
     }
 
+
     ensureUserData();
+
 
     const progress =
         getLevelProgress(
             currentHSK
         );
+
 
     progress.index =
         currentIndex;
@@ -1982,8 +1949,10 @@ function saveCurrentProgress() {
     progress.done =
         doneCount;
 
+
     currentUser.lastHSK =
         currentHSK;
+
 
     saveUser();
 
@@ -2003,12 +1972,14 @@ function updateStats() {
         .textContent =
         correctCount;
 
+
     document
         .getElementById(
             "wrongCount"
         )
         .textContent =
         wrongCount;
+
 
     document
         .getElementById(
@@ -2017,7 +1988,9 @@ function updateStats() {
         .textContent =
         doneCount;
 
+
     let accuracy = 0;
+
 
     if (doneCount > 0) {
 
@@ -2030,6 +2003,7 @@ function updateStats() {
             );
 
     }
+
 
     document
         .getElementById(
@@ -2050,6 +2024,7 @@ function updateProgress() {
     const data =
         hskData[currentHSK];
 
+
     if (
         !data ||
         data.length === 0
@@ -2066,15 +2041,18 @@ function updateProgress() {
 
     }
 
+
     const position =
         currentIndex %
         data.length;
+
 
     const percent =
         (
             (position + 1) /
             data.length
         ) * 100;
+
 
     document
         .getElementById(
@@ -2148,7 +2126,7 @@ document
 
 
 /* =====================================================
-   ENTER = BẮT ĐẦU HỌC
+   ENTER = BẮT ĐẦU
 ===================================================== */
 
 document
@@ -2181,6 +2159,7 @@ document
     const savedUser =
         getSavedUser();
 
+
     if (!savedUser) {
 
         showNameScreen();
@@ -2189,12 +2168,15 @@ document
 
     }
 
+
     currentUser =
         savedUser;
+
 
     ensureUserData();
 
     saveUser();
+
 
     showContinueScreen();
 
