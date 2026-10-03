@@ -30,7 +30,6 @@ body {
     padding: 10px;
 }
 
-
 /* =====================================================
    HEADER
 ===================================================== */
@@ -56,6 +55,120 @@ body {
     opacity: 0.95;
 }
 
+/* =====================================================
+   USER AREA
+===================================================== */
+
+.user-area {
+    background: white;
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.user-greeting {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.user-progress {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.user-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 7px;
+}
+
+.user-actions button {
+    border: none;
+    border-radius: 11px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.continue-button {
+    background: #1677ff;
+    color: white;
+}
+
+.change-user-button {
+    background: #f1f3f5;
+    color: #444;
+}
+
+/* =====================================================
+   USER NAME WHEN LEARNING
+===================================================== */
+
+.learning-user {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 7px;
+}
+
+/* =====================================================
+   NAME SCREEN
+===================================================== */
+
+.name-screen {
+    position: fixed;
+    inset: 0;
+    background: #f4f6f8;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.name-box {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    border-radius: 20px;
+    padding: 25px 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.name-box h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #1677ff;
+}
+
+.name-box p {
+    color: #666;
+    font-size: 14px;
+    margin: 8px 0 18px;
+}
+
+.name-box input {
+    margin-bottom: 10px;
+}
+
+.start-button {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 13px;
+    background: #1677ff;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
 
 /* =====================================================
    HSK MENU
@@ -85,9 +198,8 @@ body {
     color: white;
 }
 
-
 /* =====================================================
-   STATS - NHỎ 50%
+   STATS
 ===================================================== */
 
 .stats {
@@ -118,7 +230,6 @@ body {
     margin-top: 2px;
 }
 
-
 /* =====================================================
    PROGRESS
 ===================================================== */
@@ -138,7 +249,6 @@ body {
     transition: width 0.25s;
 }
 
-
 /* =====================================================
    CARD
 ===================================================== */
@@ -157,7 +267,6 @@ body {
     font-weight: 700;
     margin-bottom: 16px;
 }
-
 
 /* =====================================================
    QUESTION
@@ -179,7 +288,6 @@ body {
     color: #333;
 }
 
-
 /* =====================================================
    PINYIN
 ===================================================== */
@@ -192,7 +300,6 @@ body {
     min-height: 25px;
     margin-bottom: 8px;
 }
-
 
 /* =====================================================
    INPUT
@@ -214,24 +321,17 @@ input:focus {
     border-color: #1677ff;
 }
 
-
-/* ĐÚNG */
-
 .input-correct {
     border-color: #22c55e !important;
     background: #f0fdf4 !important;
     color: #15803d !important;
 }
 
-
-/* SAI */
-
 .input-wrong {
     border-color: #ef4444 !important;
     background: #fef2f2 !important;
     color: #dc2626 !important;
 }
-
 
 /* =====================================================
    ACTION BUTTONS
@@ -258,7 +358,6 @@ input:focus {
 .actions button:active {
     transform: scale(0.98);
 }
-
 
 /* =====================================================
    RESULT
@@ -292,7 +391,6 @@ input:focus {
     font-weight: 600;
 }
 
-
 /* =====================================================
    HINT
 ===================================================== */
@@ -310,7 +408,6 @@ input:focus {
     font-weight: 600;
 }
 
-
 /* =====================================================
    HIDDEN
 ===================================================== */
@@ -318,7 +415,6 @@ input:focus {
 .hidden {
     display: none !important;
 }
-
 
 /* =====================================================
    MOBILE
@@ -365,11 +461,42 @@ input:focus {
 </style>
 </head>
 
-
 <body>
 
-<div class="container">
+<!-- =====================================================
+     MÀN HÌNH NHẬP TÊN
+===================================================== -->
 
+<div id="nameScreen" class="name-screen hidden">
+
+    <div class="name-box">
+
+        <h2>🇨🇳 TIẾNG TRUNG LEEBACC</h2>
+
+        <p>
+            Nhập tên để lưu tiến độ học của bạn
+        </p>
+
+        <input
+            id="nameInput"
+            type="text"
+            autocomplete="name"
+            placeholder="Nhập tên của bạn..."
+        >
+
+        <button
+            class="start-button"
+            onclick="startLearning()"
+        >
+            ▶ Bắt đầu học
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="container">
 
 <!-- =====================================================
      HEADER
@@ -387,6 +514,60 @@ input:focus {
 
 
 <!-- =====================================================
+     KHU VỰC NGƯỜI DÙNG
+===================================================== -->
+
+<div id="userArea" class="user-area hidden">
+
+    <div
+        id="userGreeting"
+        class="user-greeting"
+    ></div>
+
+    <div
+        id="userProgress"
+        class="user-progress"
+    ></div>
+
+    <div class="user-actions">
+
+        <button
+            class="continue-button"
+            onclick="continueLearning()"
+        >
+            ▶ Tiếp tục học
+        </button>
+
+        <button
+            class="change-user-button"
+            onclick="changeUser()"
+        >
+            👤 Đổi người học
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     TÊN NGƯỜI ĐANG HỌC
+===================================================== -->
+
+<div
+    id="learningUser"
+    class="learning-user hidden"
+></div>
+
+
+<!-- =====================================================
+     KHU VỰC HỌC
+===================================================== -->
+
+<div id="learningArea" class="hidden">
+
+
+<!-- =====================================================
      HSK MENU
 ===================================================== -->
 
@@ -400,14 +581,12 @@ input:focus {
         HSK 1
     </button>
 
-
     <button
         id="hsk2Button"
         onclick="selectHSK(2)"
     >
         HSK 2
     </button>
-
 
     <button
         id="hsk3Button"
@@ -544,16 +723,11 @@ input:focus {
     >
 
 
-    <!-- =================================================
-         BUTTONS
-    ================================================== -->
-
     <div class="actions">
 
         <button onclick="showPreviousQuestion()">
             ← Câu vừa làm
         </button>
-
 
         <button onclick="shuffleCurrentLevel()">
             🔀 Xáo trộn
@@ -579,8 +753,16 @@ input:focus {
 
 </div>
 
+</div>
+
 
 <script>
+
+/* =====================================================
+   CẤU HÌNH LƯU TRỮ
+===================================================== */
+
+const STORAGE_KEY = "leebacc_hsk_user_v2";
 
 
 /* =====================================================
@@ -608,6 +790,13 @@ const hskData = {
 
 
 /* =====================================================
+   NGƯỜI DÙNG
+===================================================== */
+
+let currentUser = null;
+
+
+/* =====================================================
    HSK HIỆN TẠI
 ===================================================== */
 
@@ -629,14 +818,14 @@ let currentQuestion = null;
 
 
 /* =====================================================
-   SỐ LẦN SAI CỦA CÂU HIỆN TẠI
+   SỐ LẦN SAI
 ===================================================== */
 
 let wrongAttempts = 0;
 
 
 /* =====================================================
-   ĐÃ HIỆN ĐÁP ÁN SAU 3 LẦN SAI
+   ĐÃ HIỆN ĐÁP ÁN
 ===================================================== */
 
 let answerShown = false;
@@ -677,7 +866,164 @@ let doneCount = 0;
 
 
 /* =====================================================
-   SHUFFLE
+   LẤY DỮ LIỆU USER
+===================================================== */
+
+function getSavedUser() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+        if (!saved) {
+            return null;
+        }
+
+        return JSON.parse(saved);
+
+    } catch (error) {
+
+        console.error(
+            "Không đọc được dữ liệu:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+/* =====================================================
+   LƯU DỮ LIỆU USER
+===================================================== */
+
+function saveUser() {
+
+    if (!currentUser) {
+        return;
+    }
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(currentUser)
+    );
+
+}
+
+
+/* =====================================================
+   TẠO CẤU TRÚC HSK MỚI
+===================================================== */
+
+function createLevelProgress(level) {
+
+    const data =
+        hskData[level] || [];
+
+    return {
+
+        order:
+            data.map(function(item,index) {
+                return index;
+            }),
+
+        index: 0,
+
+        correct: 0,
+
+        wrong: 0,
+
+        done: 0
+
+    };
+
+}
+
+
+/* =====================================================
+   ĐẢM BẢO CÓ ĐỦ HSK
+===================================================== */
+
+function ensureUserData() {
+
+    if (!currentUser) {
+        return;
+    }
+
+    if (!currentUser.hsk) {
+
+        currentUser.hsk = {};
+
+    }
+
+    [1,2,3].forEach(function(level) {
+
+        if (
+            !currentUser.hsk[level] ||
+            !Array.isArray(
+                currentUser.hsk[level].order
+            )
+        ) {
+
+            currentUser.hsk[level] =
+                createLevelProgress(level);
+
+        }
+
+    });
+
+}
+
+
+/* =====================================================
+   TẠO USER MỚI
+===================================================== */
+
+function createUser(name) {
+
+    currentUser = {
+
+        name: name,
+
+        lastHSK: 1,
+
+        hsk: {
+
+            1: createLevelProgress(1),
+
+            2: createLevelProgress(2),
+
+            3: createLevelProgress(3)
+
+        }
+
+    };
+
+    saveUser();
+
+}
+
+
+/* =====================================================
+   LẤY TIẾN ĐỘ HSK
+===================================================== */
+
+function getLevelProgress(level) {
+
+    ensureUserData();
+
+    return currentUser.hsk[level];
+
+}
+
+
+/* =====================================================
+   XÁO TRỘN ARRAY
 ===================================================== */
 
 function shuffle(array) {
@@ -693,14 +1039,11 @@ function shuffle(array) {
                 Math.random() * (i + 1)
             );
 
-
         const temp =
             array[i];
 
-
         array[i] =
             array[j];
-
 
         array[j] =
             temp;
@@ -711,10 +1054,206 @@ function shuffle(array) {
 
 
 /* =====================================================
-   CHỌN HSK
+   XÁO TRỘN THỨ TỰ HSK
 ===================================================== */
 
-function selectHSK(level) {
+function createShuffledOrder(level) {
+
+    const data =
+        hskData[level] || [];
+
+    const order =
+        data.map(function(item,index) {
+            return index;
+        });
+
+    shuffle(order);
+
+    return order;
+
+}
+
+
+/* =====================================================
+   KIỂM TRA ORDER CÒN HỢP LỆ
+===================================================== */
+
+function validOrder(level, order) {
+
+    const data =
+        hskData[level] || [];
+
+    if (
+        !Array.isArray(order) ||
+        order.length !== data.length
+    ) {
+        return false;
+    }
+
+    for (
+        let i = 0;
+        i < order.length;
+        i++
+    ) {
+
+        if (
+            typeof order[i] !== "number" ||
+            order[i] < 0 ||
+            order[i] >= data.length
+        ) {
+
+            return false;
+
+        }
+
+    }
+
+    return true;
+
+}
+
+
+/* =====================================================
+   HIỆN MÀN HÌNH NHẬP TÊN
+===================================================== */
+
+function showNameScreen() {
+
+    document
+        .getElementById("nameScreen")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("learningArea")
+        .classList.add("hidden");
+
+    document
+        .getElementById("userArea")
+        .classList.add("hidden");
+
+    document
+        .getElementById("learningUser")
+        .classList.add("hidden");
+
+    setTimeout(function() {
+
+        document
+            .getElementById("nameInput")
+            .focus();
+
+    },100);
+
+}
+
+
+/* =====================================================
+   BẮT ĐẦU HỌC
+===================================================== */
+
+function startLearning() {
+
+    const input =
+        document.getElementById(
+            "nameInput"
+        );
+
+    const name =
+        input.value.trim();
+
+    if (!name) {
+
+        input.focus();
+
+        return;
+
+    }
+
+    createUser(name);
+
+    document
+        .getElementById("nameScreen")
+        .classList.add("hidden");
+
+    enterLearning();
+
+}
+
+
+/* =====================================================
+   HIỆN MÀN HÌNH TIẾP TỤC
+===================================================== */
+
+function showContinueScreen() {
+
+    if (!currentUser) {
+        showNameScreen();
+        return;
+    }
+
+    ensureUserData();
+
+    const level =
+        currentUser.lastHSK || 1;
+
+    const progress =
+        getLevelProgress(level);
+
+    const total =
+        hskData[level].length;
+
+    document
+        .getElementById("userGreeting")
+        .textContent =
+        "👤 Xin chào, " +
+        currentUser.name;
+
+    document
+        .getElementById("userProgress")
+        .textContent =
+        "HSK " +
+        level +
+        " — Đã học " +
+        progress.done +
+        "/" +
+        total +
+        " câu";
+
+    document
+        .getElementById("userArea")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("learningArea")
+        .classList.add("hidden");
+
+    document
+        .getElementById("learningUser")
+        .classList.add("hidden");
+
+}
+
+
+/* =====================================================
+   TIẾP TỤC HỌC
+===================================================== */
+
+function continueLearning() {
+
+    if (!currentUser) {
+        showNameScreen();
+        return;
+    }
+
+    enterLearning();
+
+}
+
+
+/* =====================================================
+   ĐỔI NGƯỜI HỌC
+===================================================== */
+
+function changeUser() {
 
     if (nextTimer) {
 
@@ -724,44 +1263,166 @@ function selectHSK(level) {
 
     }
 
+    document
+        .getElementById("nameInput")
+        .value = "";
+
+    showNameScreen();
+
+}
+
+
+/* =====================================================
+   VÀO TRANG HỌC
+===================================================== */
+
+function enterLearning() {
+
+    if (!currentUser) {
+        return;
+    }
+
+    ensureUserData();
+
+    document
+        .getElementById("nameScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("userArea")
+        .classList.add("hidden");
+
+    document
+        .getElementById("learningArea")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("learningUser")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("learningUser")
+        .textContent =
+        "👤 " +
+        currentUser.name;
+
+    loadSavedLevel();
+
+}
+
+
+/* =====================================================
+   LOAD HSK ĐÃ LƯU
+===================================================== */
+
+function loadSavedLevel() {
+
+    let level =
+        Number(
+            currentUser.lastHSK
+        );
+
+    if (
+        level !== 1 &&
+        level !== 2 &&
+        level !== 3
+    ) {
+
+        level = 1;
+
+    }
+
+    selectHSK(
+        level,
+        true
+    );
+
+}
+
+
+/* =====================================================
+   CHỌN HSK
+===================================================== */
+
+function selectHSK(level, fromSaved) {
+
+    if (nextTimer) {
+
+        clearTimeout(nextTimer);
+
+        nextTimer = null;
+
+    }
 
     currentHSK = level;
 
-    currentIndex = 0;
+    const progress =
+        getLevelProgress(level);
 
-    wrongAttempts = 0;
+    /*
+       Nếu không có thứ tự lưu,
+       tạo thứ tự mới.
+    */
 
-    answerShown = false;
+    if (
+        !validOrder(
+            level,
+            progress.order
+        )
+    ) {
 
-    questionCompleted = false;
+        progress.order =
+            createShuffledOrder(level);
 
+        progress.index = 0;
+
+    }
+
+    /*
+       Khi người dùng bấm HSK khác:
+       tiếp tục từ tiến độ đã lưu.
+    */
+
+    currentIndex =
+        Math.min(
+            progress.index || 0,
+            Math.max(
+                0,
+                hskData[level].length - 1
+            )
+        );
+
+    correctCount =
+        progress.correct || 0;
+
+    wrongCount =
+        progress.wrong || 0;
+
+    doneCount =
+        progress.done || 0;
+
+    currentUser.lastHSK =
+        level;
+
+    saveUser();
 
     document
         .getElementById("hsk1Button")
         .classList.remove("active");
 
-
     document
         .getElementById("hsk2Button")
         .classList.remove("active");
 
-
     document
         .getElementById("hsk3Button")
         .classList.remove("active");
-
 
     document
         .getElementById(
             "hsk" + level + "Button"
         )
         .classList.add("active");
-
-
-    shuffle(
-        hskData[level]
-    );
-
 
     loadQuestion();
 
@@ -777,30 +1438,28 @@ function loadQuestion() {
     const data =
         hskData[currentHSK];
 
+    const progress =
+        getLevelProgress(currentHSK);
 
     const input =
         document.getElementById(
             "answerInput"
         );
 
-
     const result =
         document.getElementById(
             "result"
         );
-
 
     const pinyin =
         document.getElementById(
             "pinyin"
         );
 
-
     const hint =
         document.getElementById(
             "hint"
         );
-
 
     wrongAttempts = 0;
 
@@ -808,28 +1467,22 @@ function loadQuestion() {
 
     questionCompleted = false;
 
-
     input.value = "";
-
 
     input.classList.remove(
         "input-correct",
         "input-wrong"
     );
 
-
     result.innerHTML = "";
 
     result.className =
         "result";
 
-
     pinyin.innerHTML = "";
-
 
     hint.innerHTML =
         "Sai 3 lần sẽ hiện đáp án.";
-
 
     if (
         !data ||
@@ -837,9 +1490,7 @@ function loadQuestion() {
     ) {
 
         document
-            .getElementById(
-                "question"
-            )
+            .getElementById("question")
             .textContent =
             "Không có dữ liệu HSK " +
             currentHSK;
@@ -848,21 +1499,19 @@ function loadQuestion() {
 
     }
 
+    /*
+       Lấy index thật từ thứ tự xáo trộn.
+    */
+
+    const orderIndex =
+        currentIndex %
+        progress.order.length;
+
+    const realIndex =
+        progress.order[orderIndex];
 
     const item =
-        data[
-            currentIndex %
-            data.length
-        ];
-
-
-    /*
-       Cấu trúc dữ liệu:
-
-       [0] = Hán tự
-       [1] = Pinyin
-       [2] = Nghĩa tiếng Việt
-    */
+        data[realIndex];
 
     currentQuestion = {
 
@@ -877,27 +1526,19 @@ function loadQuestion() {
 
     };
 
-
     document
-        .getElementById(
-            "modeTitle"
-        )
+        .getElementById("modeTitle")
         .textContent =
         "HSK " +
         currentHSK +
         " • LUYỆN VIẾT";
 
-
     document
-        .getElementById(
-            "question"
-        )
+        .getElementById("question")
         .textContent =
         currentQuestion.question;
 
-
     updateProgress();
-
 
     setTimeout(function() {
 
@@ -909,7 +1550,7 @@ function loadQuestion() {
 
 
 /* =====================================================
-   CHUẨN HÓA CÂU TRẢ LỜI
+   CHUẨN HÓA
 ===================================================== */
 
 function normalizeText(text) {
@@ -938,38 +1579,32 @@ function checkAnswer() {
         return;
     }
 
-
     if (questionCompleted) {
         return;
     }
-
 
     const input =
         document.getElementById(
             "answerInput"
         );
 
-
     const userAnswer =
         normalizeText(
             input.value
         );
 
-
     if (!userAnswer) {
         return;
     }
-
 
     const correctAnswer =
         normalizeText(
             currentQuestion.answer
         );
 
-
-    /* =================================================
+    /*
        ĐÚNG
-    ================================================= */
+    */
 
     if (
         userAnswer ===
@@ -978,34 +1613,27 @@ function checkAnswer() {
 
         questionCompleted = true;
 
-
         correctCount++;
 
         doneCount++;
-
 
         input.classList.remove(
             "input-wrong"
         );
 
-
         input.classList.add(
             "input-correct"
         );
-
 
         const result =
             document.getElementById(
                 "result"
             );
 
-
         result.className =
             "result correct";
 
-
         result.innerHTML =
-
             '<div class="answer">' +
             escapeHTML(
                 currentQuestion.answer
@@ -1018,39 +1646,29 @@ function checkAnswer() {
             ) +
             '</div>';
 
-
         saveLastQuestion();
 
+        saveCurrentProgress();
 
         updateStats();
-
-
-        /*
-           Sau 1,5 giây sang từ tiếp theo.
-        */
 
         nextTimer =
             setTimeout(function() {
 
                 currentIndex++;
 
+                saveCurrentProgress();
+
                 loadQuestion();
 
             },1500);
-
 
         return;
 
     }
 
-
-    /* =================================================
-       SAI
-    ================================================= */
-
     /*
-       Sau khi đã hiện đáp án ở lần 3,
-       nhập sai tiếp không tăng số lần sai nữa.
+       SAI
     */
 
     if (!answerShown) {
@@ -1061,23 +1679,21 @@ function checkAnswer() {
 
     }
 
-
     input.classList.remove(
         "input-correct"
     );
-
 
     input.classList.add(
         "input-wrong"
     );
 
+    saveCurrentProgress();
 
     updateStats();
 
-
-    /* =================================================
+    /*
        SAI LẦN 2
-    ================================================= */
+    */
 
     if (
         wrongAttempts === 2
@@ -1087,10 +1703,9 @@ function checkAnswer() {
 
     }
 
-
-    /* =================================================
+    /*
        SAI LẦN 3
-    ================================================= */
+    */
 
     if (
         wrongAttempts >= 3 &&
@@ -1098,7 +1713,6 @@ function checkAnswer() {
     ) {
 
         answerShown = true;
-
 
         showAnswerAfterThreeWrong();
 
@@ -1108,7 +1722,7 @@ function checkAnswer() {
 
 
 /* =====================================================
-   GỢI Ý CHỮ ĐẦU PINYIN
+   GỢI Ý PINYIN
 ===================================================== */
 
 function showPinyinInitials() {
@@ -1118,12 +1732,10 @@ function showPinyinInitials() {
             "hint"
         );
 
-
     const pinyin =
         String(
             currentQuestion.pinyin
         ).trim();
-
 
     const initials =
         pinyin
@@ -1140,18 +1752,15 @@ function showPinyinInitials() {
 
             .join("");
 
-
     hint.innerHTML =
         "Gợi ý Pinyin: " +
-        escapeHTML(
-            initials
-        );
+        escapeHTML(initials);
 
 }
 
 
 /* =====================================================
-   HIỆN ĐÁP ÁN SAU 3 LẦN SAI
+   HIỆN ĐÁP ÁN
 ===================================================== */
 
 function showAnswerAfterThreeWrong() {
@@ -1161,13 +1770,10 @@ function showAnswerAfterThreeWrong() {
             "result"
         );
 
-
     result.className =
         "result wrong";
 
-
     result.innerHTML =
-
         '<div class="answer">' +
         escapeHTML(
             currentQuestion.answer
@@ -1180,11 +1786,8 @@ function showAnswerAfterThreeWrong() {
         ) +
         '</div>';
 
-
     document
-        .getElementById(
-            "hint"
-        )
+        .getElementById("hint")
         .innerHTML =
         "Hãy gõ lại đúng đáp án để tiếp tục.";
 
@@ -1210,7 +1813,6 @@ function saveLastQuestion() {
 
     };
 
-
     hasPreviousQuestion = true;
 
 }
@@ -1228,16 +1830,13 @@ function showPreviousQuestion() {
     ) {
 
         document
-            .getElementById(
-                "hint"
-            )
+            .getElementById("hint")
             .innerHTML =
             "Chưa có câu vừa làm.";
 
         return;
 
     }
-
 
     if (nextTimer) {
 
@@ -1246,7 +1845,6 @@ function showPreviousQuestion() {
         nextTimer = null;
 
     }
-
 
     currentQuestion = {
 
@@ -1261,52 +1859,39 @@ function showPreviousQuestion() {
 
     };
 
-
     questionCompleted = true;
-
 
     answerShown = true;
 
-
     document
-        .getElementById(
-            "question"
-        )
+        .getElementById("question")
         .textContent =
         lastQuestion.question;
-
 
     const input =
         document.getElementById(
             "answerInput"
         );
 
-
     input.value = "";
-
 
     input.classList.remove(
         "input-wrong"
     );
 
-
     input.classList.add(
         "input-correct"
     );
-
 
     const result =
         document.getElementById(
             "result"
         );
 
-
     result.className =
         "result correct";
 
-
     result.innerHTML =
-
         '<div class="answer">' +
         escapeHTML(
             lastQuestion.answer
@@ -1319,11 +1904,8 @@ function showPreviousQuestion() {
         ) +
         '</div>';
 
-
     document
-        .getElementById(
-            "hint"
-        )
+        .getElementById("hint")
         .innerHTML =
         "Đây là câu vừa làm.";
 
@@ -1331,7 +1913,7 @@ function showPreviousQuestion() {
 
 
 /* =====================================================
-   XÁO TRỘN HSK HIỆN TẠI
+   XÁO TRỘN HSK
 ===================================================== */
 
 function shuffleCurrentLevel() {
@@ -1344,16 +1926,60 @@ function shuffleCurrentLevel() {
 
     }
 
+    const progress =
+        getLevelProgress(
+            currentHSK
+        );
 
-    shuffle(
-        hskData[currentHSK]
-    );
+    progress.order =
+        createShuffledOrder(
+            currentHSK
+        );
 
+    progress.index = 0;
 
     currentIndex = 0;
 
+    saveUser();
 
     loadQuestion();
+
+}
+
+
+/* =====================================================
+   LƯU TIẾN ĐỘ
+===================================================== */
+
+function saveCurrentProgress() {
+
+    if (!currentUser) {
+        return;
+    }
+
+    ensureUserData();
+
+    const progress =
+        getLevelProgress(
+            currentHSK
+        );
+
+    progress.index =
+        currentIndex;
+
+    progress.correct =
+        correctCount;
+
+    progress.wrong =
+        wrongCount;
+
+    progress.done =
+        doneCount;
+
+    currentUser.lastHSK =
+        currentHSK;
+
+    saveUser();
 
 }
 
@@ -1371,14 +1997,12 @@ function updateStats() {
         .textContent =
         correctCount;
 
-
     document
         .getElementById(
             "wrongCount"
         )
         .textContent =
         wrongCount;
-
 
     document
         .getElementById(
@@ -1387,9 +2011,7 @@ function updateStats() {
         .textContent =
         doneCount;
 
-
     let accuracy = 0;
-
 
     if (doneCount > 0) {
 
@@ -1403,7 +2025,6 @@ function updateStats() {
 
     }
 
-
     document
         .getElementById(
             "accuracy"
@@ -1415,14 +2036,13 @@ function updateStats() {
 
 
 /* =====================================================
-   PROGRESS
+   PROGRESS BAR
 ===================================================== */
 
 function updateProgress() {
 
     const data =
         hskData[currentHSK];
-
 
     if (
         !data ||
@@ -1440,18 +2060,15 @@ function updateProgress() {
 
     }
 
-
     const position =
         currentIndex %
         data.length;
-
 
     const percent =
         (
             (position + 1) /
             data.length
         ) * 100;
-
 
     document
         .getElementById(
@@ -1504,9 +2121,7 @@ function escapeHTML(text) {
 ===================================================== */
 
 document
-    .getElementById(
-        "answerInput"
-    )
+    .getElementById("answerInput")
     .addEventListener(
         "keydown",
         function(event) {
@@ -1527,23 +2142,57 @@ document
 
 
 /* =====================================================
-   KHỞI ĐỘNG
+   ENTER Ở Ô NHẬP TÊN
 ===================================================== */
 
-shuffle(
-    hskData[1]
-);
+document
+    .getElementById("nameInput")
+    .addEventListener(
+        "keydown",
+        function(event) {
 
-shuffle(
-    hskData[2]
-);
+            if (
+                event.key ===
+                "Enter"
+            ) {
 
-shuffle(
-    hskData[3]
-);
+                event.preventDefault();
+
+                startLearning();
+
+            }
+
+        }
+    );
 
 
-loadQuestion();
+/* =====================================================
+   KHỞI ĐỘNG WEBSITE
+===================================================== */
+
+(function init() {
+
+    const savedUser =
+        getSavedUser();
+
+    if (!savedUser) {
+
+        showNameScreen();
+
+        return;
+
+    }
+
+    currentUser =
+        savedUser;
+
+    ensureUserData();
+
+    saveUser();
+
+    showContinueScreen();
+
+})();
 
 </script>
 
