@@ -1,4 +1,4 @@
-const HSK1 = [
+window.HSK1 = [
   ["爱","ài","yêu; thích"],
   ["八","bā","tám"],
   ["爸爸","bàba","bố; cha"],
