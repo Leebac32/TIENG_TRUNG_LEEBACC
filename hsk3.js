@@ -1,4 +1,4 @@
-const HSK3 = [
+window.HSK3 = [
   ["阿姨", "āyí", "cô, dì, bác gái"],
   ["矮", "ǎi", "thấp, lùn"],
   ["爱人", "àiren", "vợ/chồng, người bạn đời"],
