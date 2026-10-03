@@ -24,59 +24,60 @@ body {
 }
 
 .container {
+    width: 100%;
     max-width: 700px;
     margin: auto;
-    padding: 15px;
+    padding: 10px;
 }
 
 
-/* =========================================================
+/* =====================================================
    HEADER
-========================================================= */
+===================================================== */
 
 .header {
     background: linear-gradient(135deg,#1677ff,#005bea);
     color: white;
     border-radius: 18px;
-    padding: 22px 15px;
+    padding: 20px 12px;
     text-align: center;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
 
 .header h1 {
     margin: 0;
-    font-size: 25px;
+    font-size: 24px;
 }
 
 .header p {
-    margin: 7px 0 0;
-    font-size: 14px;
+    margin: 6px 0 0;
+    font-size: 13px;
     opacity: 0.95;
 }
 
 
-/* =========================================================
-   MENU
-========================================================= */
+/* =====================================================
+   HSK MENU
+===================================================== */
 
 .menu {
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    gap: 8px;
-    margin-bottom: 10px;
+    gap: 6px;
+    margin-bottom: 7px;
 }
 
 .menu button {
     border: none;
     background: white;
-    border-radius: 12px;
-    padding: 10px 5px;
+    border-radius: 10px;
+    padding: 8px 4px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     color: #444;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 7px rgba(0,0,0,0.05);
 }
 
 .menu button.active {
@@ -85,47 +86,49 @@ body {
 }
 
 
-/* =========================================================
-   STATS
-========================================================= */
+/* =====================================================
+   STATS - NHỎ 50%
+===================================================== */
 
 .stats {
     display: grid;
     grid-template-columns: repeat(4,1fr);
-    gap: 8px;
-    margin-bottom: 10px;
+    gap: 4px;
+    margin-bottom: 6px;
 }
 
 .stat {
     background: white;
-    border-radius: 12px;
-    padding: 9px 4px;
+    border-radius: 7px;
+    padding: 4px 2px;
     text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
 
 .stat-number {
-    font-size: 20px;
+    font-size: 10px;
+    line-height: 12px;
     font-weight: 700;
 }
 
 .stat-label {
-    font-size: 11px;
+    font-size: 6px;
+    line-height: 8px;
     color: #777;
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
 
-/* =========================================================
+/* =====================================================
    PROGRESS
-========================================================= */
+===================================================== */
 
 .progress {
-    height: 7px;
+    height: 5px;
     background: #ddd;
     border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .progress-fill {
@@ -136,14 +139,14 @@ body {
 }
 
 
-/* =========================================================
+/* =====================================================
    CARD
-========================================================= */
+===================================================== */
 
 .card {
     background: white;
     border-radius: 18px;
-    padding: 20px;
+    padding: 18px;
     box-shadow: 0 5px 18px rgba(0,0,0,0.07);
 }
 
@@ -152,8 +155,13 @@ body {
     font-size: 14px;
     color: #1677ff;
     font-weight: 700;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 }
+
+
+/* =====================================================
+   QUESTION
+===================================================== */
 
 .question {
     text-align: center;
@@ -167,36 +175,32 @@ body {
 }
 
 .question.vi {
-    font-size: 24px;
+    font-size: 25px;
     color: #333;
 }
 
-.question.hanzi {
-    font-size: 34px;
-}
 
-
-/* =========================================================
+/* =====================================================
    PINYIN
-========================================================= */
+===================================================== */
 
 .pinyin {
     text-align: center;
-    font-size: 20px;
+    font-size: 19px;
     color: #1677ff;
     font-weight: 600;
-    min-height: 28px;
-    margin-bottom: 10px;
+    min-height: 25px;
+    margin-bottom: 8px;
 }
 
 
-/* =========================================================
+/* =====================================================
    INPUT
-========================================================= */
+===================================================== */
 
 input {
     width: 100%;
-    padding: 14px;
+    padding: 13px;
     border: 2px solid #ddd;
     border-radius: 12px;
     font-size: 20px;
@@ -211,7 +215,7 @@ input:focus {
 }
 
 
-/* Đúng */
+/* ĐÚNG */
 
 .input-correct {
     border-color: #22c55e !important;
@@ -220,7 +224,7 @@ input:focus {
 }
 
 
-/* Sai */
+/* SAI */
 
 .input-wrong {
     border-color: #ef4444 !important;
@@ -229,24 +233,24 @@ input:focus {
 }
 
 
-/* =========================================================
-   ACTIONS
-========================================================= */
+/* =====================================================
+   ACTION BUTTONS
+===================================================== */
 
 .actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-top: 12px;
+    gap: 7px;
+    margin-top: 10px;
 }
 
 .actions button {
     border: none;
-    border-radius: 12px;
-    padding: 13px 8px;
+    border-radius: 11px;
+    padding: 11px 7px;
     background: #1677ff;
     color: white;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
 }
@@ -256,12 +260,12 @@ input:focus {
 }
 
 
-/* =========================================================
+/* =====================================================
    RESULT
-========================================================= */
+===================================================== */
 
 .result {
-    margin-top: 12px;
+    margin-top: 10px;
     text-align: center;
     min-height: 0;
 }
@@ -275,45 +279,30 @@ input:focus {
 }
 
 .answer {
-    margin-top: 6px;
+    margin-top: 5px;
     font-size: 21px;
     font-weight: 700;
     color: #222;
 }
 
 .answer-pinyin {
-    margin-top: 4px;
+    margin-top: 3px;
     color: #1677ff;
     font-size: 17px;
     font-weight: 600;
 }
 
 
-/* =========================================================
-   EXAMPLE
-========================================================= */
-
-.example {
-    background: #f4f8ff;
-    border-radius: 10px;
-    padding: 10px;
-    margin-top: 10px;
-    text-align: center;
-    color: #333;
-    font-size: 14px;
-}
-
-
-/* =========================================================
-   INFO
-========================================================= */
+/* =====================================================
+   HINT
+===================================================== */
 
 .info {
     text-align: center;
     color: #888;
-    font-size: 12px;
-    margin-top: 14px;
-    min-height: 18px;
+    font-size: 11px;
+    margin-top: 10px;
+    min-height: 16px;
 }
 
 .hint {
@@ -322,51 +311,53 @@ input:focus {
 }
 
 
-/* =========================================================
+/* =====================================================
    HIDDEN
-========================================================= */
+===================================================== */
 
 .hidden {
     display: none !important;
 }
 
 
-/* =========================================================
+/* =====================================================
    MOBILE
-========================================================= */
+===================================================== */
 
 @media (max-width:430px) {
 
     .container {
-        padding: 10px;
+        padding: 7px;
     }
 
     .header {
-        padding: 18px 10px;
+        padding: 16px 8px;
+        border-radius: 15px;
     }
 
     .header h1 {
-        font-size: 22px;
-    }
-
-    .card {
-        padding: 16px;
-    }
-
-    .question.vi {
         font-size: 21px;
     }
 
-    .question.hanzi {
-        font-size: 30px;
+    .header p {
+        font-size: 12px;
+    }
+
+    .menu button {
+        font-size: 13px;
+        padding: 8px 3px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .question.vi {
+        font-size: 22px;
     }
 
     input {
         font-size: 18px;
-    }
-
-    .actions button {
-        font-size: 13px;
     }
 
 }
@@ -382,50 +373,47 @@ input:focus {
 
 <!-- =====================================================
      HEADER
-====================================================== -->
+===================================================== -->
 
 <div class="header">
 
     <h1>🇨🇳 TIẾNG TRUNG LEEBACC</h1>
 
     <p>
-        Luyện từ vựng • chữ Hán • câu
+        Luyện viết chữ Hán
     </p>
 
 </div>
 
 
 <!-- =====================================================
-     MENU
-====================================================== -->
+     HSK MENU
+===================================================== -->
 
 <div class="menu">
 
     <button
-        id="modeWrite"
+        id="hsk1Button"
         class="active"
-        onclick="setMode('write')"
+        onclick="selectHSK(1)"
     >
-        🀄<br>
-        Luyện viết
+        HSK 1
     </button>
 
 
     <button
-        id="modeVocab"
-        onclick="setMode('vocab')"
+        id="hsk2Button"
+        onclick="selectHSK(2)"
     >
-        📚<br>
-        Từ vựng
+        HSK 2
     </button>
 
 
     <button
-        id="modeSentence"
-        onclick="setMode('sentence')"
+        id="hsk3Button"
+        onclick="selectHSK(3)"
     >
-        💬<br>
-        Luyện câu
+        HSK 3
     </button>
 
 </div>
@@ -433,7 +421,7 @@ input:focus {
 
 <!-- =====================================================
      STATS
-====================================================== -->
+===================================================== -->
 
 <div class="stats">
 
@@ -505,7 +493,7 @@ input:focus {
 
 <!-- =====================================================
      PROGRESS
-====================================================== -->
+===================================================== -->
 
 <div class="progress">
 
@@ -519,16 +507,15 @@ input:focus {
 
 <!-- =====================================================
      CARD
-====================================================== -->
+===================================================== -->
 
 <div class="card">
-
 
     <div
         id="modeTitle"
         class="mode-title"
     >
-        LUYỆN VIẾT CHỮ HÁN
+        HSK 1 • LUYỆN VIẾT
     </div>
 
 
@@ -536,7 +523,7 @@ input:focus {
         id="question"
         class="question vi"
     >
-        yêu thích
+        Đang tải...
     </div>
 
 
@@ -550,13 +537,15 @@ input:focus {
         id="answerInput"
         type="text"
         autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
         spellcheck="false"
-        placeholder="Nhập câu trả lời..."
+        placeholder="Nhập chữ Hán..."
     >
 
 
     <!-- =================================================
-         2 NÚT
+         BUTTONS
     ================================================== -->
 
     <div class="actions">
@@ -566,7 +555,7 @@ input:focus {
         </button>
 
 
-        <button onclick="shuffleCurrentMode()">
+        <button onclick="shuffleCurrentLevel()">
             🔀 Xáo trộn
         </button>
 
@@ -580,18 +569,11 @@ input:focus {
 
 
     <div
-        id="example"
-        class="example hidden"
-    ></div>
-
-
-    <div
         id="hint"
         class="info"
     >
         Sai 3 lần sẽ hiện đáp án.
     </div>
-
 
 </div>
 
@@ -601,87 +583,91 @@ input:focus {
 <script>
 
 
-/* =========================================================
+/* =====================================================
    DỮ LIỆU HSK
-========================================================= */
+===================================================== */
 
-let allVocabulary = [];
+const hskData = {
 
+    1:
+        Array.isArray(window.HSK1)
+            ? [...window.HSK1]
+            : [],
 
-if (Array.isArray(window.HSK1)) {
+    2:
+        Array.isArray(window.HSK2)
+            ? [...window.HSK2]
+            : [],
 
-    allVocabulary =
-        allVocabulary.concat(
-            window.HSK1
-        );
+    3:
+        Array.isArray(window.HSK3)
+            ? [...window.HSK3]
+            : []
 
-}
-
-
-if (Array.isArray(window.HSK2)) {
-
-    allVocabulary =
-        allVocabulary.concat(
-            window.HSK2
-        );
-
-}
+};
 
 
-if (Array.isArray(window.HSK3)) {
+/* =====================================================
+   HSK HIỆN TẠI
+===================================================== */
 
-    allVocabulary =
-        allVocabulary.concat(
-            window.HSK3
-        );
-
-}
+let currentHSK = 1;
 
 
-let hsk3Vocabulary =
-    Array.isArray(window.HSK3)
-        ? [...window.HSK3]
-        : [];
-
-
-/* =========================================================
-   DỮ LIỆU LUYỆN VIẾT
-========================================================= */
-
-let writeData = [];
-
-
-/* =========================================================
-   DỮ LIỆU TỪ VỰNG
-========================================================= */
-
-let vocabData = [];
-
-
-/* =========================================================
-   DỮ LIỆU LUYỆN CÂU
-========================================================= */
-
-let sentenceData = [];
-
-
-/* =========================================================
-   MODE
-========================================================= */
-
-let currentMode = "write";
-
-
-/* =========================================================
+/* =====================================================
    VỊ TRÍ CÂU
-========================================================= */
+===================================================== */
 
 let currentIndex = 0;
 
 
-/* =========================================================
+/* =====================================================
+   CÂU HIỆN TẠI
+===================================================== */
+
+let currentQuestion = null;
+
+
+/* =====================================================
+   SỐ LẦN SAI CỦA CÂU HIỆN TẠI
+===================================================== */
+
+let wrongAttempts = 0;
+
+
+/* =====================================================
+   ĐÃ HIỆN ĐÁP ÁN SAU 3 LẦN SAI
+===================================================== */
+
+let answerShown = false;
+
+
+/* =====================================================
+   CÂU ĐÃ HOÀN THÀNH
+===================================================== */
+
+let questionCompleted = false;
+
+
+/* =====================================================
+   CÂU VỪA LÀM
+===================================================== */
+
+let lastQuestion = null;
+
+let hasPreviousQuestion = false;
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+let nextTimer = null;
+
+
+/* =====================================================
    THỐNG KÊ
-========================================================= */
+===================================================== */
 
 let correctCount = 0;
 
@@ -690,162 +676,9 @@ let wrongCount = 0;
 let doneCount = 0;
 
 
-/* =========================================================
-   CÂU HIỆN TẠI
-========================================================= */
-
-let currentQuestion = null;
-
-
-/* =========================================================
-   SỐ LẦN SAI
-========================================================= */
-
-let wrongAttempts = 0;
-
-
-/* =========================================================
-   ĐÃ HOÀN THÀNH CÂU CHƯA
-========================================================= */
-
-let questionCompleted = false;
-
-
-/* =========================================================
-   ĐÃ HIỆN ĐÁP ÁN SAU 3 LẦN SAI
-========================================================= */
-
-let answerShown = false;
-
-
-/* =========================================================
-   CÂU VỪA LÀM
-========================================================= */
-
-let lastQuestion = null;
-
-let hasPreviousQuestion = false;
-
-
-/* =========================================================
-   TIMER
-========================================================= */
-
-let nextTimer = null;
-
-
-/* =========================================================
-   MẪU CÂU
-========================================================= */
-
-const sentenceTemplates = [
-
-    {
-        vi: word => `Tôi rất thích ${word}.`,
-        zh: word => `我很喜欢${word}。`
-    },
-
-    {
-        vi: word => `Tôi thường ${word}.`,
-        zh: word => `我经常${word}。`
-    },
-
-    {
-        vi: word => `Tôi muốn ${word}.`,
-        zh: word => `我想${word}。`
-    },
-
-    {
-        vi: word => `Tôi không muốn ${word}.`,
-        zh: word => `我不想${word}。`
-    },
-
-    {
-        vi: word => `Tôi có thể ${word}.`,
-        zh: word => `我可以${word}。`
-    },
-
-    {
-        vi: word => `Tôi không thể ${word}.`,
-        zh: word => `我不能${word}。`
-    },
-
-    {
-        vi: word => `Tôi biết ${word}.`,
-        zh: word => `我知道${word}。`
-    },
-
-    {
-        vi: word => `Tôi không biết ${word}.`,
-        zh: word => `我不知道${word}。`
-    },
-
-    {
-        vi: word => `Tôi đang ${word}.`,
-        zh: word => `我正在${word}。`
-    },
-
-    {
-        vi: word => `Hôm nay tôi sẽ ${word}.`,
-        zh: word => `今天我要${word}。`
-    },
-
-    {
-        vi: word => `Ngày mai tôi sẽ ${word}.`,
-        zh: word => `明天我要${word}。`
-    },
-
-    {
-        vi: word => `Tôi muốn học ${word}.`,
-        zh: word => `我想学习${word}。`
-    },
-
-    {
-        vi: word => `Tôi thích học ${word}.`,
-        zh: word => `我喜欢学习${word}。`
-    },
-
-    {
-        vi: word => `Tôi đang học ${word}.`,
-        zh: word => `我正在学习${word}。`
-    },
-
-    {
-        vi: word => `Tôi cần ${word}.`,
-        zh: word => `我需要${word}。`
-    },
-
-    {
-        vi: word => `Tôi không cần ${word}.`,
-        zh: word => `我不需要${word}。`
-    },
-
-    {
-        vi: word => `Tôi muốn hỏi ${word}.`,
-        zh: word => `我想问${word}。`
-    },
-
-    {
-        vi: word => `Tôi muốn nói về ${word}.`,
-        zh: word => `我想说说${word}。`
-    },
-
-    {
-        vi: word => `Tôi đã thấy ${word}.`,
-        zh: word => `我已经看见${word}了。`
-    },
-
-    {
-        vi: word => `Tôi đã nghe ${word}.`,
-        zh: word => `我已经听到了${word}。`
-    }
-
-];
-
-
-/* =========================================================
+/* =====================================================
    SHUFFLE
-========================================================= */
+===================================================== */
 
 function shuffle(array) {
 
@@ -877,119 +710,11 @@ function shuffle(array) {
 }
 
 
-/* =========================================================
-   TẠO 500 CÂU
-========================================================= */
+/* =====================================================
+   CHỌN HSK
+===================================================== */
 
-function buildSentenceData() {
-
-    sentenceData = [];
-
-
-    if (hsk3Vocabulary.length === 0) {
-        return;
-    }
-
-
-    let index = 0;
-
-
-    while (sentenceData.length < 500) {
-
-        const item =
-            hsk3Vocabulary[
-                index %
-                hsk3Vocabulary.length
-            ];
-
-
-        const hanzi =
-            item[0];
-
-
-        const pinyin =
-            item[1];
-
-
-        const meaning =
-            item[2];
-
-
-        const template =
-            sentenceTemplates[
-                sentenceData.length %
-                sentenceTemplates.length
-            ];
-
-
-        sentenceData.push({
-
-            vi:
-                template.vi(
-                    meaning
-                ),
-
-            zh:
-                template.zh(
-                    hanzi
-                ),
-
-            pinyin:
-                pinyin,
-
-            meaning:
-                meaning,
-
-            hanzi:
-                hanzi
-
-        });
-
-
-        index++;
-
-    }
-
-}
-
-
-/* =========================================================
-   INIT
-========================================================= */
-
-function init() {
-
-    writeData =
-        [...allVocabulary];
-
-
-    vocabData =
-        [...allVocabulary];
-
-
-    buildSentenceData();
-
-
-    shuffle(writeData);
-
-    shuffle(vocabData);
-
-    shuffle(sentenceData);
-
-
-    currentIndex = 0;
-
-
-    loadQuestion();
-
-}
-
-
-/* =========================================================
-   ĐỔI MODE
-========================================================= */
-
-function setMode(mode) {
+function selectHSK(level) {
 
     if (nextTimer) {
 
@@ -1000,11 +725,9 @@ function setMode(mode) {
     }
 
 
-    currentMode = mode;
-
+    currentHSK = level;
 
     currentIndex = 0;
-
 
     wrongAttempts = 0;
 
@@ -1014,64 +737,30 @@ function setMode(mode) {
 
 
     document
-        .getElementById("modeWrite")
+        .getElementById("hsk1Button")
         .classList.remove("active");
 
 
     document
-        .getElementById("modeVocab")
+        .getElementById("hsk2Button")
         .classList.remove("active");
 
 
     document
-        .getElementById("modeSentence")
+        .getElementById("hsk3Button")
         .classList.remove("active");
 
 
-    if (mode === "write") {
-
-        document
-            .getElementById("modeWrite")
-            .classList.add("active");
-
-    }
+    document
+        .getElementById(
+            "hsk" + level + "Button"
+        )
+        .classList.add("active");
 
 
-    else if (mode === "vocab") {
-
-        document
-            .getElementById("modeVocab")
-            .classList.add("active");
-
-    }
-
-
-    else {
-
-        document
-            .getElementById("modeSentence")
-            .classList.add("active");
-
-    }
-
-
-    if (mode === "write") {
-
-        shuffle(writeData);
-
-    }
-
-    else if (mode === "vocab") {
-
-        shuffle(vocabData);
-
-    }
-
-    else {
-
-        shuffle(sentenceData);
-
-    }
+    shuffle(
+        hskData[level]
+    );
 
 
     loadQuestion();
@@ -1079,11 +768,15 @@ function setMode(mode) {
 }
 
 
-/* =========================================================
+/* =====================================================
    LOAD QUESTION
-========================================================= */
+===================================================== */
 
 function loadQuestion() {
+
+    const data =
+        hskData[currentHSK];
+
 
     const input =
         document.getElementById(
@@ -1100,12 +793,6 @@ function loadQuestion() {
     const pinyin =
         document.getElementById(
             "pinyin"
-        );
-
-
-    const example =
-        document.getElementById(
-            "example"
         );
 
 
@@ -1140,188 +827,73 @@ function loadQuestion() {
     pinyin.innerHTML = "";
 
 
-    example.innerHTML = "";
-
-    example.classList.add(
-        "hidden"
-    );
-
-
     hint.innerHTML =
         "Sai 3 lần sẽ hiện đáp án.";
 
 
-    /* =====================================================
-       LUYỆN VIẾT
-    ================================================== */
-
-    if (currentMode === "write") {
-
-        const item =
-            writeData[
-                currentIndex %
-                writeData.length
-            ];
-
-
-        currentQuestion = {
-
-            question:
-                item[2],
-
-            answer:
-                item[0],
-
-            pinyin:
-                item[1],
-
-            example:
-                "",
-
-            type:
-                "write"
-
-        };
-
+    if (
+        !data ||
+        data.length === 0
+    ) {
 
         document
             .getElementById(
-                "modeTitle"
+                "question"
             )
             .textContent =
-            "LUYỆN VIẾT CHỮ HÁN";
+            "Không có dữ liệu HSK " +
+            currentHSK;
 
-
-        const question =
-            document.getElementById(
-                "question"
-            );
-
-
-        question.className =
-            "question vi";
-
-
-        question.textContent =
-            currentQuestion.question;
+        return;
 
     }
 
 
-    /* =====================================================
-       TỪ VỰNG
-    ================================================== */
-
-    else if (currentMode === "vocab") {
-
-        const item =
-            vocabData[
-                currentIndex %
-                vocabData.length
-            ];
+    const item =
+        data[
+            currentIndex %
+            data.length
+        ];
 
 
-        currentQuestion = {
+    /*
+       Cấu trúc dữ liệu:
 
-            question:
-                item[0],
+       [0] = Hán tự
+       [1] = Pinyin
+       [2] = Nghĩa tiếng Việt
+    */
 
-            answer:
-                item[2],
+    currentQuestion = {
 
-            pinyin:
-                item[1],
+        question:
+            item[2],
 
-            example:
-                "",
+        answer:
+            item[0],
 
-            type:
-                "vocab"
+        pinyin:
+            item[1]
 
-        };
-
-
-        document
-            .getElementById(
-                "modeTitle"
-            )
-            .textContent =
-            "LUYỆN TỪ VỰNG";
+    };
 
 
-        const question =
-            document.getElementById(
-                "question"
-            );
+    document
+        .getElementById(
+            "modeTitle"
+        )
+        .textContent =
+        "HSK " +
+        currentHSK +
+        " • LUYỆN VIẾT";
 
 
-        question.className =
-            "question hanzi";
-
-
-        question.textContent =
-            currentQuestion.question;
-
-    }
-
-
-    /* =====================================================
-       LUYỆN CÂU
-    ================================================== */
-
-    else {
-
-        const item =
-            sentenceData[
-                currentIndex %
-                sentenceData.length
-            ];
-
-
-        currentQuestion = {
-
-            question:
-                item.vi,
-
-            answer:
-                item.zh,
-
-            pinyin:
-                item.pinyin,
-
-            example:
-                item.hanzi +
-                " — " +
-                item.pinyin,
-
-            type:
-                "sentence"
-
-        };
-
-
-        document
-            .getElementById(
-                "modeTitle"
-            )
-            .textContent =
-            "LUYỆN CÂU HSK3";
-
-
-        const question =
-            document.getElementById(
-                "question"
-            );
-
-
-        question.className =
-            "question vi";
-
-
-        question.textContent =
-            currentQuestion.question;
-
-    }
+    document
+        .getElementById(
+            "question"
+        )
+        .textContent =
+        currentQuestion.question;
 
 
     updateProgress();
@@ -1336,17 +908,15 @@ function loadQuestion() {
 }
 
 
-/* =========================================================
-   CHUẨN HÓA
-========================================================= */
+/* =====================================================
+   CHUẨN HÓA CÂU TRẢ LỜI
+===================================================== */
 
 function normalizeText(text) {
 
     return String(text)
 
         .trim()
-
-        .toLowerCase()
 
         .replace(/\s+/g,"")
 
@@ -1358,13 +928,18 @@ function normalizeText(text) {
 }
 
 
-/* =========================================================
-   KIỂM TRA
-========================================================= */
+/* =====================================================
+   KIỂM TRA ĐÁP ÁN
+===================================================== */
 
 function checkAnswer() {
 
     if (!currentQuestion) {
+        return;
+    }
+
+
+    if (questionCompleted) {
         return;
     }
 
@@ -1392,20 +967,14 @@ function checkAnswer() {
         );
 
 
-    /* =====================================================
+    /* =================================================
        ĐÚNG
-    ================================================== */
+    ================================================= */
 
-    if (userAnswer === correctAnswer) {
-
-        /*
-           Nếu câu đã hoàn thành thì không xử lý lại.
-        */
-
-        if (questionCompleted) {
-            return;
-        }
-
+    if (
+        userAnswer ===
+        correctAnswer
+    ) {
 
         questionCompleted = true;
 
@@ -1450,16 +1019,6 @@ function checkAnswer() {
             '</div>';
 
 
-        if (
-            currentQuestion.type ===
-            "sentence"
-        ) {
-
-            showExample();
-
-        }
-
-
         saveLastQuestion();
 
 
@@ -1467,8 +1026,7 @@ function checkAnswer() {
 
 
         /*
-           Đúng:
-           chờ 1.5 giây rồi sang câu mới.
+           Sau 1,5 giây sang từ tiếp theo.
         */
 
         nextTimer =
@@ -1486,13 +1044,13 @@ function checkAnswer() {
     }
 
 
-    /* =====================================================
+    /* =================================================
        SAI
-    ================================================== */
+    ================================================= */
 
     /*
-       Nếu đã hiện đáp án sau 3 lần sai,
-       vẫn cho người dùng nhập lại.
+       Sau khi đã hiện đáp án ở lần 3,
+       nhập sai tiếp không tăng số lần sai nữa.
     */
 
     if (!answerShown) {
@@ -1514,16 +1072,12 @@ function checkAnswer() {
     );
 
 
-    /*
-       Cập nhật thống kê.
-    */
-
     updateStats();
 
 
-    /* =====================================================
+    /* =================================================
        SAI LẦN 2
-    ================================================== */
+    ================================================= */
 
     if (
         wrongAttempts === 2
@@ -1534,9 +1088,9 @@ function checkAnswer() {
     }
 
 
-    /* =====================================================
+    /* =================================================
        SAI LẦN 3
-    ================================================== */
+    ================================================= */
 
     if (
         wrongAttempts >= 3 &&
@@ -1553,9 +1107,9 @@ function checkAnswer() {
 }
 
 
-/* =========================================================
-   HIỆN CHỮ ĐẦU PINYIN
-========================================================= */
+/* =====================================================
+   GỢI Ý CHỮ ĐẦU PINYIN
+===================================================== */
 
 function showPinyinInitials() {
 
@@ -1565,52 +1119,40 @@ function showPinyinInitials() {
         );
 
 
+    const pinyin =
+        String(
+            currentQuestion.pinyin
+        ).trim();
+
+
+    const initials =
+        pinyin
+
+            .split(/\s+/)
+
+            .map(function(word) {
+
+                return word
+                    ? word.charAt(0)
+                    : "";
+
+            })
+
+            .join("");
+
+
     hint.innerHTML =
         "Gợi ý Pinyin: " +
-        getPinyinInitials(
-            currentQuestion.pinyin
+        escapeHTML(
+            initials
         );
 
 }
 
 
-/* =========================================================
-   LẤY CHỮ ĐẦU PINYIN
-========================================================= */
-
-function getPinyinInitials(
-    pinyin
-) {
-
-    if (!pinyin) {
-        return "";
-    }
-
-
-    return String(pinyin)
-
-        .trim()
-
-        .split(/\s+/)
-
-        .map(function(word) {
-
-            if (!word) {
-                return "";
-            }
-
-            return word.charAt(0);
-
-        })
-
-        .join("");
-
-}
-
-
-/* =========================================================
+/* =====================================================
    HIỆN ĐÁP ÁN SAU 3 LẦN SAI
-========================================================= */
+===================================================== */
 
 function showAnswerAfterThreeWrong() {
 
@@ -1639,62 +1181,19 @@ function showAnswerAfterThreeWrong() {
         '</div>';
 
 
-    const hint =
-        document.getElementById(
+    document
+        .getElementById(
             "hint"
-        );
-
-
-    hint.innerHTML =
+        )
+        .innerHTML =
         "Hãy gõ lại đúng đáp án để tiếp tục.";
 
-
-    if (
-        currentQuestion.type ===
-        "sentence"
-    ) {
-
-        showExample();
-
-    }
-
 }
 
 
-/* =========================================================
-   VÍ DỤ CÂU
-========================================================= */
-
-function showExample() {
-
-    if (!currentQuestion.example) {
-        return;
-    }
-
-
-    const example =
-        document.getElementById(
-            "example"
-        );
-
-
-    example.innerHTML =
-        "<strong>Ví dụ:</strong><br>" +
-        escapeHTML(
-            currentQuestion.example
-        );
-
-
-    example.classList.remove(
-        "hidden"
-    );
-
-}
-
-
-/* =========================================================
-   CÂU VỪA LÀM
-========================================================= */
+/* =====================================================
+   LƯU CÂU VỪA LÀM
+===================================================== */
 
 function saveLastQuestion() {
 
@@ -1707,13 +1206,7 @@ function saveLastQuestion() {
             currentQuestion.answer,
 
         pinyin:
-            currentQuestion.pinyin,
-
-        example:
-            currentQuestion.example,
-
-        type:
-            currentQuestion.type
+            currentQuestion.pinyin
 
     };
 
@@ -1723,9 +1216,9 @@ function saveLastQuestion() {
 }
 
 
-/* =========================================================
+/* =====================================================
    XEM CÂU VỪA LÀM
-========================================================= */
+===================================================== */
 
 function showPreviousQuestion() {
 
@@ -1764,13 +1257,7 @@ function showPreviousQuestion() {
             lastQuestion.answer,
 
         pinyin:
-            lastQuestion.pinyin,
-
-        example:
-            lastQuestion.example,
-
-        type:
-            lastQuestion.type
+            lastQuestion.pinyin
 
     };
 
@@ -1778,66 +1265,15 @@ function showPreviousQuestion() {
     questionCompleted = true;
 
 
-    const question =
-        document.getElementById(
+    answerShown = true;
+
+
+    document
+        .getElementById(
             "question"
-        );
-
-
-    if (
-        lastQuestion.type ===
-        "vocab"
-    ) {
-
-        question.className =
-            "question hanzi";
-
-    }
-
-    else {
-
-        question.className =
-            "question vi";
-
-    }
-
-
-    question.textContent =
+        )
+        .textContent =
         lastQuestion.question;
-
-
-    const modeTitle =
-        document.getElementById(
-            "modeTitle"
-        );
-
-
-    if (
-        lastQuestion.type ===
-        "write"
-    ) {
-
-        modeTitle.textContent =
-            "LUYỆN VIẾT CHỮ HÁN";
-
-    }
-
-    else if (
-        lastQuestion.type ===
-        "vocab"
-    ) {
-
-        modeTitle.textContent =
-            "LUYỆN TỪ VỰNG";
-
-    }
-
-    else {
-
-        modeTitle.textContent =
-            "LUYỆN CÂU HSK3";
-
-    }
 
 
     const input =
@@ -1884,28 +1320,6 @@ function showPreviousQuestion() {
         '</div>';
 
 
-    if (lastQuestion.example) {
-
-        const example =
-            document.getElementById(
-                "example"
-            );
-
-
-        example.innerHTML =
-            "<strong>Ví dụ:</strong><br>" +
-            escapeHTML(
-                lastQuestion.example
-            );
-
-
-        example.classList.remove(
-            "hidden"
-        );
-
-    }
-
-
     document
         .getElementById(
             "hint"
@@ -1916,11 +1330,11 @@ function showPreviousQuestion() {
 }
 
 
-/* =========================================================
-   XÁO TRỘN
-========================================================= */
+/* =====================================================
+   XÁO TRỘN HSK HIỆN TẠI
+===================================================== */
 
-function shuffleCurrentMode() {
+function shuffleCurrentLevel() {
 
     if (nextTimer) {
 
@@ -1931,29 +1345,9 @@ function shuffleCurrentMode() {
     }
 
 
-    if (
-        currentMode ===
-        "write"
-    ) {
-
-        shuffle(writeData);
-
-    }
-
-    else if (
-        currentMode ===
-        "vocab"
-    ) {
-
-        shuffle(vocabData);
-
-    }
-
-    else {
-
-        shuffle(sentenceData);
-
-    }
+    shuffle(
+        hskData[currentHSK]
+    );
 
 
     currentIndex = 0;
@@ -1964,9 +1358,9 @@ function shuffleCurrentMode() {
 }
 
 
-/* =========================================================
+/* =====================================================
    THỐNG KÊ
-========================================================= */
+===================================================== */
 
 function updateStats() {
 
@@ -2017,62 +1411,45 @@ function updateStats() {
         .textContent =
         accuracy + "%";
 
-
-    updateProgress();
-
 }
 
 
-/* =========================================================
-   TIẾN ĐỘ
-========================================================= */
+/* =====================================================
+   PROGRESS
+===================================================== */
 
 function updateProgress() {
 
-    let total = 1;
+    const data =
+        hskData[currentHSK];
 
 
     if (
-        currentMode ===
-        "write"
+        !data ||
+        data.length === 0
     ) {
 
-        total =
-            writeData.length;
+        document
+            .getElementById(
+                "progressFill"
+            )
+            .style.width =
+            "0%";
 
-    }
+        return;
 
-    else if (
-        currentMode ===
-        "vocab"
-    ) {
-
-        total =
-            vocabData.length;
-
-    }
-
-    else {
-
-        total =
-            sentenceData.length;
-
-    }
-
-
-    if (total <= 0) {
-        total = 1;
     }
 
 
     const position =
-        currentIndex % total;
+        currentIndex %
+        data.length;
 
 
     const percent =
         (
             (position + 1) /
-            total
+            data.length
         ) * 100;
 
 
@@ -2086,9 +1463,9 @@ function updateProgress() {
 }
 
 
-/* =========================================================
+/* =====================================================
    ESCAPE HTML
-========================================================= */
+===================================================== */
 
 function escapeHTML(text) {
 
@@ -2122,9 +1499,9 @@ function escapeHTML(text) {
 }
 
 
-/* =========================================================
+/* =====================================================
    ENTER = KIỂM TRA
-========================================================= */
+===================================================== */
 
 document
     .getElementById(
@@ -2149,11 +1526,24 @@ document
     );
 
 
-/* =========================================================
+/* =====================================================
    KHỞI ĐỘNG
-========================================================= */
+===================================================== */
 
-init();
+shuffle(
+    hskData[1]
+);
+
+shuffle(
+    hskData[2]
+);
+
+shuffle(
+    hskData[3]
+);
+
+
+loadQuestion();
 
 </script>
 
