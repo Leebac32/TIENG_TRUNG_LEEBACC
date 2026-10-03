@@ -1,2 +1,1 @@
-# -
-Học tiếng trung HSK3 với leebacc
+Cùng LeeBacc học tiếng Trung nhé!!
