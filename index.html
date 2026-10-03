@@ -254,34 +254,6 @@ body{
 }
 
 /* =====================================================
-   LEARNING MENU
-===================================================== */
-
-.menu{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:6px;
-    margin-bottom:7px;
-}
-
-.menu button{
-    border:none;
-    background:white;
-    border-radius:10px;
-    padding:8px 4px;
-    font-size:14px;
-    font-weight:700;
-    color:#444;
-    cursor:pointer;
-    box-shadow:0 2px 7px rgba(0,0,0,.05);
-}
-
-.menu button.active{
-    background:#1677ff;
-    color:white;
-}
-
-/* =====================================================
    STATS
 ===================================================== */
 
@@ -337,10 +309,38 @@ body{
 ===================================================== */
 
 .card{
+    position:relative;
     background:white;
     border-radius:18px;
     padding:18px;
     box-shadow:0 5px 18px rgba(0,0,0,.07);
+}
+
+/* =====================================================
+   NÚT QUAY LẠI
+===================================================== */
+
+.back-to-menu{
+    position:absolute;
+    top:8px;
+    left:8px;
+    width:32px;
+    height:32px;
+    padding:0;
+    border:none;
+    border-radius:8px;
+    background:#e5e7eb;
+    color:#555;
+    font-size:20px;
+    font-weight:700;
+    line-height:32px;
+    text-align:center;
+    cursor:pointer;
+    z-index:2;
+}
+
+.back-to-menu:active{
+    transform:scale(.94);
 }
 
 .mode-title{
@@ -477,11 +477,6 @@ input:focus{
     .main-menu button{
         min-height:78px;
         font-size:14px;
-    }
-
-    .menu button{
-        font-size:13px;
-        padding:8px 3px;
     }
 
     .card{
@@ -680,33 +675,6 @@ input:focus{
         class="hidden"
     >
 
-        <!-- HSK -->
-
-        <div class="menu">
-
-            <button
-                id="hsk1Button"
-                onclick="selectHSK(1)"
-            >
-                HSK 1
-            </button>
-
-            <button
-                id="hsk2Button"
-                onclick="selectHSK(2)"
-            >
-                HSK 2
-            </button>
-
-            <button
-                id="hsk3Button"
-                onclick="selectHSK(3)"
-            >
-                HSK 3
-            </button>
-
-        </div>
-
         <!-- STATS -->
 
         <div class="stats">
@@ -787,6 +755,14 @@ input:focus{
         <!-- CARD -->
 
         <div class="card">
+
+            <button
+                class="back-to-menu"
+                onclick="exitLearning()"
+                title="Quay lại"
+            >
+                ←
+            </button>
 
             <div
                 id="modeTitle"
@@ -874,18 +850,6 @@ const hskData = {
 
 };
 
-/*
-   LUYỆN CÂU:
-
-   cauhsk3.js:
-
-   window.CAU_HSK3 = [
-       ["Tiếng Việt", "中文"],
-       ["Tiếng Việt", "中文"]
-   ];
-
-*/
-
 const sentenceData =
     Array.isArray(window.CAU_HSK3)
         ? [...window.CAU_HSK3]
@@ -920,13 +884,6 @@ let correctCount = 0;
 let wrongCount = 0;
 
 let doneCount = 0;
-
-/*
-   1 = HSK1
-   2 = HSK2
-   3 = HSK3
-   4 = LUYỆN CÂU
-*/
 
 let selectedCourse = 1;
 
@@ -1060,10 +1017,6 @@ function ensureUserData(){
         }
 
     });
-
-    /*
-       DỮ LIỆU LUYỆN CÂU ĐƯỢC TÁCH RIÊNG
-    */
 
     if(
         !currentUser.sentence ||
@@ -1513,6 +1466,26 @@ function backToSelection(){
 }
 
 /* =====================================================
+   QUAY LẠI MENU 4 LỰA CHỌN TỪ KHU LÀM BÀI
+===================================================== */
+
+function exitLearning(){
+
+    if(nextTimer){
+
+        clearTimeout(nextTimer);
+
+        nextTimer = null;
+
+    }
+
+    saveCurrentProgress();
+
+    showSelection();
+
+}
+
+/* =====================================================
    BẮT ĐẦU MỤC ĐÃ CHỌN
 ===================================================== */
 
@@ -1599,25 +1572,12 @@ function startHSKPractice(level){
         "👤 " +
         currentUser.name;
 
-    document
-        .getElementById("hsk1Button")
-        .classList.remove("active");
+    /*
+       Không còn menu HSK 1/2/3
+    */
 
     document
-        .getElementById("hsk2Button")
-        .classList.remove("active");
-
-    document
-        .getElementById("hsk3Button")
-        .classList.remove("active");
-
-    document
-        .getElementById(
-            "hsk" +
-            currentHSK +
-            "Button"
-        )
-        .classList.add("active");
+        .querySelector(".menu");
 
     loadQuestion();
 
@@ -1680,20 +1640,12 @@ function startSentencePractice(){
         "👤 " +
         currentUser.name;
 
-    /*
-       ẨN MENU HSK KHI LUYỆN CÂU
-    */
-
-    document
-        .querySelector(".menu")
-        .classList.add("hidden");
-
     loadSentenceQuestion();
 
 }
 
 /* =====================================================
-   ENTER LEARNING CŨ
+   ENTER LEARNING
 ===================================================== */
 
 function enterLearning(){
@@ -1705,11 +1657,6 @@ function enterLearning(){
     }
 
     ensureUserData();
-
-    /*
-       Khi bấm tiếp tục:
-       giữ nguyên HSK cuối cùng như hệ thống cũ.
-    */
 
     document
         .getElementById("nameScreen")
@@ -1736,10 +1683,6 @@ function enterLearning(){
         .textContent =
         "👤 " +
         currentUser.name;
-
-    document
-        .querySelector(".menu")
-        .classList.remove("hidden");
 
     let level =
         Number(
@@ -1782,26 +1725,6 @@ function enterLearning(){
         level;
 
     saveUser();
-
-    document
-        .getElementById("hsk1Button")
-        .classList.remove("active");
-
-    document
-        .getElementById("hsk2Button")
-        .classList.remove("active");
-
-    document
-        .getElementById("hsk3Button")
-        .classList.remove("active");
-
-    document
-        .getElementById(
-            "hsk" +
-            level +
-            "Button"
-        )
-        .classList.add("active");
 
     loadQuestion();
 
@@ -1848,7 +1771,8 @@ function changeUser(){
 }
 
 /* =====================================================
-   SELECT HSK TRONG KHU LÀM BÀI
+   SELECT HSK
+   GIỮ FUNCTION ĐỂ KHÔNG PHÁ LOGIC CŨ
 ===================================================== */
 
 function selectHSK(level){
@@ -1863,10 +1787,6 @@ function selectHSK(level){
 
     currentLearningType =
         "hsk";
-
-    document
-        .querySelector(".menu")
-        .classList.remove("hidden");
 
     randomizeLevel(level);
 
@@ -1891,24 +1811,6 @@ function selectHSK(level){
         level;
 
     saveUser();
-
-    document
-        .getElementById("hsk1Button")
-        .classList.remove("active");
-
-    document
-        .getElementById("hsk2Button")
-        .classList.remove("active");
-
-    document
-        .getElementById("hsk3Button")
-        .classList.remove("active");
-
-    document
-        .getElementById(
-            "hsk" + level + "Button"
-        )
-        .classList.add("active");
 
     loadQuestion();
 
@@ -2102,12 +2004,6 @@ function loadSentenceQuestion(){
     const item =
         data[realIndex];
 
-    /*
-       CAU_HSK3:
-       [0] = tiếng Việt
-       [1] = chữ Hán
-    */
-
     currentQuestion = {
 
         question:item[0],
@@ -2155,11 +2051,6 @@ function normalizeText(text){
 
         .replace(/\s+/g,"")
 
-        /*
-           Bỏ dấu câu để người học
-           không bị sai vì dấu câu.
-        */
-
         .replace(
             /[，。！？、,.!?;；:：'"“”‘’`]/g,
             ""
@@ -2206,10 +2097,6 @@ function checkAnswer(){
             currentQuestion.answer
         );
 
-    /* =================================================
-       ĐÚNG
-    ================================================= */
-
     if(
         userAnswer ===
         correctAnswer
@@ -2236,10 +2123,6 @@ function checkAnswer(){
 
         result.className =
             "result correct";
-
-        /*
-           LUYỆN CÂU KHÔNG CÓ PINYIN
-        */
 
         if(
             currentLearningType ===
@@ -2301,10 +2184,6 @@ function checkAnswer(){
 
     }
 
-    /* =================================================
-       SAI
-    ================================================= */
-
     if(!answerShown){
 
         wrongAttempts++;
@@ -2324,11 +2203,6 @@ function checkAnswer(){
     saveCurrentProgress();
 
     updateStats();
-
-    /*
-       LUYỆN CÂU:
-       không dùng gợi ý pinyin.
-    */
 
     if(
         currentLearningType ===
@@ -2350,11 +2224,6 @@ function checkAnswer(){
 
     }
 
-    /*
-       HSK CŨ
-       Sai lần 2 hiện chữ cái đầu pinyin.
-    */
-
     if(
         wrongAttempts === 2
     ){
@@ -2362,10 +2231,6 @@ function checkAnswer(){
         showPinyinInitials();
 
     }
-
-    /*
-       Sai lần 3 hiện đáp án.
-    */
 
     if(
         wrongAttempts >= 3 &&
@@ -2570,10 +2435,6 @@ function showPreviousQuestion(){
 
     result.className =
         "result correct";
-
-    /*
-       LUYỆN CÂU KHÔNG CÓ PINYIN
-    */
 
     if(
         currentLearningType ===
@@ -2937,11 +2798,6 @@ document
 
     if(!savedUser){
 
-        /*
-           Người mới:
-           vẫn hiện màn hình nhập tên
-        */
-
         showNameScreen();
 
         return;
@@ -2954,11 +2810,6 @@ document
     ensureUserData();
 
     saveUser();
-
-    /*
-       Người đã có dữ liệu:
-       giữ nguyên cơ chế tiếp tục cũ.
-    */
 
     showContinueScreen();
 
