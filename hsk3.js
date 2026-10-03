@@ -180,7 +180,7 @@ window.HSK3 = [
   ["换", "huàn", "đổi, thay"],
   ["黄色", "huángsè", "màu vàng"],
   ["回答", "huídá", "trả lời"],
-  ["会2", "huì", "cuộc họp; hội"],
+  ["会", "huì", "cuộc họp; hội"],
   ["会议", "huìyì", "cuộc họp, hội nghị"],
   ["或", "huò", "hoặc; có lẽ"],
   ["或者", "huòzhě", "hoặc; hay là"],
