@@ -1,4 +1,4 @@
-const HSK2 = [
+window.HSK2 = [
   ["啊", "a", "à, nhé, ạ"],
   ["爱好", "àihào", "sở thích; yêu thích"],
   ["白色", "báisè", "màu trắng"],
