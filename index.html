@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Học Tiếng Trung HSK3</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#f4f6f8;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  color:#222;
+}
+
+.container{
+  max-width:700px;
+  margin:auto;
+  padding:15px;
+}
+
+.header{
+  background:linear-gradient(135deg,#1677ff,#005bea);
+  color:white;
+  border-radius:18px;
+  padding:20px 15px;
+  text-align:center;
+  box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.header h1{
+  margin:0;
+  font-size:25px;
+}
+
+.header p{
+  margin:7px 0 0;
+  opacity:.95;
+  font-size:14px;
+}
+
+.menu{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin:12px 0;
+}
+
+.menu button{
+  border:0;
+  background:white;
+  border-radius:13px;
+  padding:11px 5px;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 2px 7px rgba(0,0,0,.05);
+}
+
+.menu button.active{
+  background:#1677ff;
+  color:white;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.stat{
+  background:white;
+  border-radius:13px;
+  padding:10px 5px;
+  text-align:center;
+  box-shadow:0 2px 7px rgba(0,0,0,.05);
+}
+
+.stat-number{
+  font-size:20px;
+  font-weight:700;
+}
+
+.stat-label{
+  font-size:12px;
+  color:#777;
+  margin-top:2px;
+}
+
+.progress{
+  height:7px;
+  background:#ddd;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:12px;
+}
+
+.progress-fill{
+  height:100%;
+  width:0%;
+  background:#1677ff;
+  transition:.25s;
+}
+
+.card{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 5px 18px rgba(0,0,0,.07);
+}
+
+.mode-title{
+  text-align:center;
+  font-size:14px;
+  color:#1677ff;
+  font-weight:700;
+  margin-bottom:18px;
+}
+
+.question{
+  text-align:center;
+  font-size:30px;
+  font-weight:700;
+  min-height:48px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  word-break:break-word;
+}
+
+.question.vi{
+  font-size:24px;
+  line-height:1.4;
+}
+
+.question.hanzi{
+  font-size:38px;
+}
+
+.pinyin{
+  text-align:center;
+  margin-top:10px;
+  color:#555;
+  font-size:19px;
+  font-style:italic;
+  min-height:27px;
+}
+
+.example{
+  background:#f4f7fb;
+  border-left:4px solid #1677ff;
+  padding:12px;
+  margin-top:14px;
+  border-radius:8px;
+  line-height:1.5;
+  font-size:14px;
+}
+
+.example-title{
+  font-weight:700;
+  margin-bottom:4px;
+  color:#1677ff;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin-top:18px;
+  border:2px solid #ddd;
+  border-radius:12px;
+  font-size:18px;
+  outline:none;
+  text-align:center;
+}
+
+input:focus{
+  border-color:#1677ff;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px;
+}
+
+.actions button,
+.bottom-buttons button{
+  border:0;
+  border-radius:11px;
+  padding:12px;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.check{
+  background:#1677ff;
+  color:white;
+}
+
+.next{
+  background:#eaf2ff;
+  color:#1677ff;
+}
+
+.bottom-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px;
+}
+
+.shuffle{
+  background:#f0f0f0;
+}
+
+.reset{
+  background:#f0f0f0;
+}
+
+.result{
+  margin-top:13px;
+  padding:12px;
+  border-radius:10px;
+  text-align:center;
+  font-size:15px;
+}
+
+.correct{
+  background:#e8f8ed;
+  color:#16833a;
+}
+
+.wrong{
+  background:#fff0f0;
+  color:#d52b2b;
+}
+
+.hint{
+  margin-top:8px;
+  background:#fff8df;
+  color:#866500;
+  padding:10px;
+  border-radius:9px;
+  font-size:14px;
+}
+
+.answer{
+  margin-top:8px;
+  font-size:18px;
+  font-weight:700;
+}
+
+.info{
+  margin-top:14px;
+  text-align:center;
+  color:#777;
+  font-size:13px;
+}
+
+.footer{
+  text-align:center;
+  color:#999;
+  font-size:12px;
+  margin-top:18px;
+}
+
+.hidden{
+  display:none!important;
+}
+
+@media(max-width:430px){
+  .container{
+    padding:10px;
+  }
+
+  .header h1{
+    font-size:22px;
+  }
+
+  .card{
+    padding:16px;
+  }
+
+  .question{
+    font-size:27px;
+  }
+
+  .question.hanzi{
+    font-size:34px;
+  }
+
+  .question.vi{
+    font-size:21px;
+  }
+
+  input{
+    font-size:17px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h1>🇨🇳 HỌC TIẾNG TRUNG HSK3</h1>
+    <p>Luyện từ vựng • chữ Hán • câu</p>
+  </div>
+
+  <div class="menu">
+    <button id="btnWriting" onclick="setMode('writing')">
+      🀄<br>Luyện viết
+    </button>
+
+    <button id="btnVocabulary" onclick="setMode('vocabulary')">
+      📚<br>Từ vựng
+    </button>
+
+    <button id="btnSentence" onclick="setMode('sentence')">
+      💬<br>Luyện câu
+    </button>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <div class="stat-number" id="correctCount">0</div>
+      <div class="stat-label">Đúng</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-number" id="wrongCount">0</div>
+      <div class="stat-label">Sai</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-number" id="doneCount">0</div>
+      <div class="stat-label">Đã làm</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-number" id="accuracy">0%</div>
+      <div class="stat-label">Tỷ lệ</div>
+    </div>
+
+  </div>
+
+  <div class="progress">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <div class="card">
+
+    <div class="mode-title" id="modeTitle">
+      LUYỆN VIẾT CHỮ HÁN
+    </div>
+
+    <div class="question vi" id="question">
+      yêu thích
+    </div>
+
+    <div class="pinyin" id="pinyin"></div>
+
+    <div class="example hidden" id="example">
+      <div class="example-title">📌 Câu mẫu</div>
+      <div id="exampleText"></div>
+    </div>
+
+    <input
+      id="answerInput"
+      type="text"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="Nhập câu trả lời..."
+    >
+
+    <div class="actions">
+
+      <button class="check" onclick="checkAnswer()">
+        ✓ Kiểm tra
+      </button>
+
+      <button class="next" onclick="nextQuestion()">
+        → Câu tiếp
+      </button>
+
+    </div>
+
+    <div id="result" class="result hidden"></div>
+
+    <div id="hint" class="hint hidden"></div>
+
+    <div class="info" id="info">
+      Sai 3 lần sẽ hiện Pinyin gợi ý.
+    </div>
+
+  </div>
+
+  <div class="bottom-buttons">
+
+    <button class="shuffle" onclick="shuffleQuestions()">
+      🔀 Xáo trộn
+    </button>
+
+    <button class="reset" onclick="resetGame()">
+      ↻ Làm lại
+    </button>
+
+  </div>
+
+  <div class="footer">
+    HSK3 Chinese Practice
+  </div>
+
+</div>
+
+<!-- DỮ LIỆU -->
+<script src="hsk1.js"></script>
+<script src="hsk2.js"></script>
+<script src="hsk3.js"></script>
+
+<script>
+
+/* =========================================================
+   CẤU HÌNH
+========================================================= */
+
+const MAX_WRONG = 3;
+const AUTO_NEXT_DELAY = 850;
+
+
+/* =========================================================
+   BIẾN CHƯƠNG TRÌNH
+========================================================= */
+
+let currentMode = "writing";
+
+let questionList = [];
+let currentIndex = 0;
+
+let wrongAttempts = 0;
+
+let correct = 0;
+let wrong = 0;
+let done = 0;
+
+let answered = false;
+let autoNextTimer = null;
+
+
+/* =========================================================
+   LẤY DỮ LIỆU HSK
+========================================================= */
+
+function getAllVocabulary(){
+
+  let data = [];
+
+  if(Array.isArray(window.HSK1)){
+    data = data.concat(window.HSK1);
+  }
+
+  if(Array.isArray(window.HSK2)){
+    data = data.concat(window.HSK2);
+  }
+
+  if(Array.isArray(window.HSK3)){
+    data = data.concat(window.HSK3);
+  }
+
+  return data;
+}
+
+
+function getHSK3(){
+
+  if(Array.isArray(window.HSK3)){
+    return window.HSK3;
+  }
+
+  return [];
+}
+
+
+/* =========================================================
+   XỬ LÝ CHUỖI
+========================================================= */
+
+function normalizeText(text){
+
+  return String(text || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g,"")
+    .replace(/[，。！？、,.!?；;：“”"‘’'「」『』（）()]/g,"");
+}
+
+
+function shuffleArray(array){
+
+  let arr = [...array];
+
+  for(let i=arr.length-1;i>0;i--){
+
+    const j = Math.floor(Math.random()*(i+1));
+
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+
+  return arr;
+}
+
+
+/* =========================================================
+   TẠO KHOẢNG 500 CÂU HSK3
+========================================================= */
+
+/*
+   Mỗi phần tử HSK3 có:
+
+   [0] = Hán tự
+   [1] = Pinyin
+   [2] = Nghĩa Việt
+
+   Chúng ta dùng chính từ HSK3 để tạo câu luyện.
+*/
+
+function buildSentenceData(){
+
+  const vocab = getHSK3();
+
+  if(!vocab.length){
+    return [];
+  }
+
+  const result = [];
+
+  /*
+     Các mẫu câu được thiết kế đơn giản,
+     phù hợp với người học HSK3.
+  */
+
+  const templates = [
+
+    {
+      vi:"Tôi rất thích {meaning}.",
+      zh:"我很喜欢{word}。",
+      py:"Wǒ hěn xǐhuan {pinyin}。"
+    },
+
+    {
+      vi:"Tôi thường {meaning}.",
+      zh:"我经常{word}。",
+      py:"Wǒ jīngcháng {pinyin}。"
+    },
+
+    {
+      vi:"Hôm nay tôi muốn {meaning}.",
+      zh:"今天我想{word}。",
+      py:"Jīntiān wǒ xiǎng {pinyin}。"
+    },
+
+    {
+      vi:"Tôi không biết {meaning}.",
+      zh:"我不知道怎么{word}。",
+      py:"Wǒ bù zhīdào zěnme {pinyin}。"
+    },
+
+    {
+      vi:"Bạn có thể {meaning} không?",
+      zh:"你可以{word}吗？",
+      py:"Nǐ kěyǐ {pinyin} ma?"
+    },
+
+    {
+      vi:"Tôi đang {meaning}.",
+      zh:"我正在{word}。",
+      py:"Wǒ zhèngzài {pinyin}。"
+    },
+
+    {
+      vi:"Ngày mai chúng ta sẽ {meaning}.",
+      zh:"明天我们会{word}。",
+      py:"Míngtiān wǒmen huì {pinyin}。"
+    },
+
+    {
+      vi:"Tôi muốn học cách {meaning}.",
+      zh:"我想学习怎么{word}。",
+      py:"Wǒ xiǎng xuéxí zěnme {pinyin}。"
+    },
+
+    {
+      vi:"Anh ấy đang {meaning}.",
+      zh:"他正在{word}。",
+      py:"Tā zhèngzài {pinyin}。"
+    },
+
+    {
+      vi:"Cô ấy thường {meaning}.",
+      zh:"她经常{word}。",
+      py:"Tā jīngcháng {pinyin}。"
+    },
+
+    {
+      vi:"Chúng tôi cùng nhau {meaning}.",
+      zh:"我们一起{word}。",
+      py:"Wǒmen yìqǐ {pinyin}。"
+    },
+
+    {
+      vi:"Bạn đã {meaning} chưa?",
+      zh:"你已经{word}了吗？",
+      py:"Nǐ yǐjīng {pinyin} le ma?"
+    },
+
+    {
+      vi:"Tôi chưa {meaning}.",
+      zh:"我还没有{word}。",
+      py:"Wǒ hái méiyǒu {pinyin}。"
+    },
+
+    {
+      vi:"Sau khi {meaning}, tôi sẽ về nhà.",
+      zh:"{word}以后，我就回家。",
+      py:"{pinyin} yǐhòu, wǒ jiù huí jiā."
+    },
+
+    {
+      vi:"Nếu có thời gian, tôi sẽ {meaning}.",
+      zh:"如果有时间，我就{word}。",
+      py:"Rúguǒ yǒu shíjiān, wǒ jiù {pinyin}。"
+    },
+
+    {
+      vi:"Mỗi ngày tôi đều {meaning}.",
+      zh:"我每天都{word}。",
+      py:"Wǒ měitiān dōu {pinyin}。"
+    },
+
+    {
+      vi:"Tối nay tôi muốn {meaning}.",
+      zh:"今天晚上我想{word}。",
+      py:"Jīntiān wǎnshang wǒ xiǎng {pinyin}。"
+    },
+
+    {
+      vi:"Cuối tuần chúng tôi sẽ {meaning}.",
+      zh:"周末我们会{word}。",
+      py:"Zhōumò wǒmen huì {pinyin}。"
+    },
+
+    {
+      vi:"Tôi nghĩ rằng nên {meaning}.",
+      zh:"我觉得应该{word}。",
+      py:"Wǒ juéde yīnggāi {pinyin}。"
+    },
+
+    {
+      vi:"Tôi không muốn {meaning}.",
+      zh:"我不想{word}。",
+      py:"Wǒ bù xiǎng {pinyin}。"
+    },
+
+    {
+      vi:"Bạn đừng {meaning}.",
+      zh:"你不要{word}。",
+      py:"Nǐ bú yào {pinyin}。"
+    },
+
+    {
+      vi:"Xin hãy {meaning}.",
+      zh:"请{word}。",
+      py:"Qǐng {pinyin}。"
+    },
+
+    {
+      vi:"Chúng ta có thể cùng {meaning}.",
+      zh:"我们可以一起{word}。",
+      py:"Wǒmen kěyǐ yìqǐ {pinyin}。"
+    },
+
+    {
+      vi:"Tôi vừa mới {meaning}.",
+      zh:"我刚刚{word}。",
+      py:"Wǒ gānggāng {pinyin}。"
+    },
+
+    {
+      vi:"Tôi đã {meaning} rồi.",
+      zh:"我已经{word}了。",
+      py:"Wǒ yǐjīng {pinyin} le."
+    }
+
+  ];
+
+
+  /*
+     Không phải từ HSK3 nào cũng là động từ.
+
+     Vì vậy ngoài mẫu động từ ở trên,
+     tạo thêm các mẫu có thể dùng với danh từ/tính từ.
+  */
+
+  const nounTemplates = [
+
+    {
+      vi:"Tôi biết {meaning}.",
+      zh:"我知道{word}。",
+      py:"Wǒ zhīdào {pinyin}。"
+    },
+
+    {
+      vi:"Tôi rất thích {meaning}.",
+      zh:"我很喜欢{word}。",
+      py:"Wǒ hěn xǐhuan {pinyin}。"
+    },
+
+    {
+      vi:"Tôi muốn biết thêm về {meaning}.",
+      zh:"我想多了解{word}。",
+      py:"Wǒ xiǎng duō liǎojiě {pinyin}。"
+    },
+
+    {
+      vi:"Đây là {meaning}.",
+      zh:"这是{word}。",
+      py:"Zhè shì {pinyin}。"
+    },
+
+    {
+      vi:"Kia là {meaning}.",
+      zh:"那是{word}。",
+      py:"Nà shì {pinyin}。"
+    },
+
+    {
+      vi:"Tôi thường thấy {meaning}.",
+      zh:"我经常看到{word}。",
+      py:"Wǒ jīngcháng kàndào {pinyin}。"
+    },
+
+    {
+      vi:"Hôm nay tôi nói về {meaning}.",
+      zh:"今天我说说{word}。",
+      py:"Jīntiān wǒ shuōshuo {pinyin}。"
+    },
+
+    {
+      vi:"Tôi không hiểu {meaning}.",
+      zh:"我不明白{word}。",
+      py:"Wǒ bù míngbai {pinyin}。"
+    },
+
+    {
+      vi:"Bạn biết {meaning} không?",
+      zh:"你知道{word}吗？",
+      py:"Nǐ zhīdào {pinyin} ma?"
+    },
+
+    {
+      vi:"Tôi muốn mua {meaning}.",
+      zh:"我想买{word}。",
+      py:"Wǒ xiǎng mǎi {pinyin}。"
+    }
+
+  ];
+
+
+  /*
+     Sinh dữ liệu.
+
+     Mỗi từ sẽ tạo nhiều câu.
+     Lấy tối đa khoảng 500 câu.
+  */
+
+  for(let i=0;i<vocab.length;i++){
+
+    const item = vocab[i];
+
+    if(!Array.isArray(item) || item.length < 3){
+      continue;
+    }
+
+    const word = item[0];
+    const pinyin = item[1];
+    const meaning = item[2];
+
+    /*
+       2 loại mẫu luân phiên.
+    */
+
+    const templatePool =
+      i % 3 === 0
+      ? templates
+      : nounTemplates;
+
+
+    for(let t=0;t<templatePool.length;t++){
+
+      const template = templatePool[t];
+
+      const vi = template.vi
+        .replaceAll("{meaning}",meaning);
+
+      const zh = template.zh
+        .replaceAll("{word}",word);
+
+      const py = template.py
+        .replaceAll("{pinyin}",pinyin);
+
+      result.push({
+
+        vi:vi,
+
+        zh:zh,
+
+        py:py,
+
+        word:word,
+
+        meaning:meaning,
+
+        example:
+          "Từ HSK3: " +
+          word +
+          " — " +
+          pinyin +
+          " — " +
+          meaning
+
+      });
+
+      /*
+         Chỉ cần khoảng 500 câu.
+      */
+
+      if(result.length >= 500){
+        return shuffleArray(result);
+      }
+    }
+  }
+
+  return shuffleArray(result);
+}
+
+
+/* =========================================================
+   KHỞI TẠO DANH SÁCH
+========================================================= */
+
+let sentenceData = buildSentenceData();
+
+
+/* =========================================================
+   TẠO CÂU HỎI CHO LUYỆN VIẾT
+========================================================= */
+
+function buildWritingQuestions(){
+
+  const data = getAllVocabulary();
+
+  return shuffleArray(data).map(item => {
+
+    return {
+
+      question:item[2],
+
+      answer:item[0],
+
+      pinyin:item[1],
+
+      type:"writing"
+
+    };
+
+  });
+}
+
+
+/* =========================================================
+   TẠO CÂU HỎI TỪ VỰNG
+========================================================= */
+
+function buildVocabularyQuestions(){
+
+  const data = getAllVocabulary();
+
+  return shuffleArray(data).map(item => {
+
+    return {
+
+      question:item[0],
+
+      answer:item[2],
+
+      pinyin:item[1],
+
+      type:"vocabulary"
+
+    };
+
+  });
+}
+
+
+/* =========================================================
+   TẠO CÂU HỎI LUYỆN CÂU
+========================================================= */
+
+function buildSentenceQuestions(){
+
+  return shuffleArray(sentenceData).map(item => {
+
+    return {
+
+      question:item.vi,
+
+      answer:item.zh,
+
+      pinyin:item.py,
+
+      example:item.example,
+
+      type:"sentence"
+
+    };
+
+  });
+}
+
+
+/* =========================================================
+   ĐỔI CHẾ ĐỘ
+========================================================= */
+
+function setMode(mode){
+
+  currentMode = mode;
+
+  clearTimeout(autoNextTimer);
+
+  currentIndex = 0;
+  wrongAttempts = 0;
+  answered = false;
+
+  if(mode === "writing"){
+
+    questionList = buildWritingQuestions();
+
+  }else if(mode === "vocabulary"){
+
+    questionList = buildVocabularyQuestions();
+
+  }else{
+
+    questionList = buildSentenceQuestions();
+
+  }
+
+  updateMenu();
+
+  showQuestion();
+}
+
+
+/* =========================================================
+   MENU
+========================================================= */
+
+function updateMenu(){
+
+  document
+    .getElementById("btnWriting")
+    .classList
+    .toggle("active",currentMode === "writing");
+
+  document
+    .getElementById("btnVocabulary")
+    .classList
+    .toggle("active",currentMode === "vocabulary");
+
+  document
+    .getElementById("btnSentence")
+    .classList
+    .toggle("active",currentMode === "sentence");
+
+}
+
+
+/* =========================================================
+   HIỂN THỊ CÂU HỎI
+========================================================= */
+
+function showQuestion(){
+
+  clearTimeout(autoNextTimer);
+
+  if(!questionList.length){
+    return;
+  }
+
+  if(currentIndex >= questionList.length){
+
+    currentIndex = 0;
+
+    questionList = shuffleArray(questionList);
+
+  }
+
+  const q = questionList[currentIndex];
+
+  wrongAttempts = 0;
+  answered = false;
+
+  const questionEl =
+    document.getElementById("question");
+
+  const titleEl =
+    document.getElementById("modeTitle");
+
+  const pinyinEl =
+    document.getElementById("pinyin");
+
+  const exampleEl =
+    document.getElementById("example");
+
+  const exampleText =
+    document.getElementById("exampleText");
+
+  const resultEl =
+    document.getElementById("result");
+
+  const hintEl =
+    document.getElementById("hint");
+
+  const input =
+    document.getElementById("answerInput");
+
+  if(currentMode === "writing"){
+
+    titleEl.textContent =
+      "LUYỆN VIẾT CHỮ HÁN";
+
+    questionEl.textContent =
+      q.question;
+
+    questionEl.className =
+      "question vi";
+
+  }
+
+  else if(currentMode === "vocabulary"){
+
+    titleEl.textContent =
+      "LUYỆN TỪ VỰNG";
+
+    questionEl.textContent =
+      q.question;
+
+    questionEl.className =
+      "question hanzi";
+
+  }
+
+  else{
+
+    titleEl.textContent =
+      "LUYỆN CÂU";
+
+    questionEl.textContent =
+      q.question;
+
+    questionEl.className =
+      "question vi";
+
+  }
+
+
+  pinyinEl.textContent = "";
+
+  exampleEl.classList.add("hidden");
+
+  exampleText.textContent = "";
+
+  resultEl.className =
+    "result hidden";
+
+  resultEl.textContent = "";
+
+  hintEl.classList.add("hidden");
+
+  hintEl.textContent = "";
+
+  input.value = "";
+
+  input.disabled = false;
+
+  input.focus();
+
+  document.getElementById("info").textContent =
+    "Sai 3 lần sẽ hiện đáp án + Pinyin.";
+
+  updateProgress();
+
+}
+
+
+/* =========================================================
+   KIỂM TRA ĐÁP ÁN
+========================================================= */
+
+function checkAnswer(){
+
+  if(answered){
+    return;
+  }
+
+  const input =
+    document.getElementById("answerInput");
+
+  const userAnswer =
+    normalizeText(input.value);
+
+  if(!userAnswer){
+    return;
+  }
+
+  const q =
+    questionList[currentIndex];
+
+  const correctAnswer =
+    normalizeText(q.answer);
+
+  const resultEl =
+    document.getElementById("result");
+
+  const hintEl =
+    document.getElementById("hint");
+
+  const pinyinEl =
+    document.getElementById("pinyin");
+
+  const exampleEl =
+    document.getElementById("example");
+
+  const exampleText =
+    document.getElementById("exampleText");
+
+
+  /* =========================
+     ĐÚNG
+  ========================= */
+
+  if(userAnswer === correctAnswer){
+
+    answered = true;
+
+    correct++;
+    done++;
+
+    resultEl.className =
+      "result correct";
+
+    resultEl.innerHTML =
+      "✓ Chính xác!";
+
+    pinyinEl.textContent =
+      "Pinyin: " + q.pinyin;
+
+    if(currentMode === "sentence"){
+
+      exampleEl.classList.remove("hidden");
+
+      exampleText.textContent =
+        q.example;
+
+    }
+
+    input.disabled = true;
+
+    updateStats();
+
+    /*
+       Đúng thì tự động sang câu tiếp.
+    */
+
+    autoNextTimer =
+      setTimeout(() => {
+
+        nextQuestion();
+
+      },AUTO_NEXT_DELAY);
+
+    return;
+  }
+
+
+  /* =========================
+     SAI
+  ========================= */
+
+  wrongAttempts++;
+  wrong++;
+
+  resultEl.className =
+    "result wrong";
+
+  resultEl.innerHTML =
+    "✗ Chưa đúng. Lần " +
+    wrongAttempts +
+    "/" +
+    MAX_WRONG;
+
+  hintEl.classList.remove("hidden");
+
+  hintEl.textContent =
+    "Hãy thử lại.";
+
+  updateStats();
+
+
+  /* =========================
+     SAI 3 LẦN
+  ========================= */
+
+  if(wrongAttempts >= MAX_WRONG){
+
+    answered = true;
+
+    done++;
+
+    resultEl.className =
+      "result wrong";
+
+    resultEl.innerHTML =
+      "✗ Đã hết 3 lần thử.";
+
+    hintEl.classList.remove("hidden");
+
+    hintEl.innerHTML =
+      "Đáp án: <b>" +
+      escapeHTML(q.answer) +
+      "</b>";
+
+    pinyinEl.textContent =
+      "Pinyin: " + q.pinyin;
+
+    if(currentMode === "sentence"){
+
+      exampleEl.classList.remove("hidden");
+
+      exampleText.textContent =
+        q.example;
+
+    }
+
+    input.disabled = true;
+
+    updateStats();
+
+    autoNextTimer =
+      setTimeout(() => {
+
+        nextQuestion();
+
+      },1800);
+
+  }
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(text){
+
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+   CÂU TIẾP
+========================================================= */
+
+function nextQuestion(){
+
+  clearTimeout(autoNextTimer);
+
+  currentIndex++;
+
+  showQuestion();
+
+}
+
+
+/* =========================================================
+   XÁO TRỘN
+========================================================= */
+
+function shuffleQuestions(){
+
+  clearTimeout(autoNextTimer);
+
+  questionList =
+    shuffleArray(questionList);
+
+  currentIndex = 0;
+
+  wrongAttempts = 0;
+
+  answered = false;
+
+  showQuestion();
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetGame(){
+
+  clearTimeout(autoNextTimer);
+
+  correct = 0;
+  wrong = 0;
+  done = 0;
+
+  currentIndex = 0;
+  wrongAttempts = 0;
+
+  answered = false;
+
+  if(currentMode === "writing"){
+
+    questionList =
+      buildWritingQuestions();
+
+  }
+
+  else if(currentMode === "vocabulary"){
+
+    questionList =
+      buildVocabularyQuestions();
+
+  }
+
+  else{
+
+    sentenceData =
+      buildSentenceData();
+
+    questionList =
+      buildSentenceQuestions();
+
+  }
+
+  updateStats();
+
+  showQuestion();
+
+}
+
+
+/* =========================================================
+   THỐNG KÊ
+========================================================= */
+
+function updateStats(){
+
+  document.getElementById("correctCount")
+    .textContent = correct;
+
+  document.getElementById("wrongCount")
+    .textContent = wrong;
+
+  document.getElementById("doneCount")
+    .textContent = done;
+
+  const accuracy =
+    done > 0
+    ? Math.round((correct / done) * 100)
+    : 0;
+
+  document.getElementById("accuracy")
+    .textContent = accuracy + "%";
+
+}
+
+
+/* =========================================================
+   THANH TIẾN ĐỘ
+========================================================= */
+
+function updateProgress(){
+
+  if(!questionList.length){
+    return;
+  }
+
+  const percent =
+    ((currentIndex + 1) /
+    questionList.length) * 100;
+
+  document.getElementById("progressFill")
+    .style.width =
+      Math.min(percent,100) + "%";
+
+}
+
+
+/* =========================================================
+   ENTER ĐỂ KIỂM TRA
+========================================================= */
+
+document
+  .getElementById("answerInput")
+  .addEventListener("keydown",function(event){
+
+    if(event.key === "Enter"){
+
+      event.preventDefault();
+
+      checkAnswer();
+
+    }
+
+  });
+
+
+/* =========================================================
+   KHỞI ĐỘNG
+========================================================= */
+
+/*
+   Mỗi lần truy cập:
+   - random dữ liệu
+   - random câu hỏi
+*/
+
+function init(){
+
+  sentenceData =
+    buildSentenceData();
+
+  setMode("writing");
+
+  updateStats();
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+init();
+
+</script>
+
+</body>
+</html>
