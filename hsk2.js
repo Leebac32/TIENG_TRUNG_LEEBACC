@@ -101,7 +101,7 @@ window.HSK2 = [
   ["门", "mén", "cửa; cổng"],
   ["门口", "ménkǒu", "cửa ra vào; trước cửa"],
   ["门票", "ménpiào", "vé vào cửa"],
-  ["面1", "miàn", "mặt; phía; bề mặt"],
+  ["面", "miàn", "mặt; phía; bề mặt"],
   ["名", "míng", "tên; danh; người"],
   ["拿", "ná", "cầm; lấy"],
   ["那么", "nàme", "như vậy; thế; vậy thì"],
