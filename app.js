@@ -1,5 +1,21 @@
 const STORAGE_KEY="leebacc_hsk_user_v3";
 
+/* =====================================================
+   COURSE REGISTRY
+===================================================== */
+
+const courseRegistry =
+    Array.isArray(window.COURSES)
+    ? window.COURSES
+    : [];
+
+function getCourseById(id){
+
+    return courseRegistry.find(function(course){
+        return course.id===id;
+    })||null;
+}
+
 const hskData={
     1:Array.isArray(window.HSK1)?[...window.HSK1]:[],
     2:Array.isArray(window.HSK2)?[...window.HSK2]:[],
