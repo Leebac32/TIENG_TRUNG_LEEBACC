@@ -35,7 +35,7 @@ window.COURSES = [
   // ===== CÂU HSK 3 =====
   {
     id: "cauhsk3",
-    name: "Câu HSK 3",
+    name: "Luyện Câu",
     type: "legacy",
     dataFile: "cauhsk3.js",
     dataKey: "CAU_HSK3"
@@ -44,14 +44,13 @@ window.COURSES = [
   // ===== ÉP NHỰA =====
   {
     id: "epnhua",
-    name: "Tiếng Trung Ép Nhựa",
+    name: "Ép Nhựa",
     type: "legacy",
     dataFile: "epnhua.js",
     dataKey: "EPNHUA"
   },
 
   // ===== CÁC KHÓA MỚI =====
-  // Sau này chỉ cần thêm khóa vào đây
 
   {
     id: "dungcu",
