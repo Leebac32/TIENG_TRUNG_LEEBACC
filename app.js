@@ -4,22 +4,156 @@ const STORAGE_KEY="leebacc_hsk_user_v3";
    COURSE REGISTRY
 ===================================================== */
 
-const courseRegistry =
+const courseRegistry=
     Array.isArray(window.COURSES)
     ? window.COURSES
     : [];
 
+let genericCoursesReady=false;
+let genericCourseLoadPromise=null;
+
 function getCourseById(id){
 
     return courseRegistry.find(function(course){
+
         return course.id===id;
+
     })||null;
 }
 
+function normalizeCourseId(course){
+
+    const legacyMap={
+        1:"hsk1",
+        2:"hsk2",
+        3:"hsk3",
+        4:"cauhsk3",
+        5:"epnhua"
+    };
+
+    if(typeof course==="number"){
+
+        return legacyMap[course]||null;
+    }
+
+    if(typeof course==="string"){
+
+        return course;
+    }
+
+    return null;
+}
+
+/* =====================================================
+   LOAD GENERIC COURSE FILES
+===================================================== */
+
+function loadGenericCourseFiles(){
+
+    if(genericCourseLoadPromise){
+
+        return genericCourseLoadPromise;
+    }
+
+    genericCourseLoadPromise=new Promise(function(resolve){
+
+        const genericCourses=courseRegistry.filter(function(course){
+
+            return course.type==="vocab" &&
+                   course.dataFile &&
+                   course.dataKey;
+
+        });
+
+        if(!genericCourses.length){
+
+            genericCoursesReady=true;
+
+            resolve();
+
+            return;
+        }
+
+        let remaining=genericCourses.length;
+
+        genericCourses.forEach(function(course){
+
+            const existingData=window[course.dataKey];
+
+            if(Array.isArray(existingData)){
+
+                remaining--;
+
+                if(remaining<=0){
+
+                    genericCoursesReady=true;
+
+                    resolve();
+                }
+
+                return;
+            }
+
+            const script=document.createElement("script");
+
+            script.src=course.dataFile;
+
+            script.onload=function(){
+
+                remaining--;
+
+                if(remaining<=0){
+
+                    genericCoursesReady=true;
+
+                    resolve();
+                }
+            };
+
+            script.onerror=function(){
+
+                console.warn(
+                    "Không tải được file khóa học:",
+                    course.dataFile
+                );
+
+                remaining--;
+
+                if(remaining<=0){
+
+                    genericCoursesReady=true;
+
+                    resolve();
+                }
+            };
+
+            document.head.appendChild(script);
+
+        });
+
+    });
+
+    return genericCourseLoadPromise;
+}
+
+/* =====================================================
+   DATA
+===================================================== */
+
 const hskData={
-    1:Array.isArray(window.HSK1)?[...window.HSK1]:[],
-    2:Array.isArray(window.HSK2)?[...window.HSK2]:[],
-    3:Array.isArray(window.HSK3)?[...window.HSK3]:[]
+
+    1:Array.isArray(window.HSK1)
+        ? [...window.HSK1]
+        : [],
+
+    2:Array.isArray(window.HSK2)
+        ? [...window.HSK2]
+        : [],
+
+    3:Array.isArray(window.HSK3)
+        ? [...window.HSK3]
+        : []
+
 };
 
 const sentenceData=
@@ -32,39 +166,69 @@ const epnhuaData=
     ? [...window.EPNHUA]
     : [];
 
+/* =====================================================
+   GLOBAL STATE
+===================================================== */
+
 let currentUser=null;
+
 let currentHSK=1;
+
 let currentIndex=0;
+
 let currentQuestion=null;
+
 let wrongAttempts=0;
+
 let answerShown=false;
+
 let questionCompleted=false;
+
 let lastQuestion=null;
+
 let hasPreviousQuestion=false;
+
 let nextTimer=null;
+
 let correctCount=0;
+
 let wrongCount=0;
+
 let doneCount=0;
+
 let selectedCourse=1;
+
 let currentLearningType="hsk";
+
+let currentGenericCourseId=null;
 
 /* =====================================================
    STORAGE
 ===================================================== */
 
 function getSavedUser(){
+
     try{
-        const saved=localStorage.getItem(STORAGE_KEY);
+
+        const saved=
+            localStorage.getItem(STORAGE_KEY);
+
         if(!saved)return null;
+
         return JSON.parse(saved);
+
     }catch(error){
+
         console.error(error);
+
         return null;
     }
 }
 
 function saveUser(){
+
     if(!currentUser)return;
+
     localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify(currentUser)
@@ -76,16 +240,25 @@ function saveUser(){
 ===================================================== */
 
 function createLevelProgress(level){
+
     const data=hskData[level]||[];
 
     return{
+
         order:data.map(function(item,index){
+
             return index;
+
         }),
+
         index:0,
+
         correct:0,
+
         wrong:0,
+
         done:0
+
     };
 }
 
@@ -94,14 +267,23 @@ function createLevelProgress(level){
 ===================================================== */
 
 function createSentenceProgress(){
+
     return{
+
         order:sentenceData.map(function(item,index){
+
             return index;
+
         }),
+
         index:0,
+
         correct:0,
+
         wrong:0,
+
         done:0
+
     };
 }
 
@@ -110,20 +292,97 @@ function createSentenceProgress(){
 ===================================================== */
 
 function createEpnhuaProgress(){
+
     return{
+
         order:epnhuaData.map(function(item,index){
+
             return index;
+
         }),
+
         index:0,
+
         correct:0,
+
         wrong:0,
+
         done:0
+
     };
 }
 
 function getEpnhuaProgress(){
+
     ensureUserData();
+
     return currentUser.epnhua;
+}
+
+/* =====================================================
+   GENERIC COURSE PROGRESS
+===================================================== */
+
+function createGenericProgress(data){
+
+    return{
+
+        order:data.map(function(item,index){
+
+            return index;
+
+        }),
+
+        index:0,
+
+        correct:0,
+
+        wrong:0,
+
+        done:0
+
+    };
+}
+
+function getGenericData(course){
+
+    if(!course)return[];
+
+    const data=window[course.dataKey];
+
+    if(!Array.isArray(data)){
+
+        return[];
+    }
+
+    return data;
+}
+
+function getGenericProgress(course){
+
+    ensureUserData();
+
+    if(!course)return null;
+
+    const data=getGenericData(course);
+
+    if(!currentUser.courses){
+
+        currentUser.courses={};
+    }
+
+    if(
+        !currentUser.courses[course.id] ||
+        !Array.isArray(
+            currentUser.courses[course.id].order
+        )
+    ){
+
+        currentUser.courses[course.id]=
+            createGenericProgress(data);
+    }
+
+    return currentUser.courses[course.id];
 }
 
 /* =====================================================
@@ -131,51 +390,78 @@ function getEpnhuaProgress(){
 ===================================================== */
 
 function ensureUserData(){
+
     if(!currentUser)return;
 
     if(!currentUser.hsk){
+
         currentUser.hsk={};
     }
 
     [1,2,3].forEach(function(level){
+
         if(
             !currentUser.hsk[level] ||
-            !Array.isArray(currentUser.hsk[level].order)
+            !Array.isArray(
+                currentUser.hsk[level].order
+            )
         ){
-            currentUser.hsk[level]=createLevelProgress(level);
+
+            currentUser.hsk[level]=
+                createLevelProgress(level);
         }
+
     });
 
     if(
         !currentUser.sentence ||
-        !Array.isArray(currentUser.sentence.order)
+        !Array.isArray(
+            currentUser.sentence.order
+        )
     ){
-        currentUser.sentence=createSentenceProgress();
+
+        currentUser.sentence=
+            createSentenceProgress();
     }
 
     if(
         !currentUser.epnhua ||
-        !Array.isArray(currentUser.epnhua.order)
+        !Array.isArray(
+            currentUser.epnhua.order
+        )
     ){
-        currentUser.epnhua=createEpnhuaProgress();
+
+        currentUser.epnhua=
+            createEpnhuaProgress();
+    }
+
+    if(!currentUser.courses){
+
+        currentUser.courses={};
     }
 
     if(!currentUser.lastCourse){
+
         currentUser.lastCourse=1;
     }
 
     if(!currentUser.lastHSK){
+
         currentUser.lastHSK=1;
     }
 }
 
 function getLevelProgress(level){
+
     ensureUserData();
+
     return currentUser.hsk[level];
 }
 
 function getSentenceProgress(){
+
     ensureUserData();
+
     return currentUser.sentence;
 }
 
@@ -184,20 +470,34 @@ function getSentenceProgress(){
 ===================================================== */
 
 function shuffle(array){
-    for(let i=array.length-1;i>0;i--){
-        const j=Math.floor(Math.random()*(i+1));
+
+    for(
+        let i=array.length-1;
+        i>0;
+        i--
+    ){
+
+        const j=
+            Math.floor(
+                Math.random()*(i+1)
+            );
 
         const temp=array[i];
+
         array[i]=array[j];
+
         array[j]=temp;
     }
 }
 
 function createShuffledOrder(level){
+
     const data=hskData[level]||[];
 
     const order=data.map(function(item,index){
+
         return index;
+
     });
 
     shuffle(order);
@@ -206,9 +506,13 @@ function createShuffledOrder(level){
 }
 
 function createShuffledSentenceOrder(){
-    const order=sentenceData.map(function(item,index){
-        return index;
-    });
+
+    const order=
+        sentenceData.map(function(item,index){
+
+            return index;
+
+        });
 
     shuffle(order);
 
@@ -216,9 +520,29 @@ function createShuffledSentenceOrder(){
 }
 
 function createShuffledEpnhuaOrder(){
-    const order=epnhuaData.map(function(item,index){
-        return index;
-    });
+
+    const order=
+        epnhuaData.map(function(item,index){
+
+            return index;
+
+        });
+
+    shuffle(order);
+
+    return order;
+}
+
+function createShuffledGenericOrder(course){
+
+    const data=getGenericData(course);
+
+    const order=
+        data.map(function(item,index){
+
+            return index;
+
+        });
 
     shuffle(order);
 
@@ -226,27 +550,52 @@ function createShuffledEpnhuaOrder(){
 }
 
 function randomizeLevel(level){
-    const progress=getLevelProgress(level);
 
-    progress.order=createShuffledOrder(level);
+    const progress=
+        getLevelProgress(level);
+
+    progress.order=
+        createShuffledOrder(level);
+
     progress.index=0;
 
     return progress;
 }
 
 function randomizeSentence(){
-    const progress=getSentenceProgress();
 
-    progress.order=createShuffledSentenceOrder();
+    const progress=
+        getSentenceProgress();
+
+    progress.order=
+        createShuffledSentenceOrder();
+
     progress.index=0;
 
     return progress;
 }
 
 function randomizeEpnhua(){
-    const progress=getEpnhuaProgress();
 
-    progress.order=createShuffledEpnhuaOrder();
+    const progress=
+        getEpnhuaProgress();
+
+    progress.order=
+        createShuffledEpnhuaOrder();
+
+    progress.index=0;
+
+    return progress;
+}
+
+function randomizeGeneric(course){
+
+    const progress=
+        getGenericProgress(course);
+
+    progress.order=
+        createShuffledGenericOrder(course);
+
     progress.index=0;
 
     return progress;
@@ -257,19 +606,33 @@ function randomizeEpnhua(){
 ===================================================== */
 
 function createUser(name){
+
     currentUser={
+
         name:name,
+
         lastHSK:1,
+
         lastCourse:1,
 
         hsk:{
+
             1:createLevelProgress(1),
+
             2:createLevelProgress(2),
+
             3:createLevelProgress(3)
+
         },
 
-        sentence:createSentenceProgress(),
-        epnhua:createEpnhuaProgress()
+        sentence:
+            createSentenceProgress(),
+
+        epnhua:
+            createEpnhuaProgress(),
+
+        courses:{}
+
     };
 
     saveUser();
@@ -297,21 +660,29 @@ function showNameScreen(){
         .classList.add("hidden");
 
     document.getElementById("headerUserName")
-        .textContent="Luyện tiếng Trung";
+        .textContent=
+        "Luyện tiếng Trung";
 
     setTimeout(function(){
-        document.getElementById("nameInput").focus();
+
+        document.getElementById(
+            "nameInput"
+        ).focus();
+
     },100);
 }
 
 function startLearning(){
 
-    const input=document.getElementById("nameInput");
+    const input=
+        document.getElementById("nameInput");
 
     const name=input.value.trim();
 
     if(!name){
+
         input.focus();
+
         return;
     }
 
@@ -324,57 +695,171 @@ function startLearning(){
 }
 
 /* =====================================================
+   COURSE MENU
+===================================================== */
+
+function renderCourseMenu(){
+
+    const menu=
+        document.querySelector(".main-menu");
+
+    if(!menu)return;
+
+    if(!courseRegistry.length)return;
+
+    menu.innerHTML="";
+
+    courseRegistry.forEach(function(course){
+
+        let available=true;
+
+        if(course.type==="vocab"){
+
+            const data=
+                window[course.dataKey];
+
+            if(
+                !Array.isArray(data) ||
+                !data.length
+            ){
+
+                available=false;
+            }
+        }
+
+        if(!available)return;
+
+        const button=
+            document.createElement("button");
+
+        button.type="button";
+
+        button.className=
+            course.id;
+
+        button.innerHTML=
+            (course.icon||"📚")+
+            "<br>"+
+            escapeHTML(course.name);
+
+        button.onclick=function(){
+
+            openCourse(course.id);
+
+        };
+
+        menu.appendChild(button);
+
+    });
+}
+
+/* =====================================================
    CONTINUE SCREEN
 ===================================================== */
 
 function showContinueScreen(){
 
     if(!currentUser){
+
         showNameScreen();
+
         return;
     }
 
     ensureUserData();
 
-    const course=Number(currentUser.lastCourse)||1;
+    const courseId=
+        normalizeCourseId(
+            currentUser.lastCourse
+        );
 
     let text="";
 
-    if(course>=1&&course<=3){
+    if(
+        courseId==="hsk1" ||
+        courseId==="hsk2" ||
+        courseId==="hsk3"
+    ){
 
-        const level=Number(currentUser.lastHSK)||1;
+        const level=
+            Number(currentUser.lastHSK)||1;
 
-        const progress=getLevelProgress(level);
+        const progress=
+            getLevelProgress(level);
 
-        const total=hskData[level].length;
+        const total=
+            hskData[level].length;
 
         text=
             "HSK "+level+
             " — Đã học "+
-            progress.done+"/"+total+" câu";
+            progress.done+
+            "/"+
+            total+
+            " câu";
+
     }
 
-    else if(course===4){
+    else if(courseId==="cauhsk3"){
 
-        const progress=getSentenceProgress();
+        const progress=
+            getSentenceProgress();
 
         text=
             "LUYỆN CÂU — Đã làm "+
-            progress.done+"/"+sentenceData.length+" câu";
+            progress.done+
+            "/"+
+            sentenceData.length+
+            " câu";
+
     }
 
-    else if(course===5){
+    else if(courseId==="epnhua"){
 
-        const progress=getEpnhuaProgress();
+        const progress=
+            getEpnhuaProgress();
 
         text=
             "ÉP NHỰA — Đã học "+
-            progress.done+"/"+epnhuaData.length+" từ";
+            progress.done+
+            "/"+
+            epnhuaData.length+
+            " từ";
+
+    }
+
+    else{
+
+        const course=
+            getCourseById(courseId);
+
+        if(course){
+
+            const data=
+                getGenericData(course);
+
+            const progress=
+                getGenericProgress(course);
+
+            text=
+                course.name+
+                " — Đã học "+
+                progress.done+
+                "/"+
+                data.length+
+                " từ";
+        }
+
+        else{
+
+            text="Chưa có khóa học gần nhất.";
+        }
     }
 
     document.getElementById("userGreeting")
         .textContent=
-        "👤 Xin chào, "+currentUser.name;
+        "👤 Xin chào, "+
+        currentUser.name;
 
     document.getElementById("userProgress")
         .textContent=text;
@@ -403,7 +888,9 @@ function showContinueScreen(){
 function showSelection(){
 
     if(!currentUser){
+
         showNameScreen();
+
         return;
     }
 
@@ -427,6 +914,8 @@ function showSelection(){
     document.getElementById("headerUserName")
         .textContent=
         "👤 "+currentUser.name;
+
+    renderCourseMenu();
 }
 
 /* =====================================================
@@ -435,56 +924,55 @@ function showSelection(){
 
 function openCourse(course){
 
-    selectedCourse=Number(course);
+    const courseId=
+        normalizeCourseId(course);
 
-    const icon=document.getElementById("courseIcon");
-    const title=document.getElementById("courseTitle");
+    const config=
+        getCourseById(courseId);
+
+    if(!config){
+
+        console.warn(
+            "Không tìm thấy khóa học:",
+            courseId
+        );
+
+        return;
+    }
+
+    selectedCourse=courseId;
+
+    const icon=
+        document.getElementById("courseIcon");
+
+    const title=
+        document.getElementById("courseTitle");
+
     const description=
-        document.getElementById("courseDescription");
+        document.getElementById(
+            "courseDescription"
+        );
 
-    if(selectedCourse===1){
+    if(config.icon){
 
-        icon.textContent="📘";
-        title.textContent="HSK 1";
+        icon.textContent=config.icon;
 
-        description.textContent=
-            "Luyện viết chữ Hán HSK1 theo danh sách từ vựng.";
+    }else{
+
+        icon.textContent="📚";
     }
 
-    else if(selectedCourse===2){
+    title.textContent=config.name;
 
-        icon.textContent="📗";
-        title.textContent="HSK 2";
-
-        description.textContent=
-            "Luyện viết chữ Hán HSK2 theo danh sách từ vựng.";
-    }
-
-    else if(selectedCourse===3){
-
-        icon.textContent="📕";
-        title.textContent="HSK 3";
+    if(config.description){
 
         description.textContent=
-            "Luyện viết chữ Hán HSK3 theo danh sách từ vựng.";
-    }
+            config.description;
 
-    else if(selectedCourse===4){
-
-        icon.textContent="✍️";
-        title.textContent="LUYỆN CÂU";
+    }else{
 
         description.textContent=
-            "Hiện tiếng Việt và tự nhập câu tiếng Trung bằng chữ Hán.";
-    }
-
-    else if(selectedCourse===5){
-
-        icon.textContent="🏭";
-        title.textContent="ÉP NHỰA";
-
-        description.textContent=
-            "Luyện viết 200 từ tiếng Trung thường gặp về máy ép nhựa, lỗi sản phẩm, thông số và xử lý sự cố.";
+            "Luyện từ vựng tiếng Trung.";
     }
 
     document.getElementById("selectionArea")
@@ -504,7 +992,9 @@ function openCourse(course){
 function backToSelection(){
 
     if(nextTimer){
+
         clearTimeout(nextTimer);
+
         nextTimer=null;
     }
 
@@ -514,7 +1004,9 @@ function backToSelection(){
 function exitLearning(){
 
     if(nextTimer){
+
         clearTimeout(nextTimer);
+
         nextTimer=null;
     }
 
@@ -529,17 +1021,50 @@ function exitLearning(){
 
 function startSelectedCourse(){
 
-    if(selectedCourse===4){
+    const courseId=
+        normalizeCourseId(selectedCourse);
+
+    if(!courseId){
+
+        return;
+    }
+
+    if(courseId==="hsk1"){
+
+        startHSKPractice(1);
+
+        return;
+    }
+
+    if(courseId==="hsk2"){
+
+        startHSKPractice(2);
+
+        return;
+    }
+
+    if(courseId==="hsk3"){
+
+        startHSKPractice(3);
+
+        return;
+    }
+
+    if(courseId==="cauhsk3"){
+
         startSentencePractice();
+
         return;
     }
 
-    if(selectedCourse===5){
+    if(courseId==="epnhua"){
+
         startEpnhuaPractice();
+
         return;
     }
 
-    startHSKPractice(selectedCourse);
+    startGenericCourse(courseId);
 }
 
 /* =====================================================
@@ -554,20 +1079,31 @@ function startHSKPractice(level){
 
     currentLearningType="hsk";
 
+    currentGenericCourseId=null;
+
     currentHSK=Number(level);
 
     currentIndex=0;
 
     randomizeLevel(currentHSK);
 
-    const progress=getLevelProgress(currentHSK);
+    const progress=
+        getLevelProgress(currentHSK);
 
-    correctCount=progress.correct||0;
-    wrongCount=progress.wrong||0;
-    doneCount=progress.done||0;
+    correctCount=
+        progress.correct||0;
 
-    currentUser.lastHSK=currentHSK;
-    currentUser.lastCourse=currentHSK;
+    wrongCount=
+        progress.wrong||0;
+
+    doneCount=
+        progress.done||0;
+
+    currentUser.lastHSK=
+        currentHSK;
+
+    currentUser.lastCourse=
+        currentHSK;
 
     saveUser();
 
@@ -602,15 +1138,23 @@ function startSentencePractice(){
 
     currentLearningType="sentence";
 
+    currentGenericCourseId=null;
+
     currentIndex=0;
 
     randomizeSentence();
 
-    const progress=getSentenceProgress();
+    const progress=
+        getSentenceProgress();
 
-    correctCount=progress.correct||0;
-    wrongCount=progress.wrong||0;
-    doneCount=progress.done||0;
+    correctCount=
+        progress.correct||0;
+
+    wrongCount=
+        progress.wrong||0;
+
+    doneCount=
+        progress.done||0;
 
     currentUser.lastCourse=4;
 
@@ -646,21 +1190,33 @@ function startEpnhuaPractice(){
     ensureUserData();
 
     if(!epnhuaData.length){
-        alert("Không tải được dữ liệu epnhua.js!");
+
+        alert(
+            "Không tải được dữ liệu epnhua.js!"
+        );
+
         return;
     }
 
     currentLearningType="epnhua";
 
+    currentGenericCourseId=null;
+
     currentIndex=0;
 
     randomizeEpnhua();
 
-    const progress=getEpnhuaProgress();
+    const progress=
+        getEpnhuaProgress();
 
-    correctCount=progress.correct||0;
-    wrongCount=progress.wrong||0;
-    doneCount=progress.done||0;
+    correctCount=
+        progress.correct||0;
+
+    wrongCount=
+        progress.wrong||0;
+
+    doneCount=
+        progress.done||0;
 
     currentUser.lastCourse=5;
 
@@ -686,6 +1242,86 @@ function startEpnhuaPractice(){
 }
 
 /* =====================================================
+   START GENERIC COURSE
+===================================================== */
+
+function startGenericCourse(courseId){
+
+    if(!currentUser)return;
+
+    ensureUserData();
+
+    const course=
+        getCourseById(courseId);
+
+    if(!course){
+
+        alert(
+            "Không tìm thấy khóa học."
+        );
+
+        return;
+    }
+
+    const data=
+        getGenericData(course);
+
+    if(!data.length){
+
+        alert(
+            "Khóa học chưa có dữ liệu: "+
+            course.name
+        );
+
+        return;
+    }
+
+    currentLearningType="course";
+
+    currentGenericCourseId=
+        course.id;
+
+    currentIndex=0;
+
+    randomizeGeneric(course);
+
+    const progress=
+        getGenericProgress(course);
+
+    correctCount=
+        progress.correct||0;
+
+    wrongCount=
+        progress.wrong||0;
+
+    doneCount=
+        progress.done||0;
+
+    currentUser.lastCourse=
+        course.id;
+
+    saveUser();
+
+    document.getElementById("courseArea")
+        .classList.add("hidden");
+
+    document.getElementById("selectionArea")
+        .classList.add("hidden");
+
+    document.getElementById("userArea")
+        .classList.add("hidden");
+
+    document.getElementById("learningArea")
+        .classList.remove("hidden");
+
+    document.getElementById("headerUserName")
+        .textContent=
+        "👤 "+currentUser.name;
+
+    loadGenericQuestion();
+}
+
+/* =====================================================
    CONTINUE LEARNING
 ===================================================== */
 
@@ -695,31 +1331,62 @@ function enterLearning(){
 
     ensureUserData();
 
-    const course=Number(currentUser.lastCourse)||1;
+    const courseId=
+        normalizeCourseId(
+            currentUser.lastCourse
+        );
 
-    if(course===4){
+    if(courseId==="cauhsk3"){
+
         startSentencePractice();
+
         return;
     }
 
-    if(course===5){
+    if(courseId==="epnhua"){
+
         startEpnhuaPractice();
+
         return;
     }
 
-    let level=Number(currentUser.lastHSK)||1;
+    if(courseId==="hsk1"){
 
-    if(level!==1&&level!==2&&level!==3){
-        level=1;
+        startHSKPractice(1);
+
+        return;
     }
 
-    startHSKPractice(level);
+    if(courseId==="hsk2"){
+
+        startHSKPractice(2);
+
+        return;
+    }
+
+    if(courseId==="hsk3"){
+
+        startHSKPractice(3);
+
+        return;
+    }
+
+    if(courseId){
+
+        startGenericCourse(courseId);
+
+        return;
+    }
+
+    startHSKPractice(1);
 }
 
 function continueLearning(){
 
     if(!currentUser){
+
         showNameScreen();
+
         return;
     }
 
@@ -729,11 +1396,15 @@ function continueLearning(){
 function changeUser(){
 
     if(nextTimer){
+
         clearTimeout(nextTimer);
+
         nextTimer=null;
     }
 
-    document.getElementById("nameInput").value="";
+    document.getElementById(
+        "nameInput"
+    ).value="";
 
     showNameScreen();
 }
@@ -745,7 +1416,9 @@ function changeUser(){
 function selectHSK(level){
 
     if(nextTimer){
+
         clearTimeout(nextTimer);
+
         nextTimer=null;
     }
 
@@ -760,15 +1433,31 @@ function loadQuestion(){
 
     currentLearningType="hsk";
 
-    const data=hskData[currentHSK];
-    const progress=getLevelProgress(currentHSK);
+    const data=
+        hskData[currentHSK];
 
-    const input=document.getElementById("answerInput");
-    const result=document.getElementById("result");
-    const hint=document.getElementById("hint");
+    const progress=
+        getLevelProgress(currentHSK);
+
+    const input=
+        document.getElementById(
+            "answerInput"
+        );
+
+    const result=
+        document.getElementById(
+            "result"
+        );
+
+    const hint=
+        document.getElementById(
+            "hint"
+        );
 
     wrongAttempts=0;
+
     answerShown=false;
+
     questionCompleted=false;
 
     input.value="";
@@ -779,51 +1468,72 @@ function loadQuestion(){
     );
 
     result.innerHTML="";
+
     result.className="result";
 
-    hint.innerHTML="Sai 3 lần sẽ hiện đáp án.";
+    hint.innerHTML=
+        "Sai 3 lần sẽ hiện đáp án.";
 
     if(!data||!data.length){
 
-        document.getElementById("question")
-            .textContent=
-            "Không có dữ liệu HSK "+currentHSK;
+        document.getElementById(
+            "question"
+        ).textContent=
+            "Không có dữ liệu HSK "+
+            currentHSK;
 
         return;
     }
 
     if(!progress.order.length){
-        progress.order=createShuffledOrder(currentHSK);
+
+        progress.order=
+            createShuffledOrder(
+                currentHSK
+            );
     }
 
     const realIndex=
         progress.order[
-            currentIndex%progress.order.length
+            currentIndex%
+            progress.order.length
         ];
 
     const item=data[realIndex];
 
     currentQuestion={
+
         question:item[2],
+
         answer:item[0],
+
         pinyin:item[1]
+
     };
 
-    document.getElementById("modeTitle")
-        .textContent=
-        "HSK "+currentHSK+" • LUYỆN VIẾT";
+    document.getElementById(
+        "modeTitle"
+    ).textContent=
+        "HSK "+
+        currentHSK+
+        " • LUYỆN VIẾT";
 
-    document.getElementById("question")
-        .textContent=
+    document.getElementById(
+        "question"
+    ).textContent=
         currentQuestion.question;
 
-    input.placeholder="Nhập chữ Hán...";
+    input.placeholder=
+        "Nhập chữ Hán...";
 
     updateProgress();
+
     updateStats();
 
     setTimeout(function(){
+
         input.focus();
+
     },50);
 }
 
@@ -836,14 +1546,29 @@ function loadSentenceQuestion(){
     currentLearningType="sentence";
 
     const data=sentenceData;
-    const progress=getSentenceProgress();
 
-    const input=document.getElementById("answerInput");
-    const result=document.getElementById("result");
-    const hint=document.getElementById("hint");
+    const progress=
+        getSentenceProgress();
+
+    const input=
+        document.getElementById(
+            "answerInput"
+        );
+
+    const result=
+        document.getElementById(
+            "result"
+        );
+
+    const hint=
+        document.getElementById(
+            "hint"
+        );
 
     wrongAttempts=0;
+
     answerShown=false;
+
     questionCompleted=false;
 
     input.value="";
@@ -854,6 +1579,7 @@ function loadSentenceQuestion(){
     );
 
     result.innerHTML="";
+
     result.className="result";
 
     hint.innerHTML=
@@ -861,46 +1587,59 @@ function loadSentenceQuestion(){
 
     if(!data||!data.length){
 
-        document.getElementById("question")
-            .textContent=
+        document.getElementById(
+            "question"
+        ).textContent=
             "Chưa có dữ liệu cauhsk3.js";
 
         return;
     }
 
     if(!progress.order.length){
-        progress.order=createShuffledSentenceOrder();
+
+        progress.order=
+            createShuffledSentenceOrder();
     }
 
     const realIndex=
         progress.order[
-            currentIndex%progress.order.length
+            currentIndex%
+            progress.order.length
         ];
 
     const item=data[realIndex];
 
     currentQuestion={
+
         question:item[0],
+
         answer:item[1],
+
         pinyin:""
+
     };
 
-    document.getElementById("modeTitle")
-        .textContent=
+    document.getElementById(
+        "modeTitle"
+    ).textContent=
         "LUYỆN CÂU • HSK 3+";
 
-    document.getElementById("question")
-        .textContent=
+    document.getElementById(
+        "question"
+    ).textContent=
         currentQuestion.question;
 
     input.placeholder=
         "Nhập câu tiếng Trung...";
 
     updateSentenceProgress();
+
     updateStats();
 
     setTimeout(function(){
+
         input.focus();
+
     },50);
 }
 
@@ -913,14 +1652,29 @@ function loadEpnhuaQuestion(){
     currentLearningType="epnhua";
 
     const data=epnhuaData;
-    const progress=getEpnhuaProgress();
 
-    const input=document.getElementById("answerInput");
-    const result=document.getElementById("result");
-    const hint=document.getElementById("hint");
+    const progress=
+        getEpnhuaProgress();
+
+    const input=
+        document.getElementById(
+            "answerInput"
+        );
+
+    const result=
+        document.getElementById(
+            "result"
+        );
+
+    const hint=
+        document.getElementById(
+            "hint"
+        );
 
     wrongAttempts=0;
+
     answerShown=false;
+
     questionCompleted=false;
 
     input.value="";
@@ -931,52 +1685,182 @@ function loadEpnhuaQuestion(){
     );
 
     result.innerHTML="";
+
     result.className="result";
 
-    hint.innerHTML="Sai 3 lần sẽ hiện đáp án.";
+    hint.innerHTML=
+        "Sai 3 lần sẽ hiện đáp án.";
 
     if(!data||!data.length){
 
-        document.getElementById("question")
-            .textContent=
+        document.getElementById(
+            "question"
+        ).textContent=
             "Không có dữ liệu epnhua.js";
 
         return;
     }
 
     if(!progress.order.length){
-        progress.order=createShuffledEpnhuaOrder();
+
+        progress.order=
+            createShuffledEpnhuaOrder();
     }
 
     const realIndex=
         progress.order[
-            currentIndex%progress.order.length
+            currentIndex%
+            progress.order.length
         ];
 
     const item=data[realIndex];
 
     currentQuestion={
+
         question:item[2],
+
         answer:item[0],
+
         pinyin:item[1]
+
     };
 
-    document.getElementById("modeTitle")
-        .textContent=
+    document.getElementById(
+        "modeTitle"
+    ).textContent=
         "ÉP NHỰA • LUYỆN TỪ VỰNG";
 
-    document.getElementById("question")
-        .textContent=
+    document.getElementById(
+        "question"
+    ).textContent=
         currentQuestion.question;
 
     input.placeholder=
         "Nhập từ tiếng Trung...";
 
     updateEpnhuaProgress();
+
     updateStats();
 
     setTimeout(function(){
+
         input.focus();
+
+    },50);
+}
+
+/* =====================================================
+   LOAD GENERIC COURSE
+===================================================== */
+
+function loadGenericQuestion(){
+
+    currentLearningType="course";
+
+    const course=
+        getCourseById(
+            currentGenericCourseId
+        );
+
+    const data=
+        getGenericData(course);
+
+    const progress=
+        getGenericProgress(course);
+
+    const input=
+        document.getElementById(
+            "answerInput"
+        );
+
+    const result=
+        document.getElementById(
+            "result"
+        );
+
+    const hint=
+        document.getElementById(
+            "hint"
+        );
+
+    wrongAttempts=0;
+
+    answerShown=false;
+
+    questionCompleted=false;
+
+    input.value="";
+
+    input.classList.remove(
+        "input-correct",
+        "input-wrong"
+    );
+
+    result.innerHTML="";
+
+    result.className="result";
+
+    hint.innerHTML=
+        "Sai 3 lần sẽ hiện đáp án.";
+
+    if(!data||!data.length){
+
+        document.getElementById(
+            "question"
+        ).textContent=
+            "Khóa học chưa có dữ liệu.";
+
+        return;
+    }
+
+    if(!progress.order.length){
+
+        progress.order=
+            createShuffledGenericOrder(
+                course
+            );
+    }
+
+    const realIndex=
+        progress.order[
+            currentIndex%
+            progress.order.length
+        ];
+
+    const item=data[realIndex];
+
+    currentQuestion={
+
+        question:item[2],
+
+        answer:item[0],
+
+        pinyin:item[1]
+
+    };
+
+    document.getElementById(
+        "modeTitle"
+    ).textContent=
+        course.name+
+        " • LUYỆN TỪ VỰNG";
+
+    document.getElementById(
+        "question"
+    ).textContent=
+        currentQuestion.question;
+
+    input.placeholder=
+        "Nhập từ tiếng Trung...";
+
+    updateGenericProgress(course);
+
+    updateStats();
+
+    setTimeout(function(){
+
+        input.focus();
+
     },50);
 }
 
@@ -987,8 +1871,11 @@ function loadEpnhuaQuestion(){
 function normalizeText(text){
 
     return String(text)
+
         .trim()
+
         .replace(/\s+/g,"")
+
         .replace(
             /[，。！？、,.!?;；:：'"“”‘’`]/g,
             ""
@@ -996,80 +1883,135 @@ function normalizeText(text){
 }
 
 /* =====================================================
-   CHECK
+   CHECK ANSWER
 ===================================================== */
 
 function checkAnswer(){
 
-    if(!currentQuestion||questionCompleted)return;
+    if(
+        !currentQuestion ||
+        questionCompleted
+    ){
 
-    const input=document.getElementById("answerInput");
+        return;
+    }
 
-    const userAnswer=normalizeText(input.value);
+    const input=
+        document.getElementById(
+            "answerInput"
+        );
+
+    const userAnswer=
+        normalizeText(
+            input.value
+        );
 
     if(!userAnswer)return;
 
     const correctAnswer=
-        normalizeText(currentQuestion.answer);
+        normalizeText(
+            currentQuestion.answer
+        );
 
     if(userAnswer===correctAnswer){
 
         questionCompleted=true;
 
         correctCount++;
+
         doneCount++;
 
-        input.classList.remove("input-wrong");
-        input.classList.add("input-correct");
+        input.classList.remove(
+            "input-wrong"
+        );
 
-        const result=document.getElementById("result");
+        input.classList.add(
+            "input-correct"
+        );
 
-        result.className="result correct";
+        const result=
+            document.getElementById(
+                "result"
+            );
 
-        if(currentLearningType==="sentence"){
+        result.className=
+            "result correct";
+
+        if(
+            currentLearningType===
+            "sentence"
+        ){
 
             result.innerHTML=
                 '<div class="answer">'+
-                escapeHTML(currentQuestion.answer)+
+                escapeHTML(
+                    currentQuestion.answer
+                )+
                 '</div>';
 
         }else{
 
             result.innerHTML=
                 '<div class="answer">'+
-                escapeHTML(currentQuestion.answer)+
+                escapeHTML(
+                    currentQuestion.answer
+                )+
                 '</div>'+
                 '<div class="answer-pinyin">'+
-                escapeHTML(currentQuestion.pinyin)+
+                escapeHTML(
+                    currentQuestion.pinyin
+                )+
                 '</div>';
         }
 
         saveLastQuestion();
+
         saveCurrentProgress();
+
         updateStats();
 
-        nextTimer=setTimeout(function(){
+        nextTimer=
+            setTimeout(function(){
 
-            nextTimer=null;
+                nextTimer=null;
 
-            currentIndex++;
+                currentIndex++;
 
-            saveCurrentProgress();
+                saveCurrentProgress();
 
-            if(currentLearningType==="sentence"){
+                if(
+                    currentLearningType===
+                    "sentence"
+                ){
 
-                loadSentenceQuestion();
+                    loadSentenceQuestion();
 
-            }else if(currentLearningType==="epnhua"){
+                }
 
-                loadEpnhuaQuestion();
+                else if(
+                    currentLearningType===
+                    "epnhua"
+                ){
 
-            }else{
+                    loadEpnhuaQuestion();
 
-                loadQuestion();
-            }
+                }
 
-        },1500);
+                else if(
+                    currentLearningType===
+                    "course"
+                ){
+
+                    loadGenericQuestion();
+
+                }
+
+                else{
+
+                    loadQuestion();
+                }
+
+            },1500);
 
         return;
     }
@@ -1077,20 +2019,34 @@ function checkAnswer(){
     if(!answerShown){
 
         wrongAttempts++;
+
         wrongCount++;
     }
 
-    input.classList.remove("input-correct");
-    input.classList.add("input-wrong");
+    input.classList.remove(
+        "input-correct"
+    );
+
+    input.classList.add(
+        "input-wrong"
+    );
 
     saveCurrentProgress();
+
     updateStats();
 
-    if(currentLearningType==="sentence"){
+    if(
+        currentLearningType===
+        "sentence"
+    ){
 
-        if(wrongAttempts>=3&&!answerShown){
+        if(
+            wrongAttempts>=3 &&
+            !answerShown
+        ){
 
             answerShown=true;
+
             showSentenceAnswer();
         }
 
@@ -1098,12 +2054,17 @@ function checkAnswer(){
     }
 
     if(wrongAttempts===2){
+
         showPinyinInitials();
     }
 
-    if(wrongAttempts>=3&&!answerShown){
+    if(
+        wrongAttempts>=3 &&
+        !answerShown
+    ){
 
         answerShown=true;
+
         showAnswerAfterThreeWrong();
     }
 }
@@ -1114,31 +2075,52 @@ function checkAnswer(){
 
 function showSentenceAnswer(){
 
-    const result=document.getElementById("result");
+    const result=
+        document.getElementById(
+            "result"
+        );
 
-    result.className="result wrong";
+    result.className=
+        "result wrong";
 
     result.innerHTML=
         '<div class="answer">'+
-        escapeHTML(currentQuestion.answer)+
+        escapeHTML(
+            currentQuestion.answer
+        )+
         '</div>';
 
-    document.getElementById("hint").innerHTML=
+    document.getElementById(
+        "hint"
+    ).innerHTML=
         "Hãy gõ lại đúng đáp án để tiếp tục.";
 }
 
 function showPinyinInitials(){
 
-    const hint=document.getElementById("hint");
+    const hint=
+        document.getElementById(
+            "hint"
+        );
 
     const pinyin=
-        String(currentQuestion.pinyin).trim();
+        String(
+            currentQuestion.pinyin
+        ).trim();
 
-    const initials=pinyin
+    const initials=
+        pinyin
+
         .split(/\s+/)
+
         .map(function(word){
-            return word?word.charAt(0):"";
+
+            return word
+                ? word.charAt(0)
+                : "";
+
         })
+
         .join("");
 
     hint.innerHTML=
@@ -1148,19 +2130,29 @@ function showPinyinInitials(){
 
 function showAnswerAfterThreeWrong(){
 
-    const result=document.getElementById("result");
+    const result=
+        document.getElementById(
+            "result"
+        );
 
-    result.className="result wrong";
+    result.className=
+        "result wrong";
 
     result.innerHTML=
         '<div class="answer">'+
-        escapeHTML(currentQuestion.answer)+
+        escapeHTML(
+            currentQuestion.answer
+        )+
         '</div>'+
         '<div class="answer-pinyin">'+
-        escapeHTML(currentQuestion.pinyin)+
+        escapeHTML(
+            currentQuestion.pinyin
+        )+
         '</div>';
 
-    document.getElementById("hint").innerHTML=
+    document.getElementById(
+        "hint"
+    ).innerHTML=
         "Hãy gõ lại đúng đáp án để tiếp tục.";
 }
 
@@ -1171,9 +2163,16 @@ function showAnswerAfterThreeWrong(){
 function saveLastQuestion(){
 
     lastQuestion={
-        question:currentQuestion.question,
-        answer:currentQuestion.answer,
-        pinyin:currentQuestion.pinyin
+
+        question:
+            currentQuestion.question,
+
+        answer:
+            currentQuestion.answer,
+
+        pinyin:
+            currentQuestion.pinyin
+
     };
 
     hasPreviousQuestion=true;
@@ -1185,9 +2184,14 @@ function saveLastQuestion(){
 
 function showPreviousQuestion(){
 
-    if(!hasPreviousQuestion||!lastQuestion){
+    if(
+        !hasPreviousQuestion ||
+        !lastQuestion
+    ){
 
-        document.getElementById("hint").innerHTML=
+        document.getElementById(
+            "hint"
+        ).innerHTML=
             "Chưa có câu vừa làm.";
 
         return;
@@ -1196,59 +2200,90 @@ function showPreviousQuestion(){
     if(nextTimer){
 
         clearTimeout(nextTimer);
+
         nextTimer=null;
     }
 
     currentQuestion={
-        question:lastQuestion.question,
-        answer:lastQuestion.answer,
-        pinyin:lastQuestion.pinyin
+
+        question:
+            lastQuestion.question,
+
+        answer:
+            lastQuestion.answer,
+
+        pinyin:
+            lastQuestion.pinyin
+
     };
 
     questionCompleted=true;
+
     answerShown=true;
 
-    document.getElementById("question")
-        .textContent=
+    document.getElementById(
+        "question"
+    ).textContent=
         lastQuestion.question;
 
     const input=
-        document.getElementById("answerInput");
+        document.getElementById(
+            "answerInput"
+        );
 
     input.value="";
 
-    input.classList.remove("input-wrong");
-    input.classList.add("input-correct");
+    input.classList.remove(
+        "input-wrong"
+    );
+
+    input.classList.add(
+        "input-correct"
+    );
 
     const result=
-        document.getElementById("result");
+        document.getElementById(
+            "result"
+        );
 
-    result.className="result correct";
+    result.className=
+        "result correct";
 
-    if(currentLearningType==="sentence"){
+    if(
+        currentLearningType===
+        "sentence"
+    ){
 
         result.innerHTML=
             '<div class="answer">'+
-            escapeHTML(lastQuestion.answer)+
+            escapeHTML(
+                lastQuestion.answer
+            )+
             '</div>';
 
     }else{
 
         result.innerHTML=
             '<div class="answer">'+
-            escapeHTML(lastQuestion.answer)+
+            escapeHTML(
+                lastQuestion.answer
+            )+
             '</div>'+
             '<div class="answer-pinyin">'+
-            escapeHTML(lastQuestion.pinyin)+
+            escapeHTML(
+                lastQuestion.pinyin
+            )+
             '</div>';
     }
 
-    document.getElementById("hint").innerHTML=
+    document.getElementById(
+        "hint"
+    ).innerHTML=
         "Đây là câu vừa làm.";
 }
 
 /* =====================================================
-   SHUFFLE
+   SHUFFLE CURRENT COURSE
 ===================================================== */
 
 function shuffleCurrentLevel(){
@@ -1256,10 +2291,14 @@ function shuffleCurrentLevel(){
     if(nextTimer){
 
         clearTimeout(nextTimer);
+
         nextTimer=null;
     }
 
-    if(currentLearningType==="sentence"){
+    if(
+        currentLearningType===
+        "sentence"
+    ){
 
         randomizeSentence();
 
@@ -1272,7 +2311,10 @@ function shuffleCurrentLevel(){
         return;
     }
 
-    if(currentLearningType==="epnhua"){
+    if(
+        currentLearningType===
+        "epnhua"
+    ){
 
         randomizeEpnhua();
 
@@ -1281,6 +2323,30 @@ function shuffleCurrentLevel(){
         saveCurrentProgress();
 
         loadEpnhuaQuestion();
+
+        return;
+    }
+
+    if(
+        currentLearningType===
+        "course"
+    ){
+
+        const course=
+            getCourseById(
+                currentGenericCourseId
+            );
+
+        if(course){
+
+            randomizeGeneric(course);
+
+            currentIndex=0;
+
+            saveCurrentProgress();
+
+            loadGenericQuestion();
+        }
 
         return;
     }
@@ -1302,14 +2368,25 @@ function saveCurrentProgress(){
 
     if(!currentUser)return;
 
-    if(currentLearningType==="sentence"){
+    if(
+        currentLearningType===
+        "sentence"
+    ){
 
-        const progress=getSentenceProgress();
+        const progress=
+            getSentenceProgress();
 
-        progress.index=currentIndex;
-        progress.correct=correctCount;
-        progress.wrong=wrongCount;
-        progress.done=doneCount;
+        progress.index=
+            currentIndex;
+
+        progress.correct=
+            correctCount;
+
+        progress.wrong=
+            wrongCount;
+
+        progress.done=
+            doneCount;
 
         currentUser.lastCourse=4;
 
@@ -1318,14 +2395,25 @@ function saveCurrentProgress(){
         return;
     }
 
-    if(currentLearningType==="epnhua"){
+    if(
+        currentLearningType===
+        "epnhua"
+    ){
 
-        const progress=getEpnhuaProgress();
+        const progress=
+            getEpnhuaProgress();
 
-        progress.index=currentIndex;
-        progress.correct=correctCount;
-        progress.wrong=wrongCount;
-        progress.done=doneCount;
+        progress.index=
+            currentIndex;
+
+        progress.correct=
+            correctCount;
+
+        progress.wrong=
+            wrongCount;
+
+        progress.done=
+            doneCount;
 
         currentUser.lastCourse=5;
 
@@ -1334,15 +2422,64 @@ function saveCurrentProgress(){
         return;
     }
 
-    const progress=getLevelProgress(currentHSK);
+    if(
+        currentLearningType===
+        "course"
+    ){
 
-    progress.index=currentIndex;
-    progress.correct=correctCount;
-    progress.wrong=wrongCount;
-    progress.done=doneCount;
+        const course=
+            getCourseById(
+                currentGenericCourseId
+            );
 
-    currentUser.lastHSK=currentHSK;
-    currentUser.lastCourse=currentHSK;
+        if(!course){
+
+            return;
+        }
+
+        const progress=
+            getGenericProgress(course);
+
+        progress.index=
+            currentIndex;
+
+        progress.correct=
+            correctCount;
+
+        progress.wrong=
+            wrongCount;
+
+        progress.done=
+            doneCount;
+
+        currentUser.lastCourse=
+            course.id;
+
+        saveUser();
+
+        return;
+    }
+
+    const progress=
+        getLevelProgress(currentHSK);
+
+    progress.index=
+        currentIndex;
+
+    progress.correct=
+        correctCount;
+
+    progress.wrong=
+        wrongCount;
+
+    progress.done=
+        doneCount;
+
+    currentUser.lastHSK=
+        currentHSK;
+
+    currentUser.lastCourse=
+        currentHSK;
 
     saveUser();
 }
@@ -1353,26 +2490,35 @@ function saveCurrentProgress(){
 
 function updateStats(){
 
-    document.getElementById("correctCount")
-        .textContent=correctCount;
+    document.getElementById(
+        "correctCount"
+    ).textContent=
+        correctCount;
 
-    document.getElementById("wrongCount")
-        .textContent=wrongCount;
+    document.getElementById(
+        "wrongCount"
+    ).textContent=
+        wrongCount;
 
-    document.getElementById("doneCount")
-        .textContent=doneCount;
+    document.getElementById(
+        "doneCount"
+    ).textContent=
+        doneCount;
 
     let accuracy=0;
 
     if(doneCount>0){
 
-        accuracy=Math.round(
-            (correctCount/doneCount)*100
-        );
+        accuracy=
+            Math.round(
+                (correctCount/
+                doneCount)*100
+            );
     }
 
-    document.getElementById("accuracy")
-        .textContent=
+    document.getElementById(
+        "accuracy"
+    ).textContent=
         accuracy+"%";
 }
 
@@ -1380,26 +2526,33 @@ function updateStats(){
    PROGRESS
 ===================================================== */
 
-function setProgressPercent(position,total){
+function setProgressPercent(
+    position,
+    total
+){
 
     if(!total){
 
-        document.getElementById("progressFill")
-            .style.width="0%";
+        document.getElementById(
+            "progressFill"
+        ).style.width="0%";
 
         return;
     }
 
-    const percent=((position+1)/total)*100;
+    const percent=
+        ((position+1)/total)*100;
 
-    document.getElementById("progressFill")
-        .style.width=
+    document.getElementById(
+        "progressFill"
+    ).style.width=
         percent+"%";
 }
 
 function updateProgress(){
 
-    const data=hskData[currentHSK];
+    const data=
+        hskData[currentHSK];
 
     if(!data||!data.length){
 
@@ -1427,7 +2580,8 @@ function updateSentenceProgress(){
     }
 
     const position=
-        currentIndex%sentenceData.length;
+        currentIndex%
+        sentenceData.length;
 
     setProgressPercent(
         position,
@@ -1445,7 +2599,8 @@ function updateEpnhuaProgress(){
     }
 
     const position=
-        currentIndex%epnhuaData.length;
+        currentIndex%
+        epnhuaData.length;
 
     setProgressPercent(
         position,
@@ -1453,55 +2608,105 @@ function updateEpnhuaProgress(){
     );
 }
 
+function updateGenericProgress(course){
+
+    const data=
+        getGenericData(course);
+
+    if(!data.length){
+
+        setProgressPercent(0,0);
+
+        return;
+    }
+
+    const position=
+        currentIndex%
+        data.length;
+
+    setProgressPercent(
+        position,
+        data.length
+    );
+}
+
 /* =====================================================
-   ESCAPE
+   ESCAPE HTML
 ===================================================== */
 
 function escapeHTML(text){
 
     return String(text)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
 
 /* =====================================================
    ENTER CHECK
 ===================================================== */
 
-document.getElementById("answerInput")
-    .addEventListener(
-        "keydown",
-        function(event){
+document.getElementById(
+    "answerInput"
+).addEventListener(
 
-            if(event.key==="Enter"){
+    "keydown",
 
-                event.preventDefault();
+    function(event){
 
-                checkAnswer();
-            }
+        if(event.key==="Enter"){
+
+            event.preventDefault();
+
+            checkAnswer();
         }
-    );
+    }
+
+);
 
 /* =====================================================
    ENTER START
 ===================================================== */
 
-document.getElementById("nameInput")
-    .addEventListener(
-        "keydown",
-        function(event){
+document.getElementById(
+    "nameInput"
+).addEventListener(
 
-            if(event.key==="Enter"){
+    "keydown",
 
-                event.preventDefault();
+    function(event){
 
-                startLearning();
-            }
+        if(event.key==="Enter"){
+
+            event.preventDefault();
+
+            startLearning();
         }
-    );
+    }
+
+);
 
 /* =====================================================
    INIT
@@ -1509,21 +2714,27 @@ document.getElementById("nameInput")
 
 (function init(){
 
-    const savedUser=getSavedUser();
+    loadGenericCourseFiles()
+        .then(function(){
 
-    if(!savedUser){
+            const savedUser=
+                getSavedUser();
 
-        showNameScreen();
+            if(!savedUser){
 
-        return;
-    }
+                showNameScreen();
 
-    currentUser=savedUser;
+                return;
+            }
 
-    ensureUserData();
+            currentUser=savedUser;
 
-    saveUser();
+            ensureUserData();
 
-    showContinueScreen();
+            saveUser();
+
+            showContinueScreen();
+
+        });
 
 })();
