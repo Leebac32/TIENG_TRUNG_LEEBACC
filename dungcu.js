@@ -1,4 +1,4 @@
-window.DUNGCU = [
+/*window.DUNGCU = [
 
   ["螺丝刀","luósīdāo","tua vít"],
   ["一字螺丝刀","yí zì luósīdāo","tua vít dẹt"],
@@ -243,3 +243,4 @@ window.DUNGCU = [
   ["工作平台","gōngzuò píngtái","sàn/bục làm việc"]
 
 ];
+*/
